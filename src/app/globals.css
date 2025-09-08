@@ -3,11 +3,10 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Коли next-themes ставить <html class="dark">, змінні перемикаються */
+html.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 html,
@@ -35,8 +34,6 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
+/* Замість media — явно під класи теми */
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }

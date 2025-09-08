@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ThemeProvider } from 'next-themes';
 import { Provider } from '@/components/ui/provider';
 import './globals.css';
 
@@ -9,9 +10,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <Provider>{children}</Provider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          enableColorScheme   // ← дозволяє браузеру підлаштовувати нативні елементи
+        >
+          <Provider>{children}</Provider>
+        </ThemeProvider>
       </body>
     </html>
   );
