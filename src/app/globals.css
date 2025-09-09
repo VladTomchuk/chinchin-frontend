@@ -35,5 +35,9 @@ a {
 }
 
 /* Замість media — явно під класи теми */
-html { color-scheme: light; }
-html.dark { color-scheme: dark; }
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}

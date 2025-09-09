@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-          enableColorScheme   // ← дозволяє браузеру підлаштовувати нативні елементи
+          enableColorScheme // ← дозволяє браузеру підлаштовувати нативні елементи
         >
           <Provider>{children}</Provider>
         </ThemeProvider>
