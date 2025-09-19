@@ -5,7 +5,7 @@ import { ColorModeToggle } from '../ui/ColorModeToggle';
 
 export default function Navbar() {
   return (
-    <Flex position={'fixed'} bg={'red.400'} width={'100%'}>
+    <Flex bg={'red.400'} width={'100%'}>
       <ColorModeToggle />
     </Flex>
   );
