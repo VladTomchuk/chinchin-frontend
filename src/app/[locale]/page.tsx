@@ -10,8 +10,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   return (
     <div>
       <div>
-        <h1>{t('title')}</h1>
-        <p>{t('content')}</p>
+        {/* <h1>{t('title')}</h1>
+        <p>{t('content')}</p> */}
       </div>
     </div>
   );
