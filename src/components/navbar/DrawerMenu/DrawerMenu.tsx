@@ -1,7 +1,7 @@
 'use client';
 
-import { Button, CloseButton, Drawer, Link, Portal } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { Button, CloseButton, Drawer, Portal } from '@chakra-ui/react';
+// import NextLink from 'next/link';
 import { useColorModeValue } from '@/components/ui/color-mode';
 import { CiMenuFries } from 'react-icons/ci';
 import { useEffect, useState } from 'react';

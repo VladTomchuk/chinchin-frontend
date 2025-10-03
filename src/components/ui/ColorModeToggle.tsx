@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Button } from '@chakra-ui/react';
 import { LuMoon, LuSun } from 'react-icons/lu';
-import { useColorModeValue } from '@/components/ui/color-mode';
 
 export function ColorModeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
