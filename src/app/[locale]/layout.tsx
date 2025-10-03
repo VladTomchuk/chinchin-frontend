@@ -14,8 +14,11 @@ type Props = {
 };
 
 export const metadata: Metadata = {
-  title: 'CHINCHIN',
+  title: 'Cocktail bar catering BCN',
   description: '...',
+  icons: {
+    icon: '/darkLogo.png',
+  },
 };
 
 export function generateStaticParams() {

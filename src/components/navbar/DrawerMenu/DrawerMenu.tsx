@@ -1,42 +1,45 @@
-import { ColorModeToggle } from '@/components/ui/ColorModeToggle';
-import { Box, Button, CloseButton, Drawer, Link, Portal } from '@chakra-ui/react';
-import HamburgerIcon from './HamburgerIcon/HamburgerIcon';
+'use client';
+
+import { Button, CloseButton, Drawer, Link, Portal } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useColorModeValue } from '@/components/ui/color-mode';
+import { CiMenuFries } from 'react-icons/ci';
+import { useEffect, useState } from 'react';
 
 export default function DrawerMenu() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  // завжди викликаємо хук
+  const buttonColorValue = useColorModeValue('brand.darkText', 'brand.lightPink');
+  const drawerBgValue = useColorModeValue('brand.lightBg', 'brand.darkBg');
+
+  // під час SSR показуємо стабільні дефолтні значення
+  const buttonColor = mounted ? buttonColorValue : 'brand.lightPink';
+  const drawerBg = mounted ? drawerBgValue : 'brand.lightBg';
   return (
-    <Drawer.Root size={'sm'} placement={'end'}>
+    <Drawer.Root size="xs" placement="end">
       <Drawer.Trigger asChild>
-        <Button variant="outline">
-          <HamburgerIcon />
+        <Button variant="outline" color={buttonColor}>
+          <CiMenuFries />
         </Button>
       </Drawer.Trigger>
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
-          <Drawer.Content bg={useColorModeValue('brand.lightBg', 'brand.darkBg')}>
-            <Drawer.Header>
-              <Drawer.Title></Drawer.Title>
-            </Drawer.Header>
+          <Drawer.Content bg={drawerBg}>
             <Drawer.Body>
-              <Link fontWeight="medium" as={NextLink} href="/">
+              {/* <Link fontWeight="medium" as={NextLink} href="/">
                 About
               </Link>
-
               <Link fontWeight="medium" as={NextLink} href="/services">
                 Services
               </Link>
-
               <Link fontWeight="medium" as={NextLink} href="/contact">
                 Contact
-              </Link>
+              </Link> */}
             </Drawer.Body>
-            <Drawer.Footer>
-              <Box>
-                <ColorModeToggle />
-              </Box>
-            </Drawer.Footer>
+            <Drawer.Footer></Drawer.Footer>
             <Drawer.CloseTrigger asChild>
               <CloseButton size="sm" />
             </Drawer.CloseTrigger>

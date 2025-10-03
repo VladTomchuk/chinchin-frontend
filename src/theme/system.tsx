@@ -9,6 +9,8 @@ const config = defineConfig({
           darkBg: { value: '#09090b' },
           lightText: { value: '#fff9f6' },
           darkText: { value: '#3d3d3d' },
+          lightPink: { value: '#f1d2d3' },
+          greenGreen: { value: '#af9c30' },
         },
       },
     },
