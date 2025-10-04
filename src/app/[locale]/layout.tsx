@@ -7,6 +7,8 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navbar from '@/components/navbar/page';
+import { brandFont } from '@/fonts/fonts';
+import FaviconSwitcher from '@/components/FaviconSwitcher';
 
 type Props = {
   children: React.ReactNode;
@@ -16,9 +18,9 @@ type Props = {
 export const metadata: Metadata = {
   title: 'Cocktail bar catering BCN',
   description: '...',
-  icons: {
-    icon: '/darkLogo.png',
-  },
+  // icons: {
+  //   icon: '/darkLogo.png',
+  // },
 };
 
 export function generateStaticParams() {
@@ -34,7 +36,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <html suppressHydrationWarning>
+    <html className={brandFont.variable} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
           <ThemeProvider
@@ -44,6 +46,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             disableTransitionOnChange
             enableColorScheme // ← дозволяє браузеру підлаштовувати нативні елементи
           >
+            <FaviconSwitcher />
             <Provider>
               <Navbar />
               {children}

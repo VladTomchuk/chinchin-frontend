@@ -1,3 +1,4 @@
+import HeroSection from '@/components/MainPage/HeroSection/HeroSection';
 import { setRequestLocale } from 'next-intl/server';
 // import { getTranslations } from 'next-intl/server';
 
@@ -11,6 +12,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   return (
     <div>
       <div>
+        <HeroSection />
         {/* <h1>{t('title')}</h1>
         <p>{t('content')}</p> */}
       </div>

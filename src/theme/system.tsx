@@ -13,6 +13,10 @@ const config = defineConfig({
           greenGreen: { value: '#af9c30' },
         },
       },
+      fonts: {
+        heading: {},
+        body: { value: 'var(--font-brand), sans-serif' },
+      },
     },
   },
 });
