@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { Button } from '@chakra-ui/react';
-import { LuMoon, LuSun } from 'react-icons/lu';
+import { CiBrightnessDown, CiDark } from 'react-icons/ci';
 
 export function ColorModeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -17,13 +17,13 @@ export function ColorModeToggle() {
     <Button
       variant="outline"
       color={isDark ? 'brand.lightPink' : 'brand.darkText'}
-      size="sm"
+      size="md"
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       aria-label="Toggle color mode"
       title="Toggle color mode"
+      mx={1}
     >
-      {/* До маунту показуємо стабільний плейсхолдер, щоб не ламати гідрацію */}
-      {mounted ? isDark ? <LuMoon /> : <LuSun /> : <LuMoon />}
+      {mounted ? isDark ? <CiDark /> : <CiBrightnessDown /> : <CiDark />}
     </Button>
   );
 }

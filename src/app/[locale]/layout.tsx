@@ -18,9 +18,6 @@ type Props = {
 export const metadata: Metadata = {
   title: 'Cocktail bar catering BCN',
   description: '...',
-  // icons: {
-  //   icon: '/darkLogo.png',
-  // },
 };
 
 export function generateStaticParams() {
@@ -44,7 +41,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-            enableColorScheme // ← дозволяє браузеру підлаштовувати нативні елементи
+            enableColorScheme
           >
             <FaviconSwitcher />
             <Provider>

@@ -10,17 +10,15 @@ export default function DrawerMenu() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  // завжди викликаємо хук
   const buttonColorValue = useColorModeValue('brand.darkText', 'brand.lightPink');
   const drawerBgValue = useColorModeValue('brand.lightBg', 'brand.darkBg');
 
-  // під час SSR показуємо стабільні дефолтні значення
   const buttonColor = mounted ? buttonColorValue : 'brand.lightPink';
   const drawerBg = mounted ? drawerBgValue : 'brand.lightBg';
   return (
     <Drawer.Root size="xs" placement="end">
       <Drawer.Trigger asChild>
-        <Button variant="outline" color={buttonColor}>
+        <Button variant="outline" color={buttonColor} mx={1}>
           <CiMenuFries />
         </Button>
       </Drawer.Trigger>

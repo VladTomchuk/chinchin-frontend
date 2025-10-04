@@ -54,14 +54,17 @@ export default function Navbar() {
       boxShadow="sm"
       transition="transform 0.3s ease"
       transform={showNavbar ? 'translateY(0)' : 'translateY(-100%)'}
+      px={8}
     >
-      <ColorModeToggle />
       <Box>
         <NextLink href="/" passHref>
           <Image src={srcLogo} alt="Logo" height="50px" cursor="pointer" />
         </NextLink>
       </Box>
-      <DrawerMenu />
+      <Flex justifyContent={'space-between'}>
+        <ColorModeToggle />
+        <DrawerMenu />
+      </Flex>
     </Flex>
   );
 }
