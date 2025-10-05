@@ -2,5 +2,12 @@
   "Homepage": {
     "title": "Welcome!",
     "content": "Some long story!"
+  },
+  "LocaleSwitcher": {
+    "label": "Select language",
+    "locale": {
+      "en": "EN",
+      "ua": "UA"
+    }
   }
 }

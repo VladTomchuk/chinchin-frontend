@@ -7,6 +7,7 @@ import DrawerMenu from './DrawerMenu/DrawerMenu';
 import { useState, useEffect } from 'react';
 import { ColorModeToggle } from '../ui/ColorModeToggle';
 import { useColorModeValue } from '../ui/color-mode';
+import LocaleSwitcher from '../LocaleSwitcherSelect/LocaleSwitcher';
 
 export default function Navbar() {
   const { resolvedTheme } = useTheme();
@@ -46,7 +47,7 @@ export default function Navbar() {
       top="0"
       left="0"
       right="0"
-      zIndex="1000"
+      zIndex="100"
       align="center"
       justify="space-between"
       wrap="wrap"
@@ -62,6 +63,7 @@ export default function Navbar() {
         </NextLink>
       </Box>
       <Flex justifyContent={'space-between'}>
+        <LocaleSwitcher />
         <ColorModeToggle />
         <DrawerMenu />
       </Flex>

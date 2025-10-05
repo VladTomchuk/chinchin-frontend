@@ -2,5 +2,12 @@
   "Homepage": {
     "title": "Вітаю!",
     "content": "Довгий текст контенту!"
+  },
+  "LocaleSwitcher": {
+    "label": "Select language",
+    "locale": {
+      "en": "EN",
+      "ua": "UA"
+    }
   }
 }
