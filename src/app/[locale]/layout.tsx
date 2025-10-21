@@ -8,7 +8,6 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navbar from '@/components/navbar/page';
 import { brandFont } from '@/fonts/fonts';
-import FaviconSwitcher from '@/components/FaviconSwitcher';
 
 type Props = {
   children: React.ReactNode;
@@ -43,7 +42,6 @@ export default async function LocaleLayout({ children, params }: Props) {
             disableTransitionOnChange
             enableColorScheme
           >
-            <FaviconSwitcher />
             <Provider>
               <Navbar />
               {children}
