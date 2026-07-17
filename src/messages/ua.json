@@ -3,6 +3,10 @@
     "title": "Вітаю!",
     "content": "Довгий текст контенту!"
   },
+  "HeroSection": {
+    "title": "Коктейлі\nщо говорять\nвашою мовою",
+    "contactButton": "Зв'язатися з нами"
+  },
   "LocaleSwitcher": {
     "label": "Select language",
     "locale": {

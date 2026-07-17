@@ -1,12 +1,6 @@
 :root {
-  --background: #ffffff;
+  --background: #fff9f6;
   --foreground: #171717;
-}
-
-/* Коли next-themes ставить <html class="dark">, змінні перемикаються */
-html.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
 }
 
 html,
@@ -18,7 +12,7 @@ body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: #fff9f6;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,7 +32,4 @@ a {
 /* Замість media — явно під класи теми */
 html {
   color-scheme: light;
-}
-html.dark {
-  color-scheme: dark;
 }

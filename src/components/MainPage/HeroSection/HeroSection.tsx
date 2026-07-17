@@ -2,9 +2,11 @@
 
 import { Box, Image, Flex, Text, Button } from '@chakra-ui/react';
 import { useTheme } from 'next-themes';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 export default function HeroSection() {
+  const t = useTranslations('HeroSection');
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -25,13 +27,11 @@ export default function HeroSection() {
     >
       <Box display={'flex'} justifyContent={'center'} alignItems={'center'} w={'100%'} h={'100%'}>
         <Flex direction={'column'} justifyContent={'space-around'} h={'100%'}>
-          <Text fontFamily="body" fontSize={'6xl'}>
-            Cocktails <br />
-            that speak <br />
-            your language
+          <Text fontFamily="body" fontSize={'6xl'} whiteSpace="pre-line">
+            {t('title')}
           </Text>
           <Button variant={'outline'} size={'md'} w={'100px'}>
-            Contact us
+            {t('contactButton')}
           </Button>
         </Flex>
       </Box>

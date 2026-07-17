@@ -35,13 +35,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html className={brandFont.variable} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            enableColorScheme
-          >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Provider>
               <Navbar />
               {children}

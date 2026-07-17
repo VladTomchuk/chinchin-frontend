@@ -3,6 +3,10 @@
     "title": "Welcome!",
     "content": "Some long story!"
   },
+  "HeroSection": {
+    "title": "Cocktails\nthat speak\nyour language",
+    "contactButton": "Contact us"
+  },
   "LocaleSwitcher": {
     "label": "Select language",
     "locale": {
