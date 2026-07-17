@@ -21,16 +21,32 @@ export default function Navbar() {
   const currentBg = mounted ? NavbarBg : 'brand.lightBg';
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY && window.scrollY > 80) {
-        setShowNavbar(false); // скролимо вниз — ховати
-      } else {
-        setShowNavbar(true); // скролимо вгору — показати
-      }
-      setLastScrollY(window.scrollY);
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        // Math.max guards against iOS rubber-band overscroll going negative
+        const currentY = Math.max(window.scrollY, 0);
+        const delta = currentY - lastScrollY;
+        const scrollThreshold = 8;
+
+        if (currentY <= 80) {
+          setShowNavbar(true); // біля самого верху — завжди показувати
+        } else if (delta > scrollThreshold) {
+          setShowNavbar(false); // скролимо вниз — ховати
+        } else if (delta < -scrollThreshold) {
+          setShowNavbar(true); // скролимо вгору — показати
+        }
+
+        setLastScrollY(currentY);
+        ticking = false;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
