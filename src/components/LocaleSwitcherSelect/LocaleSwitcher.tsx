@@ -8,13 +8,10 @@ export default function LocaleSwitcher() {
   const t = useTranslations('LocaleSwitcher');
   const locale = useLocale();
 
-  return (
-    <LocaleSwitcherSelect defaultValue={locale} label={''}>
-      {routing.locales.map((cur) => (
-        <option key={cur} value={cur}>
-          {t(`locale.${cur}`)}
-        </option>
-      ))}
-    </LocaleSwitcherSelect>
-  );
+  const items = routing.locales.map((cur) => ({
+    value: cur,
+    label: t(`locale.${cur}`),
+  }));
+
+  return <LocaleSwitcherSelect items={items} defaultValue={locale} label={t('label')} />;
 }
