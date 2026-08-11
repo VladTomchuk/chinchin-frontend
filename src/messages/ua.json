@@ -14,6 +14,23 @@
       "ua": "UA"
     }
   },
+  "Navbar": {
+    "services": "Послуги",
+    "events": "Події",
+    "about": "Про нас",
+    "instagram": "Instagram",
+    "menuTitle": "Меню сайту",
+    "openMenu": "Відкрити меню",
+    "closeMenu": "Закрити меню"
+  },
+  "Fab": {
+    "nav": "Швидка навігація",
+    "open": "Відкрити швидке меню",
+    "close": "Закрити швидке меню",
+    "services": "Послуги",
+    "about": "Про нас",
+    "instagram": "Instagram"
+  },
   "ServicesPage": {
     "meta": {
       "title": "Послуги | ChinChin",

@@ -1,0 +1,177 @@
+/* Кольори повторюють брендові токени з theme/system.tsx. У світлій темі акцент
+   темніший (#6b5f1c): брендовий #af9c30 на світлому фоні дає лише 2.6:1.
+
+   Файл написаний mobile-first не для краси, а через специфічність: правила
+   темної теми йдуть через `html.dark .label` (0,2,1), і медіа-запит їх не
+   переважує, бо сам по собі специфічності не додає. Тому базовий стан — це
+   мобільний вигляд, а десктопні пігулки та їхня темна тема живуть усередині
+   `min-width: 48em`. */
+
+/* Ловить клік повз меню. На вузьких екранах меню займає весь екран, тож
+   підкладка суцільна — сторінки під нею просто не видно. Десктопний варіант,
+   де меню лише невелика випадайка під кнопкою, — нижче в медіа-запиті. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  border: none;
+  padding: 0;
+  background: #09090b;
+  cursor: default;
+  /* Прокрутку блокує JS через overflow на body, але на iOS цього не завжди
+     досить — тач по підкладці має не тягнути сторінку. */
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+
+.menu {
+  position: fixed;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+/* --- Мобільний вигляд: меню по центру екрана, пункти — простий текст. --- */
+
+.menu {
+  inset: 0;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  /* Падінг дає ряду ~62px висоти — з запасом над мінімальними 44px для пальця. */
+  padding: 12px 10px;
+  color: #fff9f6;
+  font-family: var(--font-brand), sans-serif;
+  font-size: 2rem;
+  font-weight: 200;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+
+.link:hover .label {
+  color: #af9c30;
+}
+
+.link:focus-visible {
+  outline: 2px solid #af9c30;
+  outline-offset: 4px;
+}
+
+/* --- Широкі екрани: випадає з-під кнопки, пункти — пігулки. --- */
+
+@media (min-width: 48em) {
+  /* Тут меню — невелика випадайка під кнопкою, а не весь екран. Глушити
+     сторінку суцільним кольором заради двох пунктів забагато, тож лише злегка
+     притемнюємо й розмиваємо. */
+  .backdrop {
+    background: rgb(9 9 11 / 45%);
+    backdrop-filter: blur(3px);
+  }
+
+  :global(html.dark) .backdrop {
+    background: rgb(0 0 0 / 60%);
+  }
+
+  /* 74px — низ шапки плюс просвіт; 36px — правий край самої кнопки
+     (падінг шапки 32px + її mx 4px), щоб меню стояло з нею в одну лінію. */
+  .menu {
+    inset: auto;
+    top: 74px;
+    right: 36px;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  .label {
+    padding: 13px 18px;
+    border: 1px solid #e7ded8;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 8%);
+    color: #3d3d3d;
+    font-family: var(--font-brand-ui), sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .link:hover .label {
+    border-color: #6b5f1c;
+    background: #f1eddc;
+    color: #3d3d3d;
+  }
+
+  .link:focus-visible {
+    outline-color: #6b5f1c;
+    outline-offset: 3px;
+  }
+
+  :global(html.dark) .label {
+    border-color: #26262b;
+    background: #131316;
+    color: #fff9f6;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 45%);
+  }
+
+  :global(html.dark) .link:hover .label {
+    border-color: #af9c30;
+    background: #1a180f;
+    color: #fff9f6;
+  }
+
+  :global(html.dark) .link:focus-visible {
+    outline-color: #af9c30;
+  }
+}
+
+/* --- Стилі кружечків. Зараз не застосовуються: розмітку іконок тимчасово
+       закоментовано в DrawerMenu.tsx. Лишені, щоб повернути одним рухом. --- */
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #6b5f1c;
+  border-radius: 50%;
+  background: #6b5f1c;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 22%);
+  color: #fff9f6;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.link:hover .icon {
+  border-color: #574c15;
+  background: #574c15;
+}
+
+:global(html.dark) .icon {
+  border-color: #af9c30;
+  background: #af9c30;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 45%);
+  color: #09090b;
+}
+
+:global(html.dark) .link:hover .icon {
+  border-color: #c0ac38;
+  background: #c0ac38;
+}

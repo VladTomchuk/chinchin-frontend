@@ -14,6 +14,23 @@
       "ua": "UA"
     }
   },
+  "Navbar": {
+    "services": "Services",
+    "events": "Events",
+    "about": "About us",
+    "instagram": "Instagram",
+    "menuTitle": "Site menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Fab": {
+    "nav": "Quick navigation",
+    "open": "Open quick menu",
+    "close": "Close quick menu",
+    "services": "Services",
+    "about": "About us",
+    "instagram": "Instagram"
+  },
   "ServicesPage": {
     "meta": {
       "title": "Services | ChinChin",

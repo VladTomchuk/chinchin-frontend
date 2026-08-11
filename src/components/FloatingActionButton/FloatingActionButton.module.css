@@ -1,0 +1,140 @@
+/* Кольори повторюють брендові токени з theme/system.tsx. У світлій темі акцент
+   темніший (#6b5f1c): брендовий #af9c30 на світлому фоні дає лише 2.6:1 і як
+   текст не проходить WCAG. */
+
+.root {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 90; /* під навбаром (100), над контентом */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+@media (min-width: 48em) {
+  .root {
+    right: 32px;
+    bottom: 32px;
+  }
+}
+
+/* Ловить клік повз меню, щоб закрити його. Прозорий: візуально нічого не
+   змінює, але перекриває сторінку, поки меню відкрите. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  border-radius: 999px;
+}
+
+.label {
+  padding: 9px 15px;
+  border: 1px solid #e7ded8;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 8%);
+  color: #3d3d3d;
+  font-family: var(--font-brand-ui), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #e7ded8;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 8%);
+  color: #6b5f1c;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.link:hover .icon {
+  border-color: #6b5f1c;
+  background: #f1eddc;
+}
+
+.trigger {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background: #6b5f1c;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+  color: #fff9f6;
+  cursor: pointer;
+}
+
+/* Тема проєкту не додає видимого кільця фокусу — без цього не видно, де
+   перебуває клавіатура. Задаємо явно. */
+.trigger:focus-visible,
+.link:focus-visible {
+  outline: 2px solid #6b5f1c;
+  outline-offset: 3px;
+}
+
+/* --- Темна тема. globals.css вішає клас .dark на <html>. --- */
+
+:global(html.dark) .label,
+:global(html.dark) .icon {
+  border-color: #26262b;
+  background: #131316;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 45%);
+}
+
+:global(html.dark) .label {
+  color: #fff9f6;
+}
+
+:global(html.dark) .icon {
+  color: #af9c30;
+}
+
+:global(html.dark) .link:hover .icon {
+  border-color: #af9c30;
+  background: #1a180f;
+}
+
+:global(html.dark) .trigger {
+  background: #af9c30;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 55%);
+  color: #09090b;
+}
+
+:global(html.dark) .trigger:focus-visible,
+:global(html.dark) .link:focus-visible {
+  outline-color: #af9c30;
+}

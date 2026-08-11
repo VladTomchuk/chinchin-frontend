@@ -1,0 +1,78 @@
+/* Кольори повторюють брендові токени з theme/system.tsx. У світлій темі акцент
+   темніший (#6b5f1c): брендовий #af9c30 на світлому фоні дає лише 2.6:1. */
+
+/* Відступ живе тут, а не на кнопці: список рівняється по правому краю обгортки,
+   і якби margin був на кнопці, він би зсував список відносно неї. */
+.root {
+  position: relative;
+  display: inline-flex;
+  margin: 0 4px;
+}
+
+/* Список позиціонується відносно самої кнопки, а не вікна: шапка ховається при
+   скролі, і меню має їхати разом із нею. Порталу тут не треба саме тому. */
+.menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Форма один в один із кнопкою перемикача в шапці: 48x40, радіус 4px, рамка
+   1px. Числа зняті з обчислених стилів тієї кнопки — якщо вона колись
+   зміниться, ці значення треба оновити разом із нею. */
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid #e4e4e7;
+  border-radius: 4px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 8%);
+  color: #3d3d3d;
+  font-family: var(--font-brand-ui), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.option:hover {
+  border-color: #6b5f1c;
+  background: #f1eddc;
+}
+
+.option:focus-visible {
+  outline: 2px solid #6b5f1c;
+  outline-offset: 3px;
+}
+
+/* --- Темна тема: globals.css вішає клас .dark на <html>. --- */
+
+:global(html.dark) .option {
+  border-color: #26262b;
+  background: #131316;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 45%);
+  color: #fff9f6;
+}
+
+:global(html.dark) .option:hover {
+  border-color: #af9c30;
+  background: #1a180f;
+}
+
+:global(html.dark) .option:focus-visible {
+  outline-color: #af9c30;
+}
