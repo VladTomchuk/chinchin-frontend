@@ -11,7 +11,9 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  /* Саме clip, а не hidden: hidden робить body окремим скрол-контейнером,
+     і тоді ScrollTrigger (hero-галерея) читає позицію скролу не звідти. */
+  overflow-x: clip;
 }
 
 body {

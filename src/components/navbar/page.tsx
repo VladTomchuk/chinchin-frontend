@@ -4,10 +4,15 @@ import { useTheme } from 'next-themes';
 import NextLink from 'next/link';
 import { Flex, Box, Image } from '@chakra-ui/react';
 import DrawerMenu from './DrawerMenu/DrawerMenu';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
 import { ColorModeToggle } from '../ui/ColorModeToggle';
 import { useColorModeValue } from '../ui/color-mode';
 import LocaleSwitcher from '../LocaleSwitcherSelect/LocaleSwitcher';
+import {
+  getHeroZoom,
+  getServerHeroZoom,
+  subscribeHeroZoom,
+} from '../MainPage/HeroSection/heroZoom';
 
 export default function Navbar() {
   const { resolvedTheme } = useTheme();
@@ -19,6 +24,15 @@ export default function Navbar() {
 
   const NavbarBg = useColorModeValue('brand.lightBg', 'brand.darkBg');
   const currentBg = mounted ? NavbarBg : 'brand.lightBg';
+
+  // На головній перший екран займає хіро-галерея, яка піниться і зумиться.
+  // heroZoom === null означає, що на цій сторінці її немає.
+  const heroZoom = useSyncExternalStore(subscribeHeroZoom, getHeroZoom, getServerHeroZoom);
+
+  // Поки триває зум, шапки не має бути видно взагалі. Точка, де він
+  // завершується, далі працює як «верх сторінки» для автоховання.
+  const contentTop = heroZoom?.end ?? 0;
+  const visible = heroZoom && !heroZoom.complete ? false : showNavbar;
 
   useEffect(() => {
     let ticking = false;
@@ -33,7 +47,7 @@ export default function Navbar() {
         const delta = currentY - lastScrollY;
         const scrollThreshold = 8;
 
-        if (currentY <= 80) {
+        if (currentY <= contentTop + 80) {
           setShowNavbar(true); // біля самого верху — завжди показувати
         } else if (delta > scrollThreshold) {
           setShowNavbar(false); // скролимо вниз — ховати
@@ -48,7 +62,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, contentTop]);
 
   const srcLogo = mounted
     ? resolvedTheme === 'dark'
@@ -69,8 +83,10 @@ export default function Navbar() {
       wrap="wrap"
       padding={2}
       boxShadow="sm"
-      transition="transform 0.3s ease"
-      transform={showNavbar ? 'translateY(0)' : 'translateY(-100%)'}
+      transition="transform 0.45s ease, opacity 0.45s ease"
+      transform={visible ? 'translateY(0)' : 'translateY(-100%)'}
+      opacity={visible ? 1 : 0}
+      pointerEvents={visible ? 'auto' : 'none'}
       px={8}
     >
       <Box>
