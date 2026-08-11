@@ -1,0 +1,127 @@
+/* Кольори повторюють components/shared/tokens.ts. Форма зроблена нативними
+   елементами, а не компонентами Chakra: полів мало, а нативні input/select
+   дають безкоштовну валідацію браузера, правильну клавіатуру на мобільному
+   й дату/числа без зайвого JS. */
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 720px;
+}
+
+@media (min-width: 40em) {
+  .form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Тип події та email — на всю ширину: у них найдовші значення. */
+  .wide {
+    grid-column: 1 / -1;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: var(--font-brand-ui), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #5c5c5c;
+}
+
+.input {
+  width: 100%;
+  /* 44px — мінімальна ціль для пальця. */
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #e7ded8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #3d3d3d;
+  font-family: var(--font-brand-ui), sans-serif;
+  font-size: 15px;
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.input:hover {
+  border-color: #c9bdae;
+}
+
+.input:focus-visible {
+  outline: 2px solid #6b5f1c;
+  outline-offset: 2px;
+  border-color: #6b5f1c;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 999px;
+  background: #6b5f1c;
+  color: #fff9f6;
+  font-family: var(--font-brand-ui), sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.submit:hover {
+  opacity: 0.86;
+}
+
+.submit:focus-visible {
+  outline: 2px solid #6b5f1c;
+  outline-offset: 3px;
+}
+
+.note {
+  margin-top: 14px;
+  max-width: 60ch;
+  color: #5c5c5c;
+  font-family: var(--font-brand-ui), sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* --- Темна тема: globals.css вішає клас .dark на <html>. --- */
+
+:global(html.dark) .label,
+:global(html.dark) .note {
+  color: #c9c3bf;
+}
+
+:global(html.dark) .input {
+  border-color: #26262b;
+  background: #131316;
+  color: #fff9f6;
+}
+
+:global(html.dark) .input:hover {
+  border-color: #3b3b42;
+}
+
+:global(html.dark) .input:focus-visible {
+  outline-color: #af9c30;
+  border-color: #af9c30;
+}
+
+:global(html.dark) .submit {
+  background: #af9c30;
+  color: #09090b;
+}
+
+:global(html.dark) .submit:focus-visible {
+  outline-color: #af9c30;
+}

@@ -92,5 +92,289 @@
       "metaTitle": "Wedding bar service in Barcelona | ChinChin",
       "metaDescription": "Mobile wedding bar in Barcelona: welcome cocktails, a reception list, late-night drinks and alcohol-free versions for every guest."
     }
+  },
+  "CorporateEvents": {
+    "hero": {
+      "eyebrow": "Corporate & business events",
+      "title": "Corporate & Business Event Bar Service — Barcelona-Based, Worldwide",
+      "subtitle": "Turnkey bar solutions for conferences, exhibitions and MICE events — trusted at ICE, IGB, and SIGMA",
+      "intro": "Based in Barcelona, we provide full-service bar staffing and setup for corporate and MICE events worldwide. From ICE and IGB in Barcelona and London to SIGMA in Rome and Dubai, we've delivered turnkey bar service at major industry conferences and exhibitions — handling logistics, staffing, licensing and beverage sourcing so your event runs without a hitch, wherever it takes place."
+    },
+    "delivered": {
+      "eyebrow": "Track record",
+      "title": "International Experience — Major Conferences & Exhibitions",
+      "cityLabel": "City",
+      "eventLabel": "Event",
+      "rows": [
+        {
+          "city": "Barcelona",
+          "event": "IGB, ICE"
+        },
+        {
+          "city": "London",
+          "event": "IGB"
+        },
+        {
+          "city": "Rome",
+          "event": "SIGMA"
+        },
+        {
+          "city": "Dubai",
+          "event": "SIGMA"
+        }
+      ],
+      "caption": "Our team has delivered turnkey bar service at some of the world's leading gaming and business exhibitions, adapting to different venues, regulations and audiences — while maintaining the same standard of speed, quality and professionalism everywhere we work."
+    },
+    "audience": {
+      "eyebrow": "Who we work with",
+      "title": "Trusted by Event Agencies, PCOs & Corporations",
+      "items": [
+        "Event & MICE agencies",
+        "Professional Congress Organizers (PCOs)",
+        "Hotels & convention centers",
+        "Direct corporate clients"
+      ]
+    },
+    "formats": {
+      "eyebrow": "Event types",
+      "title": "Bar Service for Every Type of Corporate Event",
+      "items": [
+        {
+          "name": "Business Conferences",
+          "text": "Professional bar setup for multi-day conferences and business summits — coffee breaks, networking receptions, and evening drinks handled with precision timing to match your agenda."
+        },
+        {
+          "name": "Trade Shows & Exhibitions",
+          "text": "High-volume bar service built for exhibition floors and trade fairs, where fast, consistent service keeps foot traffic moving and booths staffed with confidence."
+        },
+        {
+          "name": "MICE & Industry Conferences",
+          "text": "Specialized bar solutions for major MICE and gaming-industry events — including ICE and IGB in Barcelona and London, and SIGMA in Rome and Dubai. Scalable staffing for delegate counts from 50 to several thousand, anywhere in the world."
+        },
+        {
+          "name": "Corporate Parties & Celebrations",
+          "text": "From year-end parties to company anniversaries, we bring a fully stocked, professionally staffed bar that matches the tone of your celebration — elegant, high-energy, or anywhere in between."
+        },
+        {
+          "name": "Team Buildings & Incentive Events",
+          "text": "On-site or off-site, our bar team adds a social, memorable element to team building days and incentive trips — including interactive cocktail experiences for group engagement."
+        },
+        {
+          "name": "Brand Activations & Product Launches",
+          "text": "Branded bar experiences designed around your product or campaign — custom drink menus, branded garnishes, and staff briefed to represent your brand story at every pour."
+        }
+      ]
+    },
+    "included": {
+      "eyebrow": "Scope",
+      "title": "What's Included in Our Turnkey Bar Service",
+      "items": [
+        "Professional bartending staff (ratio calculated per guest count)",
+        "Full bar equipment & mobile setup",
+        "Beverage sourcing & stock management",
+        "Alcohol licensing & permits handling",
+        "Load-in, service timing & load-out coordination",
+        "Custom menus tailored to your event format"
+      ]
+    },
+    "why": {
+      "eyebrow": "Why us",
+      "title": "Why Choose Our Corporate Bar Service",
+      "text": "With experience calculating precise staffing and throughput for high-volume events, we ensure guests are served quickly even during peak conference breaks — no bottlenecks, no long queues."
+    },
+    "quote": {
+      "eyebrow": "Next step",
+      "title": "Get a Quote for Your Event",
+      "text": "Tell us about your event and we'll send a tailored proposal within 24 hours.",
+      "eventType": "Event type",
+      "eventTypePlaceholder": "Select event type",
+      "date": "Event date",
+      "guests": "Guest count",
+      "city": "City / location",
+      "email": "Contact email",
+      "submit": "Request a proposal",
+      "emailSubject": "Corporate bar service enquiry",
+      "note": "The button opens your mail client with the details filled in — nothing is sent without you pressing send."
+    },
+    "gallery": {
+      "title": "Bar service in action",
+      "empty": "Event photos go here once the image set is confirmed.",
+      "alt": {
+        "straining": "Bartender straining a cocktail into coupe glasses at a mobile bar station",
+        "glassware": "Coupe glasses filled with crushed ice lined up on a bar mat before service",
+        "themedBar": "Bartender in themed costume working the bar as guests gather at an evening event",
+        "shaking": "Bartender shaking a cocktail behind a themed event bar",
+        "brandedFoam": "Cocktail topped with foam printed with the ChinChin logo",
+        "guest": "Event guest holding a foam-topped cocktail served at the bar"
+      }
+    }
+  },
+  "HealthyBar": {
+    "meta": {
+      "title": "Healthy Bar — protein shakes, smoothies and mocktails | ChinChin",
+      "description": "Mobile healthy bar in Barcelona: protein shakes, fresh smoothies and mocktails for sports events, wellness retreats, conferences and private parties."
+    },
+    "hero": {
+      "eyebrow": "Healthy bar",
+      "title": "A bar that leaves\nyou energy for\nthe rest of the day",
+      "subtitle": "Protein shakes, fresh smoothies and mocktails for events where alcohol isn't the point. We bring the station, the blenders, the ice and the bartender — from finish lines to morning conferences.",
+      "ctaPrimary": "Request a quote",
+      "ctaSecondary": "See the menu",
+      "imageAlt": "A ChinChin bartender serving a fresh drink on a Barcelona terrace",
+      "stats": [
+        {
+          "value": "0%",
+          "label": "alcohol in the core menu"
+        },
+        {
+          "value": "20 g",
+          "label": "protein per protein shake"
+        },
+        {
+          "value": "up to 120",
+          "label": "servings per hour from one station"
+        }
+      ]
+    },
+    "intro": {
+      "eyebrow": "What it is",
+      "title": "A real bar — it just skips the alcohol",
+      "paragraphs": [
+        "A healthy bar isn't a table with juice cartons. It's the same bar station, the same technique and the same service as a cocktail event: fresh citrus, house syrups, proper ice, chilled glassware.",
+        "The only difference is what sits at the base — protein, fruit, vegetables and infusions instead of spirits. Guests get a drink with real structure and balance, not sugar water over ice."
+      ]
+    },
+    "offerings": {
+      "eyebrow": "Directions",
+      "title": "Three bases the menu is built from",
+      "items": [
+        {
+          "name": "Protein shakes",
+          "text": "Dairy or plant base, whey isolate or plant protein, banana, peanut butter, cacao, dates. 18–22 g of protein per serving, no added sugar."
+        },
+        {
+          "name": "Smoothies",
+          "text": "Thick fruit and vegetable bases over ice: mango-passion fruit, spinach-apple-celery, berry-beetroot. Blended to order — no concentrates, no powders."
+        },
+        {
+          "name": "Mocktails",
+          "text": "Cocktail technique without the proof: house syrups, shrubs, cold infusions, fresh juice. Same glassware, same garnish, same presentation."
+        }
+      ]
+    },
+    "menu": {
+      "eyebrow": "Menu",
+      "title": "A sample list for an event",
+      "lead": "This is the starting set — the final list is built around your format, the season and your guests' dietary needs.",
+      "items": [
+        {
+          "name": "Coffee protein",
+          "ingredients": "Espresso, whey isolate, oat milk, date syrup",
+          "tag": "22 g protein"
+        },
+        {
+          "name": "Cacao almond",
+          "ingredients": "Cacao, almond milk, banana, almond butter, plant protein",
+          "tag": "vegan"
+        },
+        {
+          "name": "Green balance",
+          "ingredients": "Spinach, apple, celery, lime, fresh ginger",
+          "tag": "detox"
+        },
+        {
+          "name": "Mango passion",
+          "ingredients": "Mango, passion fruit, coconut water, lime",
+          "tag": "dairy free"
+        },
+        {
+          "name": "Garden tonic",
+          "ingredients": "Cucumber, basil, lime, soda, alcohol-free tonic",
+          "tag": "light"
+        },
+        {
+          "name": "Berry shrub",
+          "ingredients": "Berry shrub, lemon, rosemary, alcohol-free sparkling",
+          "tag": "mocktail"
+        }
+      ]
+    },
+    "formats": {
+      "eyebrow": "Formats",
+      "title": "Where it works best",
+      "imageAlt": "A ChinChin bar station with a row of prepared drinks",
+      "items": [
+        {
+          "name": "Sports events and races",
+          "text": "A station at the finish line: batched bases, fast service, glassware built for moving crowds."
+        },
+        {
+          "name": "Wellness retreats and yoga",
+          "text": "Quiet service between sessions, plant-based options, caffeine-free on request."
+        },
+        {
+          "name": "Conferences and corporate",
+          "text": "A morning protein station instead of a third cup of americano."
+        },
+        {
+          "name": "Private events",
+          "text": "A healthy bar running alongside the cocktail bar — guests pick for themselves."
+        }
+      ]
+    },
+    "process": {
+      "eyebrow": "How it works",
+      "title": "From enquiry to a cleared station",
+      "items": [
+        {
+          "name": "Brief",
+          "text": "Date, location, guest count, dietary restrictions. We come back to you within a day."
+        },
+        {
+          "name": "Menu and quote",
+          "text": "We build the list around your format and budget, and confirm allergens and plant-based swaps."
+        },
+        {
+          "name": "Event day",
+          "text": "We arrive two hours before the start, set up the station and work the full slot."
+        },
+        {
+          "name": "After",
+          "text": "Clearing the bar area is on us. The equipment leaves with us the same day."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "What people usually ask",
+      "items": [
+        {
+          "question": "Can the healthy bar run alongside a regular cocktail bar?",
+          "answer": "Yes — that's the most common setup. Either two stations side by side or one station with two lists. Guests choose for themselves and nobody feels left out."
+        },
+        {
+          "question": "What about allergens and diets?",
+          "answer": "Every drink can be built on plant milk, and whey can be swapped for plant protein. Nut butters stay in clearly labelled drinks. A full ingredient and allergen list goes out with the menu before the event."
+        },
+        {
+          "question": "How many guests can one station handle?",
+          "answer": "Roughly up to 120 servings per hour with one bartender, assuming the bases are batched in advance. Above 150 guests with a short service window we add a second bartender."
+        },
+        {
+          "question": "Do you need power on site?",
+          "answer": "Yes — the blenders need a 220 V socket next to the station. If the venue has none, tell us in advance: we either bring a generator or move part of the menu to blender-free drinks."
+        },
+        {
+          "question": "How far do you travel?",
+          "answer": "Barcelona and the surrounding area at no extra cost. Elsewhere in Catalonia we quote per event, depending on logistics."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Tell us about your event",
+      "text": "Date, location and a rough guest count are enough for us to come back with a menu and a quote within a day.",
+      "button": "Email us",
+      "emailSubject": "Healthy bar enquiry"
+    }
   }
 }
