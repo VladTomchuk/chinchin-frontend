@@ -13,5 +13,67 @@
       "en": "EN",
       "ua": "UA"
     }
+  },
+  "ServicesPage": {
+    "meta": {
+      "title": "Services | ChinChin",
+      "description": "Mobile bar services for events in Barcelona: cocktail bars, healthy bars and more, built around your format and guests."
+    },
+    "hero": {
+      "eyebrow": "Services",
+      "title": "What we bring to your event",
+      "lead": "A station, the equipment and the bartenders — matched to your format, guest count and the mood you're going for."
+    }
+  },
+  "EventsPage": {
+    "meta": {
+      "title": "Event types | ChinChin",
+      "description": "The event formats we serve in Barcelona: corporate events, conferences, weddings and team buildings — each with its own matching bar services."
+    },
+    "hero": {
+      "eyebrow": "Event types",
+      "title": "The events we work with",
+      "lead": "Every format has its own service rhythm, its own drinks list and its own set of stations. Pick yours and we'll show you what fits."
+    }
+  },
+  "Catalog": {
+    "cta": "Explore",
+    "contentPlaceholder": "Content goes here. This page is built from the shared template: the title and summary come from the data layer, and the cross-link section below is assembled automatically.",
+    "relatedServicesEyebrow": "What we bring",
+    "relatedServicesTitle": "Recommended services",
+    "relatedServicesLead": "The bar formats that work best for this type of event.",
+    "relatedEventsEyebrow": "Where it fits",
+    "relatedEventsTitle": "Perfect for these events",
+    "relatedEventsLead": "The events where this service comes into its own.",
+    "otherEventsEyebrow": "Other formats",
+    "otherEventsTitle": "Other event types"
+  },
+  "ServiceItems": {
+    "healthy-bar": {
+      "name": "Healthy Bar",
+      "shortDescription": "Protein shakes, fresh smoothies and mocktails for events where alcohol isn't the point.",
+      "metaTitle": "Healthy Bar — protein shakes, smoothies and mocktails | ChinChin",
+      "metaDescription": "Mobile healthy bar in Barcelona: protein shakes, fresh smoothies and mocktails for sports events, wellness retreats, conferences and private parties."
+    },
+    "cocktail-bar": {
+      "name": "Cocktail Bar",
+      "shortDescription": "A full bar station with classics, house creations and an alcohol-free version of every cocktail.",
+      "metaTitle": "Mobile cocktail bar for events | ChinChin",
+      "metaDescription": "Mobile cocktail bar in Barcelona: station, glassware, ice, ingredients and bartenders. Classics, a house list and alcohol-free versions throughout."
+    }
+  },
+  "EventItems": {
+    "corporate-business-events": {
+      "name": "Corporate & Business Events",
+      "shortDescription": "Conferences, launches, business dinners and company parties — where fast service without queues is the priority.",
+      "metaTitle": "Corporate Event Bar Service Barcelona | MICE & Business Bars",
+      "metaDescription": "Professional bar service for conferences, exhibitions, corporate parties & team buildings worldwide. Full staff, setup & licensing — turnkey MICE bar solutions."
+    },
+    "weddings": {
+      "name": "Weddings",
+      "shortDescription": "A welcome cocktail at the ceremony, a full bar at the reception and a separate late-night list for the dancing.",
+      "metaTitle": "Wedding bar service in Barcelona | ChinChin",
+      "metaDescription": "Mobile wedding bar in Barcelona: welcome cocktails, a reception list, late-night drinks and alcohol-free versions for every guest."
+    }
   }
 }

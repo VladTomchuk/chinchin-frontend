@@ -1,0 +1,19 @@
+/* Фокусоване тут посилання, а не картка всередині нього, тож кільце фокусу
+   мусить бути на ньому. Через Chakra це не задати: _focusVisible на вкладеному
+   Box не спрацював би — :focus-within діє на предків фокусованого елемента, а
+   не на нащадків. */
+.cardLink {
+  display: block;
+  height: 100%;
+  border-radius: 16px;
+  text-decoration: none;
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid #6b5f1c;
+  outline-offset: 3px;
+}
+
+:global(html.dark) .cardLink:focus-visible {
+  outline-color: #af9c30;
+}

@@ -7,7 +7,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navbar from '@/components/navbar/page';
-import { brandFont } from '@/fonts/fonts';
+import { brandFont, uiFont } from '@/fonts/fonts';
 
 type Props = {
   children: React.ReactNode;
@@ -32,7 +32,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <html className={brandFont.variable} suppressHydrationWarning>
+    <html className={`${brandFont.variable} ${uiFont.variable}`} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
