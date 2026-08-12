@@ -9,19 +9,27 @@
 
 /* Ловить клік повз меню. На вузьких екранах меню займає весь екран, тож
    підкладка суцільна — сторінки під нею просто не видно. Десктопний варіант,
-   де меню лише невелика випадайка під кнопкою, — нижче в медіа-запиті. */
+   де меню лише невелика випадайка під кнопкою, — нижче в медіа-запиті.
+
+   Колір — той самий `page` токен, що й фон сторінки: світла тема лишається
+   світлою, темна лишається темною. Раніше тут був захардкоджений #09090b,
+   тож у світлій темі мобільне меню виглядало так, ніби тема перемкнулась. */
 .backdrop {
   position: fixed;
   inset: 0;
   z-index: 98;
   border: none;
   padding: 0;
-  background: #09090b;
+  background: #fff9f6;
   cursor: default;
   /* Прокрутку блокує JS через overflow на body, але на iOS цього не завжди
      досить — тач по підкладці має не тягнути сторінку. */
   touch-action: none;
   overscroll-behavior: contain;
+}
+
+:global(html.dark) .backdrop {
+  background: #09090b;
 }
 
 .menu {
@@ -54,7 +62,7 @@
 .label {
   /* Падінг дає ряду ~62px висоти — з запасом над мінімальними 44px для пальця. */
   padding: 12px 10px;
-  color: #fff9f6;
+  color: #3d3d3d;
   font-family: var(--font-brand), sans-serif;
   font-size: 2rem;
   font-weight: 200;
@@ -63,13 +71,25 @@
   transition: color 200ms ease;
 }
 
+:global(html.dark) .label {
+  color: #fff9f6;
+}
+
 .link:hover .label {
+  color: #6b5f1c;
+}
+
+:global(html.dark) .link:hover .label {
   color: #af9c30;
 }
 
 .link:focus-visible {
-  outline: 2px solid #af9c30;
+  outline: 2px solid #6b5f1c;
   outline-offset: 4px;
+}
+
+:global(html.dark) .link:focus-visible {
+  outline-color: #af9c30;
 }
 
 /* --- Широкі екрани: випадає з-під кнопки, пункти — пігулки. --- */
