@@ -4,7 +4,6 @@ import { routing } from '@/i18n/routing';
 import Hero from '@/components/About/Hero';
 import Reach from '@/components/About/Reach';
 import Offer from '@/components/About/Offer';
-import Process from '@/components/About/Process';
 import FinalCta from '@/components/About/FinalCta';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -32,7 +31,6 @@ export default async function AboutPage({ params }: Props) {
       <Hero />
       <Reach />
       <Offer />
-      <Process />
       <FinalCta />
     </main>
   );

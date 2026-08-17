@@ -39,11 +39,20 @@ const SECTIONS = [
   },
 ];
 
-export default function PlaceholderSections() {
+type Props = {
+  /** Зсуває контент на 25% ширини екрана від лівого краю замість центрування
+   *  (max-width + margin:auto). Використовується для примірника, що йде одразу
+   *  після EventTypesScroll — щоб контент "продовжував" той самий лівий відступ. */
+  indented?: boolean;
+};
+
+export default function PlaceholderSections({ indented }: Props = {}) {
+  const sectionClassName = `${styles.section} ${indented ? styles.indented : ''}`;
+
   return (
     <>
       {SECTIONS.map((section) => (
-        <section className={styles.section} key={section.title}>
+        <section className={sectionClassName} key={section.title}>
           <p className={styles.eyebrow}>{section.eyebrow}</p>
           <h2 className={styles.title}>{section.title}</h2>
           {section.paragraphs.map((text) => (
@@ -53,7 +62,7 @@ export default function PlaceholderSections() {
           ))}
         </section>
       ))}
-      <section className={`${styles.section} ${styles.tall}`} />
+      <section className={`${sectionClassName} ${styles.tall}`} />
     </>
   );
 }

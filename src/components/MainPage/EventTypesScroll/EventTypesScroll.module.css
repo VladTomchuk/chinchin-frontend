@@ -1,0 +1,158 @@
+/* Горизонтальний скрол за мотивами motion.dev/examples/react-scroll-horizontal:
+   висока обгортка .container задає вертикальну дистанцію скролу, .sticky
+   лишається пришпиленим на весь екран, а .track їде вбік — величину зсуву
+   рахує JS (EventTypesScroll.tsx) від реальної ширини треку, а не тут. */
+
+.container {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  height: 100%;
+  will-change: transform;
+}
+
+/* Заголовок секції — перший елемент .track, тому їде разом зі слайдами й
+   стоїть ліворуч від першого з них, а не окремим накладенням зверху.
+   Половина екрана — той самий поділ, що й фото/текст усередині слайдів. */
+.intro {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  width: 50vw;
+  padding: 0 clamp(1.25rem, 5vw, 4rem);
+  margin-right: 30vw;
+}
+
+/* Слайд — на всю ширину екрана: половина фото, половина текст. Через це
+   кожен слайд і так ширший за viewport будь-якого монітора, тож дистанція
+   горизонтального скролу вже сама по собі гарантовано ненульова (раніше з
+   вузькими картками стеля ширини "з'їдала" запас на широких моніторах). */
+.slide {
+  display: flex;
+  flex: none;
+  width: 100vw;
+  height: 100%;
+  text-decoration: none;
+}
+
+/*
+.slide:focus-visible {
+  outline: 2px solid #6b5f1c;
+  outline-offset: -3px;
+}
+
+:global(html.dark) .slide:focus-visible {
+  outline-color: #af9c30;
+}
+*/
+
+/* .photo — вікно з overflow:hidden; .photoInner — сама картинка, свідомо
+   більша за вікно з усіх боків (inset заходить у мінус), щоб паралакс-зсув
+   (ParallaxPhoto у .tsx) не оголював порожні краї. Відступ (80px) із запасом
+   більший за PARALLAX_AMPLITUDE (48px) у компоненті. */
+.photo {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  flex: none;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.photoInner {
+  position: absolute;
+  inset: 0 -80px;
+  height: 100%;
+}
+
+.photoInner img {
+  object-fit: cover;
+}
+
+.textPane {
+  display: flex;
+  width: 50%;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(1.5rem, 5vw, 4.5rem);
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-brand-ui);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #6b5f1c;
+}
+
+:global(html.dark) .cta {
+  color: #af9c30;
+}
+
+@media (max-width: 640px) {
+  .slide {
+    flex-direction: column;
+  }
+
+  .photo,
+  .textPane {
+    width: 100%;
+  }
+
+  .photo {
+    height: 55%;
+  }
+
+  .textPane {
+    height: 45%;
+    padding: clamp(1.25rem, 6vw, 2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    height: auto !important;
+  }
+
+  .sticky {
+    position: static;
+    height: auto;
+    padding: clamp(3rem, 8vw, 5rem) 0;
+  }
+
+  .track {
+    height: auto;
+    overflow-x: auto;
+    flex-direction: row;
+    padding-bottom: 1rem;
+    scroll-snap-type: x proximity;
+  }
+
+  .intro {
+    width: clamp(240px, 40vw, 420px);
+    scroll-snap-align: start;
+  }
+
+  .slide {
+    width: min(90vw, 640px);
+    height: auto;
+    min-height: 60vh;
+    scroll-snap-align: start;
+  }
+}

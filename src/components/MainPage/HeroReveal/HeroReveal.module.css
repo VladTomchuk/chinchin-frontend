@@ -1,0 +1,85 @@
+/* Скрол-розкриття тексту: висока обгортка задає дистанцію скролу, а .pin
+   лишається пришпиленим на весь екран, поки GSAP ScrollTrigger проявляє
+   слова одне за одним (opacity) і зрештою показує кнопку контакту. */
+
+.wrap {
+  position: relative;
+  height: 260vh;
+
+  --reveal-bg: #fff9f6;
+  --reveal-glow: rgb(175 156 48 / 32%);
+  --reveal-text: #3d3d3d;
+}
+
+:global(html.dark) .wrap {
+  --reveal-bg: #09090b;
+  --reveal-glow: rgb(175 156 48 / 22%);
+  --reveal-text: #fff9f6;
+}
+
+.pin {
+  position: relative;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 100%, var(--reveal-glow) 0%, transparent 60%),
+    var(--reveal-bg);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  max-width: 900px;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  padding: 0 clamp(1.25rem, 5vw, 2rem);
+  text-align: center;
+}
+
+.paragraph {
+  font-family: var(--font-brand), sans-serif;
+  font-weight: 300;
+  line-height: 1.35;
+  font-size: clamp(1.6rem, 4.4vw, 3.1rem);
+  letter-spacing: -0.01em;
+}
+
+.word {
+  /* inline-block трощить пробіл, який лежить у кінці спана (colapses trailing
+     whitespace всередині власного inline-контексту) — лишаємо звичайний inline,
+     щоб пробіли між словами не зникали. */
+  display: inline;
+  color: var(--reveal-text);
+  opacity: 0.2;
+  will-change: opacity;
+}
+
+.button {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap {
+    height: auto;
+  }
+
+  .pin {
+    position: static;
+    height: auto;
+    padding: clamp(4rem, 12vw, 7rem) 0;
+  }
+
+  .word {
+    color: var(--reveal-text);
+  }
+
+  .button {
+    opacity: 1;
+    transform: none;
+  }
+}

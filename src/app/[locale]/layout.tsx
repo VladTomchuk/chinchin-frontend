@@ -31,8 +31,18 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
 
+  // Код локалі в проєкті — 'ua' (усталений в URL і messages/ua.json), але це
+  // код країни, не мови: валідний BCP-47 lang для української — 'uk'. Без
+  // цієї підміни атрибут lang був відсутній узагалі (html.lang="ua" Next.js
+  // не проставляє сам), що ламало screen-readers і підказку мови для пошуковика.
+  const htmlLang = locale === 'ua' ? 'uk' : locale;
+
   return (
-    <html className={`${brandFont.variable} ${uiFont.variable}`} suppressHydrationWarning>
+    <html
+      lang={htmlLang}
+      className={`${brandFont.variable} ${uiFont.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <NextIntlClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

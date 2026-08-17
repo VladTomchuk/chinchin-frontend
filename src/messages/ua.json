@@ -5,7 +5,12 @@
   },
   "HeroSection": {
     "title": "Коктейлі\nщо говорять\nвашою мовою",
-    "contactButton": "Зв'язатися з нами"
+    "contactButton": "Зв'язатися з нами",
+    "introAlt": "Бармен проціджує коктейль у келих поруч із двома келихами, наповненими дробленим льодом"
+  },
+  "EventTypesScroll": {
+    "eyebrow": "Типи подій",
+    "title": "Для яких подій ми приїжджаємо"
   },
   "LocaleSwitcher": {
     "label": "Select language",

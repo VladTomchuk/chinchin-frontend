@@ -5,7 +5,12 @@
   },
   "HeroSection": {
     "title": "Cocktails\nthat speak\nyour language",
-    "contactButton": "Contact us"
+    "contactButton": "Contact us",
+    "introAlt": "Bartender straining a cocktail into a glass next to two more glasses filled with crushed ice"
+  },
+  "EventTypesScroll": {
+    "eyebrow": "Event types",
+    "title": "Events we cover"
   },
   "LocaleSwitcher": {
     "label": "Select language",
@@ -278,6 +283,50 @@
         "brandedFoam": "Cocktail topped with foam printed with the ChinChin logo",
         "guest": "Event guest holding a foam-topped cocktail served at the bar"
       }
+    }
+  },
+  "About": {
+    "meta": {
+      "title": "About us | ChinChin",
+      "description": "ChinChin Bar Catering is a Barcelona-based bar team serving private parties, weddings, corporate events, festivals and brand collaborations worldwide."
+    },
+    "hero": {
+      "eyebrow": "About us",
+      "title": "We are ChinChin",
+      "subtitle": "Cocktails that speak your language.",
+      "intro": "ChinChin Bar Catering is a team that takes all the hassle of organizing the bar at your event off your shoulders. We provide flawless bar service for events of any scale — from private parties and weddings to corporate events, festivals and brand collaborations.",
+      "ctaPrimary": "Get in touch",
+      "ctaSecondary": "See our services",
+      "imageAlt": "A ChinChin bartender preparing a cocktail at an event bar"
+    },
+    "reach": {
+      "eyebrow": "Where we work",
+      "title": "Based in Barcelona, open to the world",
+      "items": [
+        {
+          "name": "Home base: Barcelona",
+          "text": "Our team, bar equipment and stock are based in Barcelona, so events in and around the city are the simplest to plan."
+        },
+        {
+          "name": "Clients worldwide",
+          "text": "We're open to clients from anywhere — tell us the destination and we'll work out the logistics, staffing and licensing to get the bar there."
+        }
+      ]
+    },
+    "offer": {
+      "eyebrow": "What we bring",
+      "title": "A different bar for every kind of event",
+      "lead": "The bar service and the event format go together — here's what we currently offer.",
+      "servicesLabel": "Bar services",
+      "servicesCta": "See all services",
+      "eventsLabel": "Event types",
+      "eventsCta": "See all event types"
+    },
+    "cta": {
+      "title": "Let's talk about your event",
+      "text": "Tell us the date, the format and a rough guest count — we'll come back with a bar that fits, wherever you are.",
+      "button": "Email us",
+      "emailSubject": "About ChinChin — event enquiry"
     }
   },
   "HealthyBar": {
