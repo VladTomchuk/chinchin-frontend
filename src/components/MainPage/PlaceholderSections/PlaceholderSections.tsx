@@ -28,31 +28,13 @@ const SECTIONS = [
       'Для приватних подій можемо провести коктейльний воркшоп: гості змішують напої самі, під керівництвом бармена.',
     ],
   },
-  {
-    eyebrow: 'Як це працює',
-    title: 'Від заявки до останнього коктейлю',
-    paragraphs: [
-      'Ви розповідаєте про подію: дата, місце, кількість гостей, настрій. Ми повертаємось із меню та кошторисом протягом доби.',
-      'У день події приїздимо за дві години до старту, збираємо станцію і забираємо все з собою після завершення. Прибирання барної зони — на нас.',
-      'Прокрутіть ще трохи — далі просто порожній простір, щоб було видно, як галерея відпускає екран.',
-    ],
-  },
 ];
 
-type Props = {
-  /** Зсуває контент на 25% ширини екрана від лівого краю замість центрування
-   *  (max-width + margin:auto). Використовується для примірника, що йде одразу
-   *  після EventTypesScroll — щоб контент "продовжував" той самий лівий відступ. */
-  indented?: boolean;
-};
-
-export default function PlaceholderSections({ indented }: Props = {}) {
-  const sectionClassName = `${styles.section} ${indented ? styles.indented : ''}`;
-
+export default function PlaceholderSections() {
   return (
     <>
       {SECTIONS.map((section) => (
-        <section className={sectionClassName} key={section.title}>
+        <section className={styles.section} key={section.title}>
           <p className={styles.eyebrow}>{section.eyebrow}</p>
           <h2 className={styles.title}>{section.title}</h2>
           {section.paragraphs.map((text) => (
@@ -62,7 +44,6 @@ export default function PlaceholderSections({ indented }: Props = {}) {
           ))}
         </section>
       ))}
-      <section className={`${sectionClassName} ${styles.tall}`} />
     </>
   );
 }

@@ -17,13 +17,14 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     <div>
       <div>
         <IntroBanner />
-        <HeroSection />
+
         {/* HeroReveal тимчасово вимкнено */}
         {/* <HeroReveal /> */}
         <PlaceholderSections />
         <EventTypesScroll />
         {/* ТИМЧАСОВО: рибні секції, щоб було видно повну прокрутку. */}
-        <PlaceholderSections indented />
+        <PlaceholderSections />
+        <HeroSection />
         {/* <h1>{t('title')}</h1>
         <p>{t('content')}</p> */}
       </div>

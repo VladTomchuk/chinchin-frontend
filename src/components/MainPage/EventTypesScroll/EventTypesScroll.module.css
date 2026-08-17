@@ -61,8 +61,9 @@
 
 /* .photo — вікно з overflow:hidden; .photoInner — сама картинка, свідомо
    більша за вікно з усіх боків (inset заходить у мінус), щоб паралакс-зсув
-   (ParallaxPhoto у .tsx) не оголював порожні краї. Відступ (80px) із запасом
-   більший за PARALLAX_AMPLITUDE (48px) у компоненті. */
+   (ParallaxPhoto у .tsx) не оголював порожні краї. Відступ (130px) із
+   запасом більший за PARALLAX_AMPLITUDE (100px) у компоненті — тримати їх
+   узгодженими, інакше на краю зсуву буде видно порожню смугу. */
 .photo {
   position: relative;
   width: 50%;
@@ -74,7 +75,7 @@
 
 .photoInner {
   position: absolute;
-  inset: 0 -80px;
+  inset: 0 -130px;
   height: 100%;
 }
 

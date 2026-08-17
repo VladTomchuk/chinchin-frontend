@@ -7,6 +7,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navbar from '@/components/navbar/page';
+import SmoothScroll from '@/components/shared/SmoothScroll';
 import { brandFont, uiFont } from '@/fonts/fonts';
 
 type Props = {
@@ -47,6 +48,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Provider>
+              <SmoothScroll />
               <Navbar />
               {children}
             </Provider>

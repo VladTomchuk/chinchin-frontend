@@ -2,7 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from 'framer-motion';
 import Image from 'next/image';
 import { Heading, Text } from '@chakra-ui/react';
 import { LuArrowRight } from 'react-icons/lu';
@@ -149,7 +156,12 @@ export default function EventTypesScroll() {
     offset: ['start start', 'end end'],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
+  const xRaw = useTransform(scrollYProgress, [0, 1], [0, -distance]);
+  // М'який скрол: трек не стрибає точно за позицією скролу, а з інерцією
+  // "наздоганяє" її. Це накладається поверх загальносайтового Lenis-згладжування
+  // (SmoothScroll.tsx) — тут своя, додаткова пружина саме для горизонтального
+  // руху треку, м'якша за початкову, щоб рух читався як плинний, а не пружний.
+  const x = useSpring(xRaw, { stiffness: 120, damping: 20, mass: 0.5 });
 
   const slides: Slide[] = [
     ...eventTypes.map((eventType, i) => ({
