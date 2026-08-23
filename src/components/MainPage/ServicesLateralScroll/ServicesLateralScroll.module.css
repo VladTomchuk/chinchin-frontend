@@ -1,0 +1,364 @@
+/* Пінована секція форматів бару — див. коментар у ServicesLateralScroll.tsx.
+   .container сам стає пін-спейсером через GSAP (pin:true) і сам перемикає себе
+   в position:fixed на час піна, тож тут задано лише "стан спокою" (як секція
+   виглядає до/після піна).
+
+   Кольори нижче — ті самі значення, що й c.* у components/shared/tokens.ts.
+   CSS-модуль не може імпортувати TS-константи, тож дублюємо вручну (той самий
+   компроміс, що й у EventTypesScroll.module.css) — тримати значення тут і в
+   tokens.ts синхронними при правках. */
+
+.container {
+  --services-page: #fff9f6;
+  --services-surface-alt: #fbf2ec;
+  --services-accent: #6b5f1c;
+  --services-accent-contrast: #fff9f6;
+  --services-line: #e7ded8;
+
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--services-page);
+}
+
+:global(html.dark) .container {
+  --services-page: #09090b;
+  --services-surface-alt: #101013;
+  --services-accent: #f1d2d3;
+  --services-accent-contrast: #09090b;
+  --services-line: #26262b;
+}
+
+/* Дві колонки: зліва велика фото-картка, праворуч — фото-картка формату. */
+.inner {
+  display: grid;
+  height: min(82vh, 660px);
+  max-width: 1120px;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: clamp(0.75rem, 1.6vw, 1.25rem);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 2rem);
+
+  /* .inner центрується у 100vh .container вертикально. */
+  position: absolute;
+  inset: 0;
+  margin-block: auto;
+}
+
+/* ── Ліва фото-картка (статична, текст-заглушка поверх фото) ── */
+.leftCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(20px, 2vw, 28px);
+  background-color: var(--services-surface-alt);
+}
+
+.leftPhoto {
+  object-fit: cover;
+}
+
+/* Затемнення зайшло вище й стало щільнішим порівняно з першою версією:
+   .leftContent тепер несе не тільки чіп і заголовок, а й абзац, перелік
+   послуг і кнопку — цій масі тексту потрібен темний фон на більшій частині
+   висоти картки, інакше верхні рядки лягали б просто на світлі ділянки фото. */
+.leftOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(9, 9, 11, 0.86) 0%,
+    rgba(9, 9, 11, 0.62) 38%,
+    rgba(9, 9, 11, 0.24) 66%,
+    rgba(9, 9, 11, 0) 90%
+  );
+}
+
+.leftContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: clamp(0.625rem, 1.3vw, 1rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-family: var(--font-brand-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  /* Стоїть на темному фото — світла напівпрозора пігулка з розмиттям. */
+  background-color: rgba(255, 249, 246, 0.9);
+  color: #1a1a1a;
+  backdrop-filter: blur(6px);
+}
+
+.lead {
+  max-width: 40ch;
+  color: rgba(255, 249, 246, 0.88);
+  font-family: var(--font-brand-ui);
+  font-size: clamp(0.8125rem, 1.1vw, 0.9375rem);
+  line-height: 1.55;
+}
+
+/* Перелік послуг — суцільний рядок з « · » як роздільником (той самий
+   прийом, що в копірайті), а не список: візуально це продовження lead-абзацу,
+   тільки трохи приглушеніше й дрібніше. */
+.servicesList {
+  max-width: 42ch;
+  color: rgba(255, 249, 246, 0.68);
+  font-family: var(--font-brand-ui);
+  font-size: clamp(0.75rem, 1vw, 0.8125rem);
+  line-height: 1.6;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+  color: #fff9f6;
+  font-family: var(--font-brand-ui);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: gap 200ms ease, opacity 200ms ease;
+}
+
+.cta:hover {
+  gap: 0.6rem;
+  opacity: 0.86;
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--services-accent);
+  outline-offset: 3px;
+}
+
+/* ── Права колонка: стек фото-карток, що перехресно проявляються ── */
+.rightStage {
+  position: relative;
+  min-width: 0;
+}
+
+/* Панелі накладені одна на одну (inset:0). Базові opacity/visibility — той
+   самий стан спокою, який інакше на мить було б видно до першого gsap.set().
+
+   Геометрія нотча живе тут (а не в .cardMasked), бо її читають ОБИДВА елементи:
+   .cardMasked (де вирізаний нотч) і .arrowLink (кнопка, що в нього сідає) —
+   вони сусіди, тож спільний предок .cardPanel. --notch-c — відстань центра
+   кнопки від кута (відступ + півкнопки), --notch-r — радіус кільця навколо
+   кнопки (півкнопки + зазор). Так кнопка й виріз завжди концентричні.
+
+   --notch-r МАЄ перевищувати діагональ від центра кнопки до самого кута
+   картки (--notch-c * √2 ≈ --notch-c * 1.42), інакше в кутку лишається
+   гострий трикутний "хвостик" картки — коло вирізу не дотягується до кута й
+   не прибирає його. Звідси й --notch-gap 20px, а не якесь тонке "на око"
+   значення: --notch-c тут 30px, тож поріг — 30 × 1.42 ≈ 42.6px, і
+   --notch-r = 44px лишає невеликий запас понад ним. Перевірено рендером —
+   з меншим --notch-r хвостик видно (той самий візуальний баг, що був). */
+.cardPanel {
+  --btn: 48px;
+  --btn-inset: 6px;
+  --notch-gap: 20px;
+  --notch-c: calc(var(--btn-inset) + var(--btn) / 2);
+  --notch-r: calc(var(--btn) / 2 + var(--notch-gap));
+
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cardPanel:first-child {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Шар з фото/затемненням/назвою + виріз-нотч навколо кнопки у нижньому правому
+   куті. mask лишає шар суцільним усюди, крім кола радіусом --notch-r із центром
+   у центрі кнопки (--notch-c від кута по обох осях) — виходить рівне кільце
+   навколо кнопки, що плавно відкривається до кута. Кнопка рендериться ОКРЕМИМ
+   елементом поза цим шаром, інакше mask вирізав би і її. border-radius формує
+   три звичайні заокруглені кути, mask огортає кнопку. */
+.cardMasked {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: clamp(20px, 2vw, 28px);
+  background-color: var(--services-surface-alt);
+  -webkit-mask: radial-gradient(
+    circle var(--notch-r) at calc(100% - var(--notch-c)) calc(100% - var(--notch-c)),
+    #0000 calc(var(--notch-r) - 0.5px),
+    #000 var(--notch-r)
+  );
+  mask: radial-gradient(
+    circle var(--notch-r) at calc(100% - var(--notch-c)) calc(100% - var(--notch-c)),
+    #0000 calc(var(--notch-r) - 0.5px),
+    #000 var(--notch-r)
+  );
+}
+
+.cardPhoto {
+  object-fit: cover;
+}
+
+.cardTint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(9, 9, 11, 0.82) 0%,
+    rgba(9, 9, 11, 0.4) 38%,
+    rgba(9, 9, 11, 0.12) 70%,
+    rgba(9, 9, 11, 0.18) 100%
+  );
+}
+
+.cardName {
+  position: absolute;
+  left: clamp(1.1rem, 2.4vw, 1.6rem);
+  right: clamp(4.75rem, 9vw, 5.5rem);
+  bottom: clamp(1.1rem, 2.4vw, 1.6rem);
+  font-family: var(--font-brand-ui);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #fff9f6;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Кругла кнопка-стрілка у виріз-нотч ──
+   right/bottom = --btn-inset, той самий відступ, з якого рахується центр нотча
+   (--notch-c) у .cardPanel, тож кнопка стоїть рівно в центрі кільця. */
+.arrowLink {
+  position: absolute;
+  right: var(--btn-inset);
+  bottom: var(--btn-inset);
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.arrowLink:focus-visible {
+  outline: 2px solid var(--services-accent);
+  outline-offset: 3px;
+}
+
+.arrowBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--btn);
+  height: var(--btn);
+  border-radius: 999px;
+  background-color: var(--services-accent);
+  color: var(--services-accent-contrast);
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.arrowLink:hover .arrowBtn {
+  transform: translate(3px, -3px);
+  box-shadow: 0 8px 20px rgba(9, 9, 11, 0.35);
+}
+
+/* Перелік для читалок екрана — візуально прихований, але фокусований. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Фолбек: вузькі екрани та reduced-motion ──
+   JS (ServicesLateralScroll.tsx) за цих умов не будує пін/кросфейд. Тут — як
+   секція виглядає без нього: звичайний стовпчик карток, усі панелі видимі й
+   статичні (той самий підхід, що й у EventTypesScroll.module.css). Обидва
+   @media дають однаковий результат, тож правила продубльовано. */
+@media (max-width: 900px) {
+  .container {
+    height: auto;
+    padding: clamp(3rem, 8vw, 5rem) 0;
+    overflow: visible;
+  }
+
+  .inner {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-block: 0;
+    gap: clamp(0.75rem, 3vw, 1.15rem);
+  }
+
+  .leftCard {
+    min-height: clamp(320px, 60vw, 460px);
+  }
+
+  .rightStage {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 3vw, 1.15rem);
+  }
+
+  .cardPanel {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    min-height: clamp(360px, 70vw, 480px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    height: auto;
+    padding: clamp(3rem, 8vw, 5rem) 0;
+    overflow: visible;
+  }
+
+  .inner {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-block: 0;
+    gap: clamp(0.75rem, 3vw, 1.15rem);
+  }
+
+  .leftCard {
+    min-height: clamp(320px, 60vw, 460px);
+  }
+
+  .rightStage {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 3vw, 1.15rem);
+  }
+
+  .cardPanel {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    min-height: clamp(360px, 70vw, 480px);
+  }
+
+  .arrowBtn {
+    transition: none;
+  }
+}

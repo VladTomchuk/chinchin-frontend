@@ -1,21 +1,29 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Box, Text } from '@chakra-ui/react';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { routing } from '@/i18n/routing';
+import { setRequestLocale } from 'next-intl/server';
+import { routing, type Locale } from '@/i18n/routing';
 import { services } from '@/data/services';
 import { isServiceSlug } from '@/data/relations';
+import { buildServiceJsonLd, buildServiceMetadata } from '@/lib/seo';
+import JsonLd from '@/components/shared/JsonLd';
+import ServiceHero from '@/components/catalog/ServiceHero';
+import ServiceBody from '@/components/catalog/ServiceBody';
 import RelatedEventTypesGrid from '@/components/catalog/RelatedEventTypesGrid';
-import { Eyebrow, Lead, PageTitle, Section } from '@/components/shared/primitives';
-import { c, NAVBAR_OFFSET } from '@/components/shared/tokens';
+import OtherServicesGrid from '@/components/catalog/OtherServicesGrid';
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
 export function generateStaticParams() {
   // Слаги з власною версткою пропускаємо: у Next.js статичний сегмент і так
   // перемагає [slug], тож генерувати для них ще й шаблонну сторінку немає сенсу.
+  //
+  // Дві мови × вісім послуг обслуговує один файл. Шістнадцять майже однакових
+  // сторінок довелося б правити шістнадцять разів, і будь-яка правка, зроблена
+  // не всюди, тихо розвела б їх між собою.
   return routing.locales.flatMap((locale) =>
-    services.filter((service) => !service.customPage).map((service) => ({ locale, slug: service.slug })),
+    services
+      .filter((service) => !service.customPage)
+      .map((service) => ({ locale, slug: service.slug })),
   );
 }
 
@@ -23,18 +31,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!isServiceSlug(slug)) return {};
 
-  const t = await getTranslations({ locale, namespace: 'ServiceItems' });
-
-  return {
-    title: t(`${slug}.metaTitle`),
-    description: t(`${slug}.metaDescription`),
-  };
+  return buildServiceMetadata(locale as Locale, slug);
 }
 
 /**
- * Шаблон сторінки послуги. Поки що це каркас: шапка з даних + блок перелінковки.
- * Реальні секції додаються сюди або, якщо сторінці потрібна власна верстка, —
- * окремою текою services/{slug}/ із customPage: true в даних.
+ * Шаблон сторінки послуги. Текст, фото й перелінковка беруться з даних за
+ * активною локаллю, тож структура сторінки в EN і UA однакова, а різниться
+ * тільки текст.
  */
 export default async function ServicePage({ params }: Props) {
   const { locale, slug } = await params;
@@ -42,39 +45,23 @@ export default async function ServicePage({ params }: Props) {
 
   if (!isServiceSlug(slug)) notFound();
 
-  const t = await getTranslations('ServiceItems');
-  const tCatalog = await getTranslations('Catalog');
-  const tPage = await getTranslations('ServicesPage');
+  const service = services.find((item) => item.slug === slug);
+  if (!service) notFound();
+
+  const jsonLd = await buildServiceJsonLd(locale as Locale, slug);
 
   return (
     <main>
-      <Section as="header" bg={c.page} pt={NAVBAR_OFFSET} pb={{ base: 10, md: 14 }}>
-        <Eyebrow>{tPage('hero.eyebrow')}</Eyebrow>
-        <PageTitle mb={6}>{t(`${slug}.name`)}</PageTitle>
-        <Lead>{t(`${slug}.shortDescription`)}</Lead>
-      </Section>
+      <ServiceHero service={service} />
+      <ServiceBody slug={slug} />
 
-      <Section bg={c.page} pt={0} pb={{ base: 10, md: 16 }}>
-        <Box
-          borderWidth="1px"
-          borderStyle="dashed"
-          borderColor={c.line}
-          rounded="2xl"
-          px={{ base: 6, md: 10 }}
-          py={{ base: 10, md: 14 }}
-        >
-          <Text
-            fontFamily="var(--font-brand-ui)"
-            fontSize="sm"
-            lineHeight="1.7"
-            color={c.textMuted}
-          >
-            {tCatalog('contentPlaceholder')}
-          </Text>
-        </Box>
-      </Section>
-
+      {/* Перелінковка з того самого шару даних: типи подій, для яких послуга
+          доречна, і сусідні формати барів. Обидва блоки лишаються в поточній
+          мові. */}
       <RelatedEventTypesGrid serviceSlug={slug} />
+      <OtherServicesGrid currentSlug={slug} />
+
+      {jsonLd && <JsonLd data={jsonLd} />}
     </main>
   );
 }

@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import CatalogHero from '@/components/catalog/CatalogHero';
 import ServicesCatalog from '@/components/catalog/ServicesCatalog';
+import ReviewsSection from '@/components/GoogleReviews/ReviewsSection';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -28,6 +29,7 @@ export default async function ServicesPage({ params }: Props) {
     <main>
       <CatalogHero namespace="ServicesPage" />
       <ServicesCatalog />
+      <ReviewsSection />
     </main>
   );
 }

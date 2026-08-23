@@ -1,15 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from 'framer-motion';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import { Heading, Text } from '@chakra-ui/react';
 import { LuArrowRight } from 'react-icons/lu';
@@ -18,6 +13,8 @@ import { eventTypes, type EventTypeSlug } from '@/data/eventTypes';
 import { c } from '@/components/shared/tokens';
 import { Eyebrow, SectionTitle } from '@/components/shared/primitives';
 import styles from './EventTypesScroll.module.css';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Slide = {
   key: string;
@@ -61,107 +58,100 @@ const PLACEHOLDER_SLIDES: Omit<Slide, 'href' | 'photo'>[] = [
 ];
 
 // На скільки пікселів фото всередині рамки зміщується за весь час, поки його
-// слайд перетинає екран. Помірно, щоб читалось як глибина, а не як тряска.
+// слайд перетинає екран. Той самий запас закладено в CSS (.photoInner inset),
+// тримати їх узгодженими — інакше на краю зсуву буде видно порожню смугу.
 const PARALLAX_AMPLITUDE = 100;
 
-type ParallaxPhotoProps = {
-  src: string;
-  priority?: boolean;
-  x: MotionValue<number>;
-  /** Пікселевий діапазон x (глобального зсуву треку), у якому саме цей слайд
-   *  перетинає екран — від щойно з'явився праворуч до щойно зник ліворуч. */
-  range: [number, number];
-  disabled: boolean;
-};
-
-// Фото зміщується всередині своєї рамки повільніше за сам трек: поки слайд
-// проїжджає екран, картинка ледь відстає від рамки, що й читається як
-// паралакс-глибина. Окремий компонент — бо useTransform не можна викликати
-// всередині .map() у батьківському компоненті (порушує rules-of-hooks), а
-// один спільний виклик на всі слайди дав би той самий зсув для кожного фото
-// одночасно, незалежно від того, яке з них зараз у кадрі.
-function ParallaxPhoto({ src, priority, x, range, disabled }: ParallaxPhotoProps) {
-  const imgX = useTransform(x, range, [PARALLAX_AMPLITUDE, -PARALLAX_AMPLITUDE]);
-
-  return (
-    <div className={styles.photo}>
-      <motion.div className={styles.photoInner} style={disabled ? undefined : { x: imgX }}>
-        <Image
-          src={src}
-          alt=""
-          fill
-          sizes="100vw"
-          priority={priority}
-          style={{ objectFit: 'cover' }}
-        />
-      </motion.div>
-    </div>
-  );
-}
-
-// Горизонтальний скрол за мотивами motion.dev/examples/react-scroll-horizontal:
-// вертикальний скрол по високій .container керує горизонтальним зсувом .track
-// через useScroll + useTransform. Кожен слайд — на весь екран (фото/текст
-// пополам), тож дистанція зсуву вимірюється з реального DOM (а не зашита
-// числом) і перераховується на resize.
+/**
+ * Горизонтальний скрол через GSAP ScrollTrigger (pin + scrub), а не
+ * попередній framer-motion (useScroll + useSpring). Причина заміни: спрінг
+ * над треком був ДРУГИМ, незалежним шаром інерції поверх загальносайтового
+ * Lenis-згладжування (SmoothScroll.tsx) — і на самому старті секції це
+ * читалось як підвисання: скрол уже пінився, а трек ще не встиг розігнати
+ * власну пружину. Тепер трек рухає єдиний scrub-tween, синхронізований з тим
+ * самим Lenis-скролом, яким уже керується решта сторінки (GSAP ScrollTrigger
+ * і Lenis зв'язані в SmoothScroll.tsx) — шар інерції лишається рівно один.
+ *
+ * pin:true сам створює пін-спейсер потрібної висоти й сам перемикає елемент
+ * у position:fixed на час піна — раніше цю висоту (.container) і сам пін
+ * (.sticky, position:sticky) доводилось рахувати й тримати вручну.
+ *
+ * Паралакс фото всередині слайдів — через containerAnimation: у кожного
+ * .photoInner свій scrub, але його прогрес рахується не від реального
+ * вертикального скролу, а від прогресу горизонтального tween'а (mainTween)
+ * нижче. Це стандартний рецепт GSAP саме для елементів усередині пінованого
+ * горизонтального треку — заміняє ручний перерахунок пікселевих діапазонів
+ * (introWidth/slideWidth), який був потрібен framer-motion-версії.
+ */
 export default function EventTypesScroll() {
   const t = useTranslations('EventTypesScroll');
   const tItems = useTranslations('EventItems');
   const tCatalog = useTranslations('Catalog');
-  const prefersReducedMotion = useReducedMotion();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const introRef = useRef<HTMLDivElement>(null);
-  const [distance, setDistance] = useState(0);
-  const [scrollVh, setScrollVh] = useState(100);
-  // Ширина .intro і слайду потрібні окремо від distance, щоб порахувати
-  // пікселевий діапазон x, у якому кожен конкретний слайд перетинає екран
-  // (для паралаксу фото всередині нього — див. ParallaxPhoto).
-  const [introWidth, setIntroWidth] = useState(0);
-  const [slideWidth, setSlideWidth] = useState(0);
 
-  // PACE_VH_PER_SCREEN — скільки vh скролу припадає на кожен повний екран
-  // горизонтального шляху. Слайди на всю ширину екрана, тож дистанція вже
-  // сама по собі гарантовано перевищує viewport (на відміну від вузьких
-  // карток раніше, де стеля ширини "з'їдала" запас на широких моніторах).
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
+  useGSAP(
+    () => {
+      const container = containerRef.current;
+      const track = trackRef.current;
+      if (!container || !track) return;
 
-    const PACE_VH_PER_SCREEN = 70;
+      // Фолбек — нативний горизонтальний скрол з @media у module.css
+      // (.container/.track там уже мають свої reduced-motion правила).
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const measure = () => {
-      const winW = window.innerWidth;
-      const d = Math.max(0, track.scrollWidth - winW);
-      setDistance(d);
-      setScrollVh(100 + (d / winW) * PACE_VH_PER_SCREEN);
-      setIntroWidth(introRef.current?.getBoundingClientRect().width ?? 0);
-      setSlideWidth(winW);
-    };
-    measure();
+      const getDistance = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
-    const observer = new ResizeObserver(measure);
-    observer.observe(track);
-    window.addEventListener('resize', measure);
+      const mainTween = gsap.to(track, {
+        x: () => -getDistance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: () => `+=${getDistance()}`,
+          scrub: true,
+          pin: true,
+          invalidateOnRefresh: true,
+        },
+      });
 
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', measure);
-    };
-  }, []);
+      track.querySelectorAll<HTMLElement>(`.${styles.slide}`).forEach((slideEl) => {
+        const photoInner = slideEl.querySelector<HTMLElement>(`.${styles.photoInner}`);
+        if (!photoInner) return;
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
+        gsap.fromTo(
+          photoInner,
+          { x: PARALLAX_AMPLITUDE },
+          {
+            x: -PARALLAX_AMPLITUDE,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: slideEl,
+              containerAnimation: mainTween,
+              start: 'left right',
+              end: 'right left',
+              scrub: true,
+            },
+          },
+        );
+      });
 
-  const xRaw = useTransform(scrollYProgress, [0, 1], [0, -distance]);
-  // М'який скрол: трек не стрибає точно за позицією скролу, а з інерцією
-  // "наздоганяє" її. Це накладається поверх загальносайтового Lenis-згладжування
-  // (SmoothScroll.tsx) — тут своя, додаткова пружина саме для горизонтального
-  // руху треку, м'якша за початкову, щоб рух читався як плинний, а не пружний.
-  const x = useSpring(xRaw, { stiffness: 120, damping: 20, mass: 0.5 });
+      // Той самий рейс умов, що й у HeroBentoGallery (див. коментар там):
+      // на момент цього ефекту зображення/шрифти вище могли ще не
+      // домалюватися, тож getDistance() і "left"/"right"-позиції слайдів
+      // усередині containerAnimation рахуються від ще не остаточного
+      // лейауту. invalidateOnRefresh:true перераховує дистанцію
+      // головного tween'а на НАСТУПНОМУ рефреші (напр. від ResizeObserver
+      // у SmoothScroll.tsx), але паралакс-тригери слайдів створені раніше
+      // й лишаються звіреними зі старою, часто занадто малою дистанцією —
+      // звідси й ефект "усі паралакс-фото зіщулені в перші кілька
+      // відсотків скролу", який на очах виглядає як дергання. Явний
+      // рефреш одразу після побудови тригерів прибирає цю розбіжність.
+      ScrollTrigger.refresh();
+    },
+    { scope: containerRef },
+  );
 
   const slides: Slide[] = [
     ...eventTypes.map((eventType, i) => ({
@@ -177,86 +167,86 @@ export default function EventTypesScroll() {
     })),
   ];
 
-  const containerHeight = prefersReducedMotion ? 'auto' : `${scrollVh}vh`;
-
   return (
-    <div className={styles.container} ref={containerRef} style={{ height: containerHeight }}>
-      <div className={styles.sticky}>
-        <motion.div
-          className={styles.track}
-          ref={trackRef}
-          style={prefersReducedMotion ? undefined : { x }}
-        >
-          <div className={styles.intro} ref={introRef}>
-            <Eyebrow>{t('eyebrow')}</Eyebrow>
-            <SectionTitle fontSize={{ base: '1.75rem', md: '2.5rem' }}>{t('title')}</SectionTitle>
-          </div>
+    <div className={styles.container} ref={containerRef}>
+      <div className={styles.track} ref={trackRef}>
+        <div className={styles.intro}>
+          <Eyebrow>{t('eyebrow')}</Eyebrow>
+          <SectionTitle fontSize={{ base: '1.75rem', md: '2.5rem' }}>{t('title')}</SectionTitle>
+        </div>
 
-          {slides.map((slide, i) => {
-            const left = introWidth + i * slideWidth;
-            const range: [number, number] = [-(left + slideWidth), -(left - slideWidth)];
-
-            const body = (
-              <>
-                <ParallaxPhoto
-                  src={slide.photo}
-                  priority={i === 0}
-                  x={x}
-                  range={range}
-                  disabled={!!prefersReducedMotion}
-                />
-
-                <div className={styles.textPane}>
-                  {!slide.href && <Eyebrow>Заглушка</Eyebrow>}
-
-                  <Heading
-                    as="h3"
-                    fontFamily="var(--font-brand-ui)"
-                    fontWeight="600"
-                    fontSize={{ base: 'xl', md: '2xl' }}
-                    color={c.text}
-                    mb={4}
-                  >
-                    {slide.name}
-                  </Heading>
-
-                  <Text
-                    fontFamily="var(--font-brand-ui)"
-                    fontSize={{ base: 'sm', md: 'md' }}
-                    lineHeight="1.7"
-                    color={c.textMuted}
-                    mb={6}
-                    maxW="46ch"
-                  >
-                    {slide.description}
-                  </Text>
-
-                  {slide.href && (
-                    <div className={styles.cta}>
-                      {tCatalog('cta')}
-                      <LuArrowRight size={16} aria-hidden />
-                    </div>
-                  )}
+        {slides.map((slide, i) => {
+          const body = (
+            <>
+              <div className={styles.photo}>
+                <div className={styles.photoInner}>
+                  <Image
+                    src={slide.photo}
+                    alt=""
+                    fill
+                    // .photo займає лише половину слайда (50% від 100vw, див.
+                    // .photo у CSS-модулі; на мобільних — 100%, там слайд
+                    // складається в колонку). sizes="100vw" тут просив у
+                    // Next.js вдвічі більшу картинку, ніж реально рендериться
+                    // — зайва вага/декодування на кожен кадр паралакса й був
+                    // помітний внесок у "дергання" скролу.
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    priority={i === 0}
+                    style={{ objectFit: 'cover' }}
+                  />
                 </div>
-              </>
-            );
-
-            return slide.href ? (
-              <Link
-                key={slide.key}
-                href={slide.href}
-                aria-label={slide.name}
-                className={styles.slide}
-              >
-                {body}
-              </Link>
-            ) : (
-              <div key={slide.key} className={styles.slide}>
-                {body}
               </div>
-            );
-          })}
-        </motion.div>
+
+              <div className={styles.textPane}>
+                {!slide.href && <Eyebrow>Заглушка</Eyebrow>}
+
+                <Heading
+                  as="h3"
+                  fontFamily="var(--font-brand-ui)"
+                  fontWeight="600"
+                  fontSize={{ base: 'xl', md: '2xl' }}
+                  color={c.text}
+                  mb={4}
+                >
+                  {slide.name}
+                </Heading>
+
+                <Text
+                  fontFamily="var(--font-brand-ui)"
+                  fontSize={{ base: 'sm', md: 'md' }}
+                  lineHeight="1.7"
+                  color={c.textMuted}
+                  mb={6}
+                  maxW="46ch"
+                >
+                  {slide.description}
+                </Text>
+
+                {slide.href && (
+                  <div className={styles.cta}>
+                    {tCatalog('cta')}
+                    <LuArrowRight size={16} aria-hidden />
+                  </div>
+                )}
+              </div>
+            </>
+          );
+
+          return slide.href ? (
+            <Link
+              key={slide.key}
+              href={slide.href}
+              aria-label={slide.name}
+              className={styles.slide}
+            >
+              {body}
+            </Link>
+          ) : (
+            <div key={slide.key} className={styles.slide}>
+              {body}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

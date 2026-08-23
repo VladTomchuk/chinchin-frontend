@@ -1,0 +1,33 @@
+/* Рамка/скруглення/фон, які раніше сиділи на зовнішньому Chakra Box, — тепер
+   тут, бо саме цей елемент нахиляється в 3D. Значення — ті самі, що були:
+   rounded="xl" (0.75rem, токен radii.xl з @chakra-ui/react), bg={c.surface},
+   borderWidth/borderColor={c.line} (components/shared/tokens.ts).
+
+   "Паспарту" (відступ + другий радіус навколо фото) прибрали — замість
+   рамки картка відкидає динамічну тінь (boxShadow-мотіонвелью в
+   TiltPhoto.tsx, реагує на той самий курсор, що й нахил).
+
+   Колір/прозорість тіні — через custom properties, а не захардкоджені в
+   JS: на темному фоні чорна тінь просто зникає (там немає світлішого фону,
+   від якого їй відрізнятись), тож у html.dark вона стає світлою (кремовою,
+   той самий #fff9f6, що й c.page у components/shared/tokens.ts). JS-версія
+   (TiltPhoto.tsx) читає ці самі змінні через var(...), тому перемикання
+   теми не дублюється у двох місцях. */
+.card {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e7ded8;
+  --tilt-shadow-rgb: 0 0 0;
+  --tilt-shadow-alpha: 16%;
+  box-shadow: 0 14px 32px rgb(var(--tilt-shadow-rgb) / var(--tilt-shadow-alpha));
+}
+
+:global(html.dark) .card {
+  background: #131316;
+  border-color: #26262b;
+  --tilt-shadow-rgb: 255 249 246;
+  --tilt-shadow-alpha: 22%;
+}

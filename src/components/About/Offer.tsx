@@ -35,7 +35,7 @@ export default async function Offer() {
   }));
 
   return (
-    <Section bg={c.page}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={5}>{t('title')}</SectionTitle>
       <Lead mb={{ base: 10, md: 14 }}>{t('lead')}</Lead>

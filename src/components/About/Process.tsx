@@ -20,7 +20,7 @@ export default async function Process() {
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(tCta('emailSubject'))}`;
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 10, md: 14 }}>{t('title')}</SectionTitle>
 

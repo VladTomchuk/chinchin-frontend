@@ -14,7 +14,7 @@ export default async function Reach() {
   const items = t.raw('items') as ReachItem[];
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 10, md: 14 }} maxW="24ch">
         {t('title')}

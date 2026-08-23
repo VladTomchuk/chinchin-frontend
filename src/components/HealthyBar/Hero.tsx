@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { Box, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
-import { Eyebrow } from './primitives';
+import { Eyebrow } from '@/components/shared/primitives';
+import BackLink from '@/components/shared/BackLink';
 import { c, CONTACT_EMAIL, CONTENT_MAX_WIDTH, FOCUS_RING, NAVBAR_OFFSET } from './tokens';
 
 type Stat = { value: string; label: string };
@@ -9,6 +10,7 @@ type Stat = { value: string; label: string };
 export default async function Hero() {
   const t = await getTranslations('HealthyBar.hero');
   const tCta = await getTranslations('HealthyBar.cta');
+  const tNav = await getTranslations('Navbar');
   const stats = t.raw('stats') as Stat[];
 
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(tCta('emailSubject'))}`;
@@ -23,6 +25,13 @@ export default async function Hero() {
         alignItems="center"
       >
         <Box>
+          {/* Повернення до каталогу. Тут, на відміну від шаблонного героя,
+              рубрика несе іншу назву («Хелсі бар»), тож посилання стоїть над
+              нею, а не замість неї. */}
+          <Box mb={4}>
+            <BackLink href="/services" label={tNav('services')} />
+          </Box>
+
           <Eyebrow>{t('eyebrow')}</Eyebrow>
 
           <Heading

@@ -18,7 +18,7 @@ export default async function WhereDelivered() {
   const alts = eventPhotos.map((photo) => tGallery(`alt.${photo.altKey}`));
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 8, md: 12 }} maxW="24ch">
         {t('title')}

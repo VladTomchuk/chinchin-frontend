@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { routing } from '@/i18n/routing';
+import { setRequestLocale } from 'next-intl/server';
+import { routing, type Locale } from '@/i18n/routing';
+import { buildServiceJsonLd, buildServiceMetadata } from '@/lib/seo';
+import JsonLd from '@/components/shared/JsonLd';
 import Hero from '@/components/HealthyBar/Hero';
 import Intro from '@/components/HealthyBar/Intro';
 import Offerings from '@/components/HealthyBar/Offerings';
@@ -10,6 +12,9 @@ import Process from '@/components/HealthyBar/Process';
 import Faq from '@/components/HealthyBar/Faq';
 import FinalCta from '@/components/HealthyBar/FinalCta';
 import RelatedEventTypesGrid from '@/components/catalog/RelatedEventTypesGrid';
+import OtherServicesGrid from '@/components/catalog/OtherServicesGrid';
+
+const SLUG = 'healthy-bar' as const;
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -17,19 +22,22 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+/**
+ * Мета-теги збирає та сама функція, що й для шаблонних сторінок, із тих самих
+ * ключів ServiceItems.{slug} — власна верстка не привід тримати для сторінки
+ * окремий набір canonical/hreflang/OG, який згодом розійдеться з рештою.
+ * Тексти для healthy-bar дублювались у HealthyBar.meta; лишається одна копія.
+ */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'HealthyBar.meta' });
-
-  return {
-    title: t('title'),
-    description: t('description'),
-  };
+  return buildServiceMetadata(locale as Locale, SLUG);
 }
 
 export default async function HealthyBarPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const jsonLd = await buildServiceJsonLd(locale as Locale, SLUG);
 
   return (
     <main>
@@ -40,10 +48,13 @@ export default async function HealthyBarPage({ params }: Props) {
       <Formats />
       <Process />
       <Faq />
-      {/* Перелінковка збирається з даних (src/data), тож нові типи подій
-          зʼявляться тут самі — правити цю сторінку для цього не треба. */}
-      <RelatedEventTypesGrid serviceSlug="healthy-bar" />
+      {/* Перелінковка збирається з даних (src/data), тож нові типи подій і нові
+          послуги зʼявляться тут самі — правити цю сторінку для цього не треба. */}
+      <RelatedEventTypesGrid serviceSlug={SLUG} />
+      <OtherServicesGrid currentSlug={SLUG} />
       <FinalCta />
+
+      {jsonLd && <JsonLd data={jsonLd} />}
     </main>
   );
 }

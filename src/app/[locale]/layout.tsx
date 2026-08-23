@@ -8,7 +8,11 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navbar from '@/components/navbar/page';
 import SmoothScroll from '@/components/shared/SmoothScroll';
-import { brandFont, uiFont } from '@/fonts/fonts';
+import TopLoader from '@/components/shared/TopLoader';
+import LoadingCursor from '@/components/shared/LoadingCursor';
+import WhatsAppButton from '@/components/WhatsAppButton/WhatsAppButton';
+import { brandFont, monotonFont, uiFont } from '@/fonts/fonts';
+import { SITE_URL } from '@/config/site';
 
 type Props = {
   children: React.ReactNode;
@@ -16,6 +20,10 @@ type Props = {
 };
 
 export const metadata: Metadata = {
+  // Від цієї адреси Next.js рахує абсолютні URL для canonical, hreflang і
+  // Open Graph. Без неї відносні шляхи в метаданих лишаються відносними, а
+  // соцмережі й пошуковик такі посилання не резолвлять.
+  metadataBase: new URL(SITE_URL),
   title: 'Cocktail bar catering BCN',
   description: '...',
 };
@@ -41,16 +49,19 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html
       lang={htmlLang}
-      className={`${brandFont.variable} ${uiFont.variable}`}
+      className={`${brandFont.variable} ${uiFont.variable} ${monotonFont.variable}`}
       suppressHydrationWarning
     >
       <body>
         <NextIntlClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Provider>
+              <TopLoader />
+              <LoadingCursor />
               <SmoothScroll />
               <Navbar />
               {children}
+              <WhatsAppButton />
             </Provider>
           </ThemeProvider>
         </NextIntlClientProvider>

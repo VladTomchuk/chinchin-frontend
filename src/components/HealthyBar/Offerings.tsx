@@ -1,7 +1,7 @@
 import { Box, Grid, Heading, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
 import { LuCitrus, LuDumbbell, LuMartini } from 'react-icons/lu';
-import { Eyebrow, Section, SectionTitle } from './primitives';
+import { Eyebrow, Section, SectionTitle } from '@/components/shared/primitives';
 import { c } from './tokens';
 
 type Offering = { name: string; text: string };
@@ -14,7 +14,7 @@ export default async function Offerings() {
   const items = t.raw('items') as Offering[];
 
   return (
-    <Section bg={c.page}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 10, md: 14 }}>{t('title')}</SectionTitle>
 

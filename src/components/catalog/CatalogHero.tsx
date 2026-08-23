@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Eyebrow, Lead, PageTitle, Section } from '@/components/shared/primitives';
-import { c, NAVBAR_OFFSET } from '@/components/shared/tokens';
+import { NAVBAR_OFFSET } from '@/components/shared/tokens';
 
 type Props = {
   /** Неймспейс перекладів індексної сторінки. */
@@ -12,7 +12,7 @@ export default async function CatalogHero({ namespace }: Props) {
   const t = await getTranslations(`${namespace}.hero`);
 
   return (
-    <Section as="header" bg={c.page} pt={NAVBAR_OFFSET} pb={{ base: 10, md: 14 }}>
+    <Section as="header" pt={NAVBAR_OFFSET} pb={{ base: 10, md: 14 }}>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <PageTitle mb={6}>{t('title')}</PageTitle>
       <Lead>{t('lead')}</Lead>

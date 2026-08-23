@@ -29,3 +29,8 @@ export const routing = defineRouting({
     '/events/[slug]': '/events/[slug]',
   },
 });
+
+// Тип локалі виводимо з самого routing, щоб список мов лишався в одному місці:
+// додали мову в locales — усі мапи, що індексуються Locale (config/site.ts),
+// одразу почнуть вимагати для неї значення, замість тихо пропустити.
+export type Locale = (typeof routing.locales)[number];

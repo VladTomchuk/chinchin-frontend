@@ -15,5 +15,5 @@
 }
 
 :global(html.dark) .cardLink:focus-visible {
-  outline-color: #af9c30;
+  outline-color: #f1d2d3;
 }

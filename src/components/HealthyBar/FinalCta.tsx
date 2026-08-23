@@ -1,6 +1,6 @@
 import { Box, Button, Link, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
-import { Section, SectionTitle } from './primitives';
+import { Section, SectionTitle } from '@/components/shared/primitives';
 import { c, CONTACT_EMAIL, FOCUS_RING } from './tokens';
 
 export default async function FinalCta() {
@@ -8,7 +8,7 @@ export default async function FinalCta() {
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t('emailSubject'))}`;
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Box
         bg={c.surface}
         borderWidth="1px"

@@ -5,6 +5,7 @@ import Hero from '@/components/About/Hero';
 import Reach from '@/components/About/Reach';
 import Offer from '@/components/About/Offer';
 import FinalCta from '@/components/About/FinalCta';
+import ReviewsSection from '@/components/GoogleReviews/ReviewsSection';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -31,6 +32,7 @@ export default async function AboutPage({ params }: Props) {
       <Hero />
       <Reach />
       <Offer />
+      <ReviewsSection />
       <FinalCta />
     </main>
   );

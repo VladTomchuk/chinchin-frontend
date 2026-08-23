@@ -9,7 +9,7 @@ export default async function FinalCta() {
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t('emailSubject'))}`;
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Box
         bg={c.surface}
         borderWidth="1px"

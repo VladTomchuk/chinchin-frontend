@@ -6,11 +6,95 @@
   "HeroSection": {
     "title": "Коктейлі\nщо говорять\nвашою мовою",
     "contactButton": "Зв'язатися з нами",
+    "ctaQuote": "Отримати кошторис",
+    "quoteEmailSubject": "Запит кошторису",
     "introAlt": "Бармен проціджує коктейль у келих поруч із двома келихами, наповненими дробленим льодом"
   },
   "EventTypesScroll": {
     "eyebrow": "Типи подій",
     "title": "Для яких подій ми приїжджаємо"
+  },
+  "ServicesLateralScroll": {
+    "eyebrow": "Формати послуг",
+    "title": "Наші бар-послуги",
+    "lead": "Від повного коктейльного бару до затишного кавового куточка — ми беремо на себе напої на вашому заході, а вам залишається насолоджуватись святом. Ось що ми пропонуємо:",
+    "servicesList": [
+      "Мобільний коктейльний бар",
+      "Бармен на подію",
+      "Open bar",
+      "Оренда барної стійки",
+      "Бар самообслуговування",
+      "Матча-бар",
+      "Розливна пивна стійка",
+      "Кавовий куточок",
+      "Здоровий бар"
+    ],
+    "cta": "Переглянути всі послуги"
+  },
+  "EventServicesSlider": {
+    "eyebrow": "Послуги під подію",
+    "title": "Що привозимо на кожен тип події",
+    "lead": "Оберіть тип події — і побачите формати бару, які на ній працюють найкраще.",
+    "filterLabel": "Тип події",
+    "allEvents": "Усі події",
+    "carousel": "карусель",
+    "prev": "Попередня послуга",
+    "next": "Наступна послуга",
+    "counter": "{current} / {total}",
+    "empty": "Для цього типу події послуг поки не додано."
+  },
+  "TeamPreview": {
+    "eyebrow": "Про нас",
+    "title": "Люди, які стоять за баром",
+    "lead": "ChinChin Bar Catering — команда, яка знімає з вас усі клопоти з організації бару на події. Забезпечуємо бездоганне барне обслуговування подій будь-якого масштабу — від приватних свят і весіль до корпоративів, фестивалів і бренд-колаборацій.",
+    "members": [
+      {
+        "name": "Ім'я Прізвище",
+        "role": "Посада"
+      },
+      {
+        "name": "Ім'я Прізвище",
+        "role": "Посада"
+      },
+      {
+        "name": "Ім'я Прізвище",
+        "role": "Посада"
+      },
+      {
+        "name": "Ім'я Прізвище",
+        "role": "Посада"
+      },
+      {
+        "name": "Ім'я Прізвище",
+        "role": "Посада"
+      },
+      {
+        "name": "Ім'я Прізвище",
+        "role": "Посада"
+      },
+      {
+        "name": "Ім'я Прізвище",
+        "role": "Посада"
+      },
+      {
+        "name": "Ім'я Прізвище",
+        "role": "Посада"
+      }
+    ],
+    "photoAlt": "Заглушка фото учасника команди",
+    "cta": "Дізнатися більше про нашу команду",
+    "socialsLabel": "Слідкуйте за нами",
+    "social": {
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "facebook": "Facebook",
+      "youtube": "YouTube"
+    }
+  },
+  "Brands": {
+    "eyebrow": "Клієнти",
+    "title": "Бренди, які з нами працювали",
+    "lead": "Від технологічних компаній і виставок до приватних майданчиків — команди, які довірили нам бар на своїх подіях."
   },
   "LocaleSwitcher": {
     "label": "Select language",
@@ -35,6 +119,10 @@
     "services": "Послуги",
     "about": "Про нас",
     "instagram": "Instagram"
+  },
+  "WhatsApp": {
+    "aria": "Написати нам у WhatsApp",
+    "label": "Написати нам"
   },
   "ServicesPage": {
     "meta": {
@@ -139,20 +227,474 @@
     "relatedEventsTitle": "Підходить для таких подій",
     "relatedEventsLead": "Події, на яких ця послуга працює найкраще.",
     "otherEventsEyebrow": "Інші формати",
-    "otherEventsTitle": "Інші типи подій"
+    "otherEventsTitle": "Інші типи подій",
+    "otherServicesEyebrow": "Інші формати",
+    "otherServicesTitle": "Вам може підійти",
+    "ctaQuote": "Отримати кошторис",
+    "quoteEmailSubject": "Запит кошторису"
   },
   "ServiceItems": {
+    "mobile-cocktail-bar": {
+      "name": "Коктейльний бар",
+      "h1": "Виїзний коктейльний бар Chin Chin Bar Catering у Барселоні для весіль, корпоративів та приватних свят",
+      "shortDescription": "Наша основна послуга: повністю укомплектований мобільний коктейльний бар для весіль, корпоративних заходів і приватних свят у Барселоні та за її межами. Ми привозимо стійку, барменів, посуд і коктейльне меню, складене під ваш захід. Вам залишається тільки список гостей. Бар легко масштабується: 40 людей на терасі чи 300 у конференц-залі — різниці немає.",
+      "metaTitle": "Виїзний коктейльний бар для весіль та корпоративів",
+      "metaDescription": "Виїзний коктейльний бар у Барселоні на весілля, корпоратив чи приватну вечірку. Авторські коктейлі, професійні бармени. Замовте розрахунок сьогодні.",
+      "heroImageAlt": "[COPY PENDING — Cocktail Bar — UK — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": [
+            "Chin Chin Bar Catering організовує виїзний коктейльний бар для весіль, корпоративів та приватних вечірок у Барселоні й за її межами. Ми привозимо барну стійку, професійних барменів, посуд і коктейльне меню, складене під ваш захід. Вам залишається тільки зібрати гостей. Формат бару підлаштовується під простір і подію, чи то 40 осіб на терасі, чи 300 у конференц-залі."
+          ]
+        },
+        "included": {
+          "title": "Що входить у послугу",
+          "lead": "Кожне замовлення — це повноцінний коктейльний бар для заходів будь-якого масштабу:",
+          "items": [
+            "Портативна барна стійка, оформлена під стиль і кольори вашого свята",
+            "Професійні бармени, зазвичай від двох до шести, залежно від кількості гостей і тривалості роботи бару",
+            "Повний набір обладнання: шейкери, джигери, стрейнери, льодогенератори, станції для гарнірів",
+            "Справжній скляний посуд за замовчуванням (пластик тільки за вимогою локації)",
+            "Лід, міксери та свіжі гарніри, підготовлені заздалегідь",
+            "Монтаж перед заходом і повне прибирання після, тож вам не доведеться нічого мити"
+          ]
+        },
+        "perfectFor": {
+          "title": "Для яких подій підходить",
+          "items": [
+            {
+              "name": "Весілля",
+              "text": "Церемонія, фуршет чи весь вечір: ми будуємо роботу бару під ваш таймінг. Багато пар обирають два-три авторські коктейлі, іноді названі на їхню честь або пов'язані з історією знайомства. Ми узгоджуємо графік напряму з весільними організаторами й локаціями."
+            },
+            {
+              "name": "Корпоративи",
+              "text": "Корпоративні заходи потребують сервісу, який виглядає бездоганно й працює точно за розкладом, чи це презентація продукту, конференція, новорічна вечірка, чи ділова вечеря. Можемо оформити коктейлі під кольори бренду чи кампанію, тримати подачу стриманою для офіційної вечері або зробити бар головним акцентом презентації."
+            },
+            {
+              "name": "Приватні вечірки",
+              "text": "Тут меню може бути більш вільним. У дні народження, річниці та інші особисті свята гості найчастіше хочуть замовляти напої просто на місці, тож для невеликих зустрічей до 50 осіб ми пропонуємо компактніший формат бару."
+            }
+          ]
+        },
+        "menu": {
+          "title": "Меню та безалкогольні коктейлі",
+          "paragraphs": [
+            "Індивідуальне коктейльне меню починається з розмови: улюблені напої, смаки, яких варто уникати, сезонні продукти. На основі цього ми складаємо список із чотирьох-шести авторських коктейлів, а також повне меню моктейлів, приготованих з тією ж увагою до якості інгредієнтів. Формат обираєте ви: відкритий бар, обмежений вибір напоїв або система талонів."
+          ]
+        },
+        "howItWorks": {
+          "title": "Як відбувається замовлення",
+          "steps": [
+            "Розкажіть нам дату, локацію та кількість гостей.",
+            "Отримайте індивідуальний розрахунок вартості та чернетку коктейльного меню.",
+            "Узгодьте фінальне меню, кількість барменів і формат бару.",
+            "У день заходу ми приїжджаємо заздалегідь, монтуємо бар, обслуговуємо гостей і прибираємо після. Вам залишається тільки насолоджуватися святом."
+          ]
+        },
+        "international": {
+          "title": "Заходи за межами Барселони",
+          "paragraphs": [
+            "Барселона залишається нашою базою, але це не межа можливостей. Ми беремося за міжнародні заходи та весілля за кордоном, коли логістика дозволяє. Напишіть нам локацію та дату, і ми розповімо, що потрібно, щоб привезти бар до вас."
+          ]
+        },
+        "cta": {
+          "title": "Готові замовити коктейльний бар?",
+          "text": "Розкажіть нам про ваш захід, і ми складемо меню, прорахуємо вартість і продумаємо весь план разом з вами. Залиште заявку на консультацію вже сьогодні."
+        },
+        "faq": {
+          "title": "FAQ",
+          "items": [
+            {
+              "question": "Скільки коштує виїзний коктейльний бар?",
+              "answer": "Вартість залежить від кількості гостей, тривалості роботи бару та обраного меню. Фіксованого прайсу немає, бо кожен захід унікальний. [COPY PENDING — Cocktail Bar — UK — FAQ price range]"
+            },
+            {
+              "question": "Скільки часу працює бар?",
+              "answer": "Зазвичай від 3 до 5 годин, але за потреби можемо продовжити роботу або розділити її на фуршет і основну частину."
+            },
+            {
+              "question": "Чи є моктейлі та мінімальна кількість гостей?",
+              "answer": "Так, у кожному меню є моктейлі поряд з алкогольними коктейлями. [COPY PENDING — Cocktail Bar — UK — FAQ minimum guest count]"
+            },
+            {
+              "question": "Чи можете ви працювати за межами Барселони, зокрема за кордоном?",
+              "answer": "Так. Ми регулярно беремо участь у міжнародних заходах та весіллях за кордоном. Напишіть нам локацію й дату, і ми розповімо про логістику та вартість."
+            }
+          ]
+        }
+      }
+    },
+    "bartender-for-events": {
+      "name": "Бармен на подію",
+      "h1": "[COPY PENDING — Bartender for Events — UK — H1]",
+      "shortDescription": "Уже маєте бар і напої, але бракує рук? Надішлемо досвідчених барменів, які все обслужать. Це добре підходить тим, хто хоче професійний сервіс без оренди повного комплекту. Просто розкажіть про захід і меню, а розливати будемо ми.",
+      "metaTitle": "[COPY PENDING — Bartender for Events — UK — Meta Title]",
+      "metaDescription": "[COPY PENDING — Bartender for Events — UK — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Bartender for Events — UK — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Bartender for Events — UK — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Bartender for Events — UK — What's Included (heading)]",
+          "lead": "[COPY PENDING — Bartender for Events — UK — What's Included — lead]",
+          "items": ["[COPY PENDING — Bartender for Events — UK — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Bartender for Events — UK — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Bartender for Events — UK — Perfect For — audience]",
+              "text": "[COPY PENDING — Bartender for Events — UK — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Bartender for Events — UK — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Bartender for Events — UK — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Bartender for Events — UK — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Bartender for Events — UK — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Bartender for Events — UK — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Bartender for Events — UK — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Bartender for Events — UK — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Bartender for Events — UK — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Bartender for Events — UK — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Bartender for Events — UK — FAQ — question]",
+              "answer": "[COPY PENDING — Bartender for Events — UK — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "open-bar": {
+      "name": "Open Bar",
+      "h1": "[COPY PENDING — Open Bar — UK — H1]",
+      "shortDescription": "Формат «все включено» для напоїв: без підрахунку келихів і окремих чеків. Ми наповнюємо бар, ставимо персонал і обслуговуємо гостей протягом усього заходу.",
+      "metaTitle": "[COPY PENDING — Open Bar — UK — Meta Title]",
+      "metaDescription": "[COPY PENDING — Open Bar — UK — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Open Bar — UK — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Open Bar — UK — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Open Bar — UK — What's Included (heading)]",
+          "lead": "[COPY PENDING — Open Bar — UK — What's Included — lead]",
+          "items": ["[COPY PENDING — Open Bar — UK — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Open Bar — UK — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Open Bar — UK — Perfect For — audience]",
+              "text": "[COPY PENDING — Open Bar — UK — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Open Bar — UK — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Open Bar — UK — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Open Bar — UK — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Open Bar — UK — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Open Bar — UK — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Open Bar — UK — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Open Bar — UK — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Open Bar — UK — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Open Bar — UK — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Open Bar — UK — FAQ — question]",
+              "answer": "[COPY PENDING — Open Bar — UK — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "self-service-bar": {
+      "name": "Бар самообслуговування",
+      "h1": "[COPY PENDING — Self-Service Bar — UK — H1]",
+      "shortDescription": "Заповнена напоями станція, де гості наливають собі самі. Невимушено й без метушні — добре підходить для неформальних зустрічей, денних заходів чи будь-де, де повноцінний барний сервіс зайвий.",
+      "metaTitle": "[COPY PENDING — Self-Service Bar — UK — Meta Title]",
+      "metaDescription": "[COPY PENDING — Self-Service Bar — UK — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Self-Service Bar — UK — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — UK — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Self-Service Bar — UK — What's Included (heading)]",
+          "lead": "[COPY PENDING — Self-Service Bar — UK — What's Included — lead]",
+          "items": ["[COPY PENDING — Self-Service Bar — UK — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Self-Service Bar — UK — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Self-Service Bar — UK — Perfect For — audience]",
+              "text": "[COPY PENDING — Self-Service Bar — UK — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Self-Service Bar — UK — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — UK — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Self-Service Bar — UK — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Self-Service Bar — UK — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Self-Service Bar — UK — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — UK — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Self-Service Bar — UK — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Self-Service Bar — UK — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Self-Service Bar — UK — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Self-Service Bar — UK — FAQ — question]",
+              "answer": "[COPY PENDING — Self-Service Bar — UK — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "draught-beer-bar": {
+      "name": "Розливна пивна стійка",
+      "h1": "[COPY PENDING — Draught Beer Bar — UK — H1]",
+      "shortDescription": "Пересувна розливна пивна стійка, яка привозить справжнє холодне пиво в будь-яку локацію, в приміщенні чи на вулиці. Просто й легко поєднується з будь-яким іншим форматом бару з нашого переліку.",
+      "metaTitle": "[COPY PENDING — Draught Beer Bar — UK — Meta Title]",
+      "metaDescription": "[COPY PENDING — Draught Beer Bar — UK — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Draught Beer Bar — UK — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — UK — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Draught Beer Bar — UK — What's Included (heading)]",
+          "lead": "[COPY PENDING — Draught Beer Bar — UK — What's Included — lead]",
+          "items": ["[COPY PENDING — Draught Beer Bar — UK — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Draught Beer Bar — UK — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Draught Beer Bar — UK — Perfect For — audience]",
+              "text": "[COPY PENDING — Draught Beer Bar — UK — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Draught Beer Bar — UK — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — UK — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Draught Beer Bar — UK — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Draught Beer Bar — UK — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Draught Beer Bar — UK — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — UK — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Draught Beer Bar — UK — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Draught Beer Bar — UK — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Draught Beer Bar — UK — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Draught Beer Bar — UK — FAQ — question]",
+              "answer": "[COPY PENDING — Draught Beer Bar — UK — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "coffee-corner": {
+      "name": "Кавовий куточок",
+      "h1": "[COPY PENDING — Coffee Corner — UK — H1]",
+      "shortDescription": "Кавова станція для гостей: еспресо, напої на молоці й та сама бадьорість, яка потрібна на будь-якому заході, особливо зранку після довгого свята.",
+      "metaTitle": "[COPY PENDING — Coffee Corner — UK — Meta Title]",
+      "metaDescription": "[COPY PENDING — Coffee Corner — UK — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Coffee Corner — UK — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Coffee Corner — UK — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Coffee Corner — UK — What's Included (heading)]",
+          "lead": "[COPY PENDING — Coffee Corner — UK — What's Included — lead]",
+          "items": ["[COPY PENDING — Coffee Corner — UK — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Coffee Corner — UK — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Coffee Corner — UK — Perfect For — audience]",
+              "text": "[COPY PENDING — Coffee Corner — UK — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Coffee Corner — UK — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Coffee Corner — UK — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Coffee Corner — UK — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Coffee Corner — UK — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Coffee Corner — UK — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Coffee Corner — UK — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Coffee Corner — UK — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Coffee Corner — UK — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Coffee Corner — UK — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Coffee Corner — UK — FAQ — question]",
+              "answer": "[COPY PENDING — Coffee Corner — UK — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "matcha-bar": {
+      "name": "Матча-бар",
+      "h1": "[COPY PENDING — Matcha Bar — UK — H1]",
+      "shortDescription": "Окрема станція з матча-напоями, які збивають на очах у гостей. Гарне доповнення до денних заходів, wellness-подій чи будь-якого свята, яке хоче щось інше за звичайну кавову перерву.",
+      "metaTitle": "[COPY PENDING — Matcha Bar — UK — Meta Title]",
+      "metaDescription": "[COPY PENDING — Matcha Bar — UK — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Matcha Bar — UK — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Matcha Bar — UK — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Matcha Bar — UK — What's Included (heading)]",
+          "lead": "[COPY PENDING — Matcha Bar — UK — What's Included — lead]",
+          "items": ["[COPY PENDING — Matcha Bar — UK — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Matcha Bar — UK — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Matcha Bar — UK — Perfect For — audience]",
+              "text": "[COPY PENDING — Matcha Bar — UK — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Matcha Bar — UK — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Matcha Bar — UK — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Matcha Bar — UK — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Matcha Bar — UK — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Matcha Bar — UK — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Matcha Bar — UK — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Matcha Bar — UK — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Matcha Bar — UK — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Matcha Bar — UK — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Matcha Bar — UK — FAQ — question]",
+              "answer": "[COPY PENDING — Matcha Bar — UK — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
     "healthy-bar": {
       "name": "Хелсі бар",
-      "shortDescription": "Протеїнові коктейлі, свіжі смузі та моктейли для подій, де алкоголь не в центрі уваги.",
+      "h1": "Бар, після якого лишаються сили на другу половину дня",
+      "shortDescription": "Свіжі фреші, смузі та безалкогольні варіанти для гостей, які не п'ють коктейлі. Добре доповнює будь-який з наших барів або працює як окрема станція для денних і wellness-орієнтованих заходів.",
       "metaTitle": "Хелсі бар — протеїнові коктейлі, смузі та моктейли | ChinChin",
-      "metaDescription": "Виїзний хелсі-бар у Барселоні: протеїнові коктейлі, свіжі смузі та моктейли на спортивні події, велнес-ретрити, конференції та приватні вечірки."
+      "metaDescription": "Виїзний хелсі-бар у Барселоні: протеїнові коктейлі, свіжі смузі та моктейли на спортивні події, велнес-ретрити, конференції та приватні вечірки.",
+      "heroImageAlt": "Бармен ChinChin подає свіжий коктейль на терасі в Барселоні"
     },
-    "cocktail-bar": {
-      "name": "Коктейльний бар",
-      "shortDescription": "Повноцінна барна станція з класикою, авторськими позиціями та безалкогольними версіями кожного коктейлю.",
-      "metaTitle": "Коктейльний бар на подію | ChinChin",
-      "metaDescription": "Виїзний коктейльний бар у Барселоні: станція, посуд, лід, інгредієнти та бармени. Класика, авторське меню й безалкогольні версії."
+    "dry-bar": {
+      "name": "Оренда барної стійки",
+      "h1": "[COPY PENDING — Dry Bar — UK — H1]",
+      "shortDescription": "Потрібна тільки стійка? Здаємо барні стійки в оренду окремо, без персоналу й напоїв, щоб ви могли зібрати саме той сетап, який вам потрібен, зі своєю командою чи постачальниками.",
+      "metaTitle": "[COPY PENDING — Dry Bar — UK — Meta Title]",
+      "metaDescription": "[COPY PENDING — Dry Bar — UK — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Dry Bar — UK — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Dry Bar — UK — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Dry Bar — UK — What's Included (heading)]",
+          "lead": "[COPY PENDING — Dry Bar — UK — What's Included — lead]",
+          "items": ["[COPY PENDING — Dry Bar — UK — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Dry Bar — UK — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Dry Bar — UK — Perfect For — audience]",
+              "text": "[COPY PENDING — Dry Bar — UK — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Dry Bar — UK — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Dry Bar — UK — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Dry Bar — UK — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Dry Bar — UK — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Dry Bar — UK — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Dry Bar — UK — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Dry Bar — UK — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Dry Bar — UK — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Dry Bar — UK — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Dry Bar — UK — FAQ — question]",
+              "answer": "[COPY PENDING — Dry Bar — UK — FAQ — answer]"
+            }
+          ]
+        }
+      }
     }
   },
   "EventItems": {
@@ -286,10 +828,6 @@
     }
   },
   "HealthyBar": {
-    "meta": {
-      "title": "Хелсі бар — протеїнові коктейлі, смузі та моктейли | ChinChin",
-      "description": "Виїзний хелсі-бар у Барселоні: протеїнові коктейлі, свіжі смузі та моктейли на спортивні події, велнес-ретрити, конференції та приватні вечірки."
-    },
     "hero": {
       "eyebrow": "Хелсі бар",
       "title": "Бар, після якого\nлишаються сили\nна другу половину дня",
@@ -452,5 +990,16 @@
       "button": "Написати нам",
       "emailSubject": "Запит на хелсі бар"
     }
+  },
+  "Reviews": {
+    "eyebrow": "Відгуки",
+    "title": "Що пишуть гості в Google",
+    "ratingValue": "{rating}",
+    "ratingAria": "Оцінка {rating} з 5",
+    "count": "Відгуків у Google: {count}",
+    "limitNote": "Google віддає щонайбільше п'ять відгуків, які вважає найрелевантнішими, і не дає ні сортування, ні перегляду решти.",
+    "seeOnGoogle": "Усі відгуки в Google",
+    "unavailable": "Відгуки тимчасово недоступні. Спробуйте, будь ласка, трохи пізніше.",
+    "loading": "Завантаження відгуків"
   }
 }

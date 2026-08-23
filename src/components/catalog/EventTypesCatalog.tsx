@@ -1,7 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { eventTypes } from '@/data/eventTypes';
 import { Section } from '@/components/shared/primitives';
-import { c } from '@/components/shared/tokens';
 import CatalogGrid, { type CatalogEntry } from './CatalogGrid';
 
 /**
@@ -21,7 +20,7 @@ export default async function EventTypesCatalog() {
   }));
 
   return (
-    <Section bg={c.page} pt={0}>
+    <Section pt={0}>
       <CatalogGrid kind="event" entries={entries} cta={t('cta')} />
     </Section>
   );

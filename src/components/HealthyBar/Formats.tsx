@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Box, Grid, Heading, Stack, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
-import { Eyebrow, Section, SectionTitle } from './primitives';
+import { Eyebrow, Section, SectionTitle } from '@/components/shared/primitives';
 import { c } from './tokens';
 
 type Format = { name: string; text: string };
@@ -11,7 +11,7 @@ export default async function Formats() {
   const items = t.raw('items') as Format[];
 
   return (
-    <Section bg={c.page}>
+    <Section>
       <Grid gap={{ base: 10, lg: 16 }} templateColumns={{ base: '1fr', lg: '1fr 1fr' }}>
         {/* TODO: замінити на фото хелсі-станції. */}
         <Box

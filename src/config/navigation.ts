@@ -1,10 +1,6 @@
 import type { IconType } from 'react-icons';
 import { LuConciergeBell, LuInstagram, LuPartyPopper, LuUsers } from 'react-icons/lu';
-
-// TODO: підставити реальний профіль, напр. 'https://www.instagram.com/chinchin.bar'.
-// Поки рядок порожній, пункт Instagram не рендериться — щоб у меню не було
-// посилання в нікуди.
-export const INSTAGRAM_URL = '';
+import { INSTAGRAM_URL } from './socials';
 
 type InternalItem = {
   key: 'services' | 'events' | 'about';

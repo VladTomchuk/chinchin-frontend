@@ -1,4 +1,5 @@
 import localFont from 'next/font/local';
+import { Monoton } from 'next/font/google';
 
 export const brandFont = localFont({
   src: [
@@ -23,5 +24,15 @@ export const uiFont = localFont({
     { path: './Manrope/static/Manrope-Bold.ttf', weight: '700', style: 'normal' },
   ],
   variable: '--font-brand-ui',
+  display: 'swap',
+});
+
+// Декоративний Google Font для слогану на головному хіро (IntroBanner) —
+// Monoton має лише один нарис (400) і тільки латиницю/капс, тому годиться
+// суто для короткого акцентного напису, не для звичайних заголовків.
+export const monotonFont = Monoton({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-monoton',
   display: 'swap',
 });

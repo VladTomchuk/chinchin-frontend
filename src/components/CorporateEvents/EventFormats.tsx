@@ -18,7 +18,7 @@ export default async function EventFormats() {
   const items = t.raw('items') as Format[];
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 10, md: 14 }} maxW="22ch">
         {t('title')}

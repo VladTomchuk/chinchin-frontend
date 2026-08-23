@@ -9,7 +9,7 @@ export default async function Included() {
   const items = t.raw('items') as string[];
 
   return (
-    <Section bg={c.page}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 8, md: 12 }} maxW="24ch">
         {t('title')}

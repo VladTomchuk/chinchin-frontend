@@ -6,11 +6,95 @@
   "HeroSection": {
     "title": "Cocktails\nthat speak\nyour language",
     "contactButton": "Contact us",
+    "ctaQuote": "Get a quote",
+    "quoteEmailSubject": "Quote request",
     "introAlt": "Bartender straining a cocktail into a glass next to two more glasses filled with crushed ice"
   },
   "EventTypesScroll": {
     "eyebrow": "Event types",
     "title": "Events we cover"
+  },
+  "ServicesLateralScroll": {
+    "eyebrow": "Service formats",
+    "title": "Our Bar Services",
+    "lead": "From a full cocktail bar to a quiet coffee corner, we handle the drinks side of your event so you don't have to think about it. Here's what we offer:",
+    "servicesList": [
+      "Mobile Cocktail Bar",
+      "Bartender for Events",
+      "Open Bar",
+      "Dry Bar Hire",
+      "Self-Service Bar",
+      "Matcha Bar",
+      "Mobile Draught Beer Bar",
+      "Coffee Corner",
+      "Healthy Bar"
+    ],
+    "cta": "See all services"
+  },
+  "EventServicesSlider": {
+    "eyebrow": "Services by event",
+    "title": "What we bring to each kind of event",
+    "lead": "Pick an event type to see the bar formats that work best there.",
+    "filterLabel": "Event type",
+    "allEvents": "All events",
+    "carousel": "carousel",
+    "prev": "Previous service",
+    "next": "Next service",
+    "counter": "{current} / {total}",
+    "empty": "No services have been added for this event type yet."
+  },
+  "TeamPreview": {
+    "eyebrow": "About us",
+    "title": "The people behind the bar",
+    "lead": "Chin Chin Bar Catering is a team that takes all the hassle of organizing the bar at your event off your shoulders. We provide flawless bar service for events of any scale — from private parties and weddings to corporate events, festivals, and brand collaborations.",
+    "members": [
+      {
+        "name": "Full name",
+        "role": "Role"
+      },
+      {
+        "name": "Full name",
+        "role": "Role"
+      },
+      {
+        "name": "Full name",
+        "role": "Role"
+      },
+      {
+        "name": "Full name",
+        "role": "Role"
+      },
+      {
+        "name": "Full name",
+        "role": "Role"
+      },
+      {
+        "name": "Full name",
+        "role": "Role"
+      },
+      {
+        "name": "Full name",
+        "role": "Role"
+      },
+      {
+        "name": "Full name",
+        "role": "Role"
+      }
+    ],
+    "photoAlt": "Team member photo placeholder",
+    "cta": "Learn more about our team",
+    "socialsLabel": "Follow us",
+    "social": {
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "facebook": "Facebook",
+      "youtube": "YouTube"
+    }
+  },
+  "Brands": {
+    "eyebrow": "Clients",
+    "title": "Brands that have worked with us",
+    "lead": "From tech companies and trade fairs to private venues — teams that trusted us with the bar at their events."
   },
   "LocaleSwitcher": {
     "label": "Select language",
@@ -35,6 +119,10 @@
     "services": "Services",
     "about": "About us",
     "instagram": "Instagram"
+  },
+  "WhatsApp": {
+    "aria": "Message us on WhatsApp",
+    "label": "Message us"
   },
   "ServicesPage": {
     "meta": {
@@ -61,7 +149,7 @@
   "About": {
     "meta": {
       "title": "About us | ChinChin",
-      "description": "ChinChin Bar Catering is a Barcelona-based bar service team working with clients worldwide — private parties, weddings, corporate events, festivals and brand collaborations."
+      "description": "ChinChin Bar Catering is a Barcelona-based bar team serving private parties, weddings, corporate events, festivals and brand collaborations worldwide."
     },
     "hero": {
       "eyebrow": "About us",
@@ -77,56 +165,29 @@
       "title": "Based in Barcelona, open to the world",
       "items": [
         {
-          "name": "Barcelona",
-          "text": "Our home base — where our team, bar stations and equipment live, and where most of our events happen."
+          "name": "Home base: Barcelona",
+          "text": "Our team, bar equipment and stock are based in Barcelona, so events in and around the city are the simplest to plan."
         },
         {
-          "name": "Worldwide",
-          "text": "We travel for the right event: our bars have worked conferences and celebrations well beyond Barcelona, and we're open to clients from anywhere."
+          "name": "Clients worldwide",
+          "text": "We're open to clients from anywhere — tell us the destination and we'll work out the logistics, staffing and licensing to get the bar there."
         }
       ]
     },
     "offer": {
       "eyebrow": "What we bring",
-      "title": "Bar services for every kind of event",
-      "lead": "Two directions the bar can take — pick one, or run both side by side. Full lists live on their own pages.",
-      "servicesLabel": "Services",
+      "title": "A different bar for every kind of event",
+      "lead": "The bar service and the event format go together — here's what we currently offer.",
+      "servicesLabel": "Bar services",
       "servicesCta": "See all services",
       "eventsLabel": "Event types",
       "eventsCta": "See all event types"
     },
-    "process": {
-      "eyebrow": "How we work",
-      "title": "From first message to last call",
-      "briefingCta": "Start a briefing",
-      "items": [
-        {
-          "name": "Briefing",
-          "text": "Tell us the date, location, guest count and the mood you're going for. We turn that into a first proposal within 24 hours."
-        },
-        {
-          "name": "Quotation",
-          "text": "We put together a detailed quote — station, staff, drinks list and logistics — priced for your exact format, not a generic package."
-        },
-        {
-          "name": "Booking a date and first payment",
-          "text": "Once the quote works for you, a deposit locks in the date and secures the team and equipment for your event."
-        },
-        {
-          "name": "Adjusting a menu",
-          "text": "We fine-tune the drinks list together: seasonal ingredients, dietary needs, alcohol-free options and any special requests."
-        },
-        {
-          "name": "Final payment 1 week before an event",
-          "text": "The balance is due a week out, so the final headcount and any last-minute changes are settled before our team arrives."
-        }
-      ]
-    },
     "cta": {
       "title": "Let's talk about your event",
-      "text": "Send us the date, location and guest count — we'll come back with a proposal built around your event.",
+      "text": "Tell us the date, the format and a rough guest count — we'll come back with a bar that fits, wherever you are.",
       "button": "Email us",
-      "emailSubject": "About us enquiry"
+      "emailSubject": "About ChinChin — event enquiry"
     }
   },
   "Catalog": {
@@ -139,20 +200,474 @@
     "relatedEventsTitle": "Perfect for these events",
     "relatedEventsLead": "The events where this service comes into its own.",
     "otherEventsEyebrow": "Other formats",
-    "otherEventsTitle": "Other event types"
+    "otherEventsTitle": "Other event types",
+    "otherServicesEyebrow": "More formats",
+    "otherServicesTitle": "You may also like",
+    "ctaQuote": "Get a quote",
+    "quoteEmailSubject": "Quote request"
   },
   "ServiceItems": {
+    "mobile-cocktail-bar": {
+      "name": "Cocktail Bar",
+      "h1": "Mobile Cocktail Bar Catering in Barcelona for Weddings, Corporate Events & Private Parties",
+      "shortDescription": "Our signature service: a fully staffed mobile cocktail bar for weddings, corporate events, and private parties across Barcelona and beyond. We bring the counter, the bartenders, the glassware, and a cocktail menu built around your event. All you bring is the guest list. The bar scales easily, whether you're hosting 40 people on a rooftop or 300 in a conference hall.",
+      "metaTitle": "Mobile Cocktail Bar for Weddings & Corporate Events",
+      "metaDescription": "Book a mobile cocktail bar in Barcelona for weddings, corporate events & private parties. Custom menus, real bartenders. Get your quote today.",
+      "heroImageAlt": "[COPY PENDING — Cocktail Bar — EN — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": [
+            "Chin Chin Bar Catering runs a fully staffed mobile cocktail bar for weddings, corporate events, and private parties across Barcelona and beyond. We bring the counter, the bartenders, the glassware, and a cocktail menu built around your event. All you bring is the guest list. The bar scales to fit the room, whether that's 40 people on a rooftop or 300 in a conference hall."
+          ]
+        },
+        "included": {
+          "title": "What's Included",
+          "lead": "Every booking is a complete cocktail bar for events of any size:",
+          "items": [
+            "A portable bar counter, styled to suit your venue and color scheme",
+            "Professional bartenders, usually two to six, depending on guest count and bar hours",
+            "Full equipment: shakers, jiggers, strainers, ice wells, garnish stations",
+            "Real glassware as standard (plastic only if the venue requires it)",
+            "Ice, mixers, and fresh garnishes, sourced and prepped in advance",
+            "Setup before your event and full breakdown after, so you won't need to clean anything up"
+          ]
+        },
+        "perfectFor": {
+          "title": "Perfect For",
+          "items": [
+            {
+              "name": "Weddings",
+              "text": "Cocktail hour, reception, or both: we build the bar around your day's timing. Many couples choose two or three signature cocktails, sometimes named after them or tied to how they met. We coordinate directly with planners and venues so service lines up with the rest of the schedule."
+            },
+            {
+              "name": "Corporate Events",
+              "text": "Corporate events need service that looks sharp and runs on schedule, whether it's a product launch, a conference, a holiday party, or a client dinner. We can brand cocktails around your company colors or campaign, keep things understated for a formal dinner, or make the bar the centerpiece of a launch."
+            },
+            {
+              "name": "Private Parties",
+              "text": "This is where the cocktail menu gets more playful. Birthdays, anniversaries, and milestone celebrations are the kind of night where guests want to request drinks on the spot, so we scale the setup down for smaller, more casual gatherings under 50 people."
+            }
+          ]
+        },
+        "menu": {
+          "title": "Menu & Non-Alcoholic Options",
+          "paragraphs": [
+            "Every custom cocktail menu starts with a conversation: your favorite spirits, flavors to avoid, and what's in season. From there we build a list of signature cocktails (usually four to six) plus a full menu of non-alcoholic cocktails made with the same technique and quality ingredients as the alcoholic ones. Open bar, a limited selection, or drink tickets: the format is yours to choose."
+          ]
+        },
+        "howItWorks": {
+          "title": "How It Works",
+          "steps": [
+            "Tell us your date, location, and guest count.",
+            "We send a custom quote and a draft cocktail menu.",
+            "We confirm the final menu, staffing, and bar setup together.",
+            "On the day, we arrive early, set up, serve, and clean up. You don't lift a glass."
+          ]
+        },
+        "international": {
+          "title": "Events Outside Barcelona",
+          "paragraphs": [
+            "Barcelona is home base, but it's not the limit. We take on international events and destination events when the logistics work. Get in touch with your location and date, and we'll walk you through what's involved in bringing the bar to you."
+          ]
+        },
+        "cta": {
+          "title": "Ready to Book Your Cocktail Bar?",
+          "text": "Tell us about your event and we'll build a menu, a quote, and a plan around it. Request a consultation today and let's start planning."
+        },
+        "faq": {
+          "title": "FAQ",
+          "items": [
+            {
+              "question": "What does a mobile cocktail bar from Chin Chin cost?",
+              "answer": "Pricing depends on guest count, bar hours, and menu selection. There's no flat rate because every event is different. Share your event details and we'll send a tailored quote. [COPY PENDING — Cocktail Bar — EN — FAQ price range]"
+            },
+            {
+              "question": "How long does the bar run for?",
+              "answer": "Most bookings run 3 to 5 hours, though we can extend service or split it into cocktail hour plus reception on request."
+            },
+            {
+              "question": "Do you offer non-alcoholic options, and is there a minimum guest count?",
+              "answer": "Yes. Every menu includes mocktails alongside the alcoholic cocktails. [COPY PENDING — Cocktail Bar — EN — FAQ minimum guest count]"
+            },
+            {
+              "question": "Can you cater events outside Barcelona, including abroad?",
+              "answer": "Yes. We regularly take on international events and destination weddings. Reach out with your location and date and we'll walk you through logistics and cost."
+            }
+          ]
+        }
+      }
+    },
+    "bartender-for-events": {
+      "name": "Bartender for Events",
+      "h1": "[COPY PENDING — Bartender for Events — EN — H1]",
+      "shortDescription": "Already have the bar and drinks sorted? We'll send experienced bartenders to run it. This works well for hosts who want professional service without renting a full setup. Just brief us on your event and menu, and we'll take care of the pouring.",
+      "metaTitle": "[COPY PENDING — Bartender for Events — EN — Meta Title]",
+      "metaDescription": "[COPY PENDING — Bartender for Events — EN — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Bartender for Events — EN — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Bartender for Events — EN — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Bartender for Events — EN — What's Included (heading)]",
+          "lead": "[COPY PENDING — Bartender for Events — EN — What's Included — lead]",
+          "items": ["[COPY PENDING — Bartender for Events — EN — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Bartender for Events — EN — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Bartender for Events — EN — Perfect For — audience]",
+              "text": "[COPY PENDING — Bartender for Events — EN — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Bartender for Events — EN — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Bartender for Events — EN — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Bartender for Events — EN — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Bartender for Events — EN — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Bartender for Events — EN — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Bartender for Events — EN — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Bartender for Events — EN — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Bartender for Events — EN — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Bartender for Events — EN — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Bartender for Events — EN — FAQ — question]",
+              "answer": "[COPY PENDING — Bartender for Events — EN — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "open-bar": {
+      "name": "Open Bar",
+      "h1": "[COPY PENDING — Open Bar — EN — H1]",
+      "shortDescription": "An all-inclusive drinks package for your guests, with no counting glasses or separate bar tabs. We stock the bar, staff it, and run it for the length of your event.",
+      "metaTitle": "[COPY PENDING — Open Bar — EN — Meta Title]",
+      "metaDescription": "[COPY PENDING — Open Bar — EN — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Open Bar — EN — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Open Bar — EN — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Open Bar — EN — What's Included (heading)]",
+          "lead": "[COPY PENDING — Open Bar — EN — What's Included — lead]",
+          "items": ["[COPY PENDING — Open Bar — EN — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Open Bar — EN — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Open Bar — EN — Perfect For — audience]",
+              "text": "[COPY PENDING — Open Bar — EN — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Open Bar — EN — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Open Bar — EN — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Open Bar — EN — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Open Bar — EN — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Open Bar — EN — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Open Bar — EN — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Open Bar — EN — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Open Bar — EN — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Open Bar — EN — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Open Bar — EN — FAQ — question]",
+              "answer": "[COPY PENDING — Open Bar — EN — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "self-service-bar": {
+      "name": "Self-Service Bar",
+      "h1": "[COPY PENDING — Self-Service Bar — EN — H1]",
+      "shortDescription": "A stocked drinks station where guests pour their own. Relaxed and low-key, it works well for casual gatherings, daytime events, or anywhere a fully staffed bar isn't the right fit.",
+      "metaTitle": "[COPY PENDING — Self-Service Bar — EN — Meta Title]",
+      "metaDescription": "[COPY PENDING — Self-Service Bar — EN — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Self-Service Bar — EN — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — EN — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Self-Service Bar — EN — What's Included (heading)]",
+          "lead": "[COPY PENDING — Self-Service Bar — EN — What's Included — lead]",
+          "items": ["[COPY PENDING — Self-Service Bar — EN — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Self-Service Bar — EN — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Self-Service Bar — EN — Perfect For — audience]",
+              "text": "[COPY PENDING — Self-Service Bar — EN — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Self-Service Bar — EN — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — EN — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Self-Service Bar — EN — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Self-Service Bar — EN — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Self-Service Bar — EN — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — EN — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Self-Service Bar — EN — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Self-Service Bar — EN — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Self-Service Bar — EN — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Self-Service Bar — EN — FAQ — question]",
+              "answer": "[COPY PENDING — Self-Service Bar — EN — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "draught-beer-bar": {
+      "name": "Draught Beer Bar",
+      "h1": "[COPY PENDING — Draught Beer Bar — EN — H1]",
+      "shortDescription": "A portable draught beer setup that brings properly poured, cold beer to any venue, indoors or out. Simple, and easy to pair with any other bar you book with us.",
+      "metaTitle": "[COPY PENDING — Draught Beer Bar — EN — Meta Title]",
+      "metaDescription": "[COPY PENDING — Draught Beer Bar — EN — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Draught Beer Bar — EN — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — EN — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Draught Beer Bar — EN — What's Included (heading)]",
+          "lead": "[COPY PENDING — Draught Beer Bar — EN — What's Included — lead]",
+          "items": ["[COPY PENDING — Draught Beer Bar — EN — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Draught Beer Bar — EN — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Draught Beer Bar — EN — Perfect For — audience]",
+              "text": "[COPY PENDING — Draught Beer Bar — EN — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Draught Beer Bar — EN — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — EN — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Draught Beer Bar — EN — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Draught Beer Bar — EN — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Draught Beer Bar — EN — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — EN — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Draught Beer Bar — EN — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Draught Beer Bar — EN — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Draught Beer Bar — EN — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Draught Beer Bar — EN — FAQ — question]",
+              "answer": "[COPY PENDING — Draught Beer Bar — EN — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "coffee-corner": {
+      "name": "Coffee Corner",
+      "h1": "[COPY PENDING — Coffee Corner — EN — H1]",
+      "shortDescription": "A coffee station for your guests: espresso, milk drinks, and the pick-me-up most events need, especially the morning after a long celebration.",
+      "metaTitle": "[COPY PENDING — Coffee Corner — EN — Meta Title]",
+      "metaDescription": "[COPY PENDING — Coffee Corner — EN — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Coffee Corner — EN — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Coffee Corner — EN — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Coffee Corner — EN — What's Included (heading)]",
+          "lead": "[COPY PENDING — Coffee Corner — EN — What's Included — lead]",
+          "items": ["[COPY PENDING — Coffee Corner — EN — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Coffee Corner — EN — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Coffee Corner — EN — Perfect For — audience]",
+              "text": "[COPY PENDING — Coffee Corner — EN — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Coffee Corner — EN — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Coffee Corner — EN — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Coffee Corner — EN — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Coffee Corner — EN — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Coffee Corner — EN — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Coffee Corner — EN — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Coffee Corner — EN — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Coffee Corner — EN — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Coffee Corner — EN — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Coffee Corner — EN — FAQ — question]",
+              "answer": "[COPY PENDING — Coffee Corner — EN — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
+    "matcha-bar": {
+      "name": "Matcha Bar",
+      "h1": "[COPY PENDING — Matcha Bar — EN — H1]",
+      "shortDescription": "A dedicated matcha station, whisked fresh in front of your guests. A nice addition to daytime events, wellness gatherings, or any celebration that wants something different from the usual coffee break.",
+      "metaTitle": "[COPY PENDING — Matcha Bar — EN — Meta Title]",
+      "metaDescription": "[COPY PENDING — Matcha Bar — EN — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Matcha Bar — EN — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Matcha Bar — EN — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Matcha Bar — EN — What's Included (heading)]",
+          "lead": "[COPY PENDING — Matcha Bar — EN — What's Included — lead]",
+          "items": ["[COPY PENDING — Matcha Bar — EN — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Matcha Bar — EN — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Matcha Bar — EN — Perfect For — audience]",
+              "text": "[COPY PENDING — Matcha Bar — EN — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Matcha Bar — EN — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Matcha Bar — EN — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Matcha Bar — EN — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Matcha Bar — EN — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Matcha Bar — EN — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Matcha Bar — EN — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Matcha Bar — EN — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Matcha Bar — EN — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Matcha Bar — EN — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Matcha Bar — EN — FAQ — question]",
+              "answer": "[COPY PENDING — Matcha Bar — EN — FAQ — answer]"
+            }
+          ]
+        }
+      }
+    },
     "healthy-bar": {
       "name": "Healthy Bar",
-      "shortDescription": "Protein shakes, fresh smoothies and mocktails for events where alcohol isn't the point.",
+      "h1": "A bar that leaves you energy for the rest of the day",
+      "shortDescription": "Fresh juices, smoothies, and non-alcoholic options for guests who'd rather skip the cocktails. It works well alongside any of our other bars, or as a standalone station for daytime and wellness-focused events.",
       "metaTitle": "Healthy Bar — protein shakes, smoothies and mocktails | ChinChin",
-      "metaDescription": "Mobile healthy bar in Barcelona: protein shakes, fresh smoothies and mocktails for sports events, wellness retreats, conferences and private parties."
+      "metaDescription": "Mobile healthy bar in Barcelona: protein shakes, fresh smoothies and mocktails for sports events, wellness retreats, conferences and private parties.",
+      "heroImageAlt": "A ChinChin bartender serving a fresh drink on a Barcelona terrace"
     },
-    "cocktail-bar": {
-      "name": "Cocktail Bar",
-      "shortDescription": "A full bar station with classics, house creations and an alcohol-free version of every cocktail.",
-      "metaTitle": "Mobile cocktail bar for events | ChinChin",
-      "metaDescription": "Mobile cocktail bar in Barcelona: station, glassware, ice, ingredients and bartenders. Classics, a house list and alcohol-free versions throughout."
+    "dry-bar": {
+      "name": "Dry Bar",
+      "h1": "[COPY PENDING — Dry Bar — EN — H1]",
+      "shortDescription": "Just need the furniture? We rent out our bar counters on their own, no staff and no drinks included, so you can build the exact setup you want with your own team or suppliers.",
+      "metaTitle": "[COPY PENDING — Dry Bar — EN — Meta Title]",
+      "metaDescription": "[COPY PENDING — Dry Bar — EN — Meta Description]",
+      "heroImageAlt": "[COPY PENDING — Dry Bar — EN — Hero Image Alt]",
+      "body": {
+        "intro": {
+          "paragraphs": ["[COPY PENDING — Dry Bar — EN — Intro]"]
+        },
+        "included": {
+          "title": "[COPY PENDING — Dry Bar — EN — What's Included (heading)]",
+          "lead": "[COPY PENDING — Dry Bar — EN — What's Included — lead]",
+          "items": ["[COPY PENDING — Dry Bar — EN — What's Included]"]
+        },
+        "perfectFor": {
+          "title": "[COPY PENDING — Dry Bar — EN — Perfect For (heading)]",
+          "items": [
+            {
+              "name": "[COPY PENDING — Dry Bar — EN — Perfect For — audience]",
+              "text": "[COPY PENDING — Dry Bar — EN — Perfect For — text]"
+            }
+          ]
+        },
+        "menu": {
+          "title": "[COPY PENDING — Dry Bar — EN — Menu & Non-Alcoholic Options (heading)]",
+          "paragraphs": ["[COPY PENDING — Dry Bar — EN — Menu & Non-Alcoholic Options]"]
+        },
+        "howItWorks": {
+          "title": "[COPY PENDING — Dry Bar — EN — How It Works (heading)]",
+          "steps": ["[COPY PENDING — Dry Bar — EN — How It Works — step]"]
+        },
+        "international": {
+          "title": "[COPY PENDING — Dry Bar — EN — Events Outside Barcelona (heading)]",
+          "paragraphs": ["[COPY PENDING — Dry Bar — EN — Events Outside Barcelona]"]
+        },
+        "cta": {
+          "title": "[COPY PENDING — Dry Bar — EN — Closing CTA (heading)]",
+          "text": "[COPY PENDING — Dry Bar — EN — Closing CTA]"
+        },
+        "faq": {
+          "title": "[COPY PENDING — Dry Bar — EN — FAQ (heading)]",
+          "items": [
+            {
+              "question": "[COPY PENDING — Dry Bar — EN — FAQ — question]",
+              "answer": "[COPY PENDING — Dry Bar — EN — FAQ — answer]"
+            }
+          ]
+        }
+      }
     }
   },
   "EventItems": {
@@ -285,55 +800,7 @@
       }
     }
   },
-  "About": {
-    "meta": {
-      "title": "About us | ChinChin",
-      "description": "ChinChin Bar Catering is a Barcelona-based bar team serving private parties, weddings, corporate events, festivals and brand collaborations worldwide."
-    },
-    "hero": {
-      "eyebrow": "About us",
-      "title": "We are ChinChin",
-      "subtitle": "Cocktails that speak your language.",
-      "intro": "ChinChin Bar Catering is a team that takes all the hassle of organizing the bar at your event off your shoulders. We provide flawless bar service for events of any scale — from private parties and weddings to corporate events, festivals and brand collaborations.",
-      "ctaPrimary": "Get in touch",
-      "ctaSecondary": "See our services",
-      "imageAlt": "A ChinChin bartender preparing a cocktail at an event bar"
-    },
-    "reach": {
-      "eyebrow": "Where we work",
-      "title": "Based in Barcelona, open to the world",
-      "items": [
-        {
-          "name": "Home base: Barcelona",
-          "text": "Our team, bar equipment and stock are based in Barcelona, so events in and around the city are the simplest to plan."
-        },
-        {
-          "name": "Clients worldwide",
-          "text": "We're open to clients from anywhere — tell us the destination and we'll work out the logistics, staffing and licensing to get the bar there."
-        }
-      ]
-    },
-    "offer": {
-      "eyebrow": "What we bring",
-      "title": "A different bar for every kind of event",
-      "lead": "The bar service and the event format go together — here's what we currently offer.",
-      "servicesLabel": "Bar services",
-      "servicesCta": "See all services",
-      "eventsLabel": "Event types",
-      "eventsCta": "See all event types"
-    },
-    "cta": {
-      "title": "Let's talk about your event",
-      "text": "Tell us the date, the format and a rough guest count — we'll come back with a bar that fits, wherever you are.",
-      "button": "Email us",
-      "emailSubject": "About ChinChin — event enquiry"
-    }
-  },
   "HealthyBar": {
-    "meta": {
-      "title": "Healthy Bar — protein shakes, smoothies and mocktails | ChinChin",
-      "description": "Mobile healthy bar in Barcelona: protein shakes, fresh smoothies and mocktails for sports events, wellness retreats, conferences and private parties."
-    },
     "hero": {
       "eyebrow": "Healthy bar",
       "title": "A bar that leaves\nyou energy for\nthe rest of the day",
@@ -496,5 +963,16 @@
       "button": "Email us",
       "emailSubject": "Healthy bar enquiry"
     }
+  },
+  "Reviews": {
+    "eyebrow": "Reviews",
+    "title": "What guests say on Google",
+    "ratingValue": "{rating}",
+    "ratingAria": "Rated {rating} out of 5",
+    "count": "{count, plural, one {# review on Google} other {# reviews on Google}}",
+    "limitNote": "Google returns at most five of the reviews it considers most relevant, and gives no way to sort or page through the rest.",
+    "seeOnGoogle": "Read all reviews on Google",
+    "unavailable": "Reviews are temporarily unavailable. Please try again a little later.",
+    "loading": "Loading reviews"
   }
 }

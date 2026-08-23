@@ -6,9 +6,22 @@ import { c, CONTENT_MAX_WIDTH } from './tokens';
 // шаблонних сторінок [slug]. PageTitle і SectionTitle розділені навмисно: на
 // сторінці має бути рівно один h1, решта заголовків секцій — h2.
 
+// Фон секції задано тут, а не на кожному місці виклику. Раніше кожна секція
+// сама обирала `c.page` або `c.surfaceAlt`, і сторінки йшли смугами через одну.
+// Система трималася на дисципліні, тож збої проникали непомітно — на Healthy Bar
+// дві останні секції обидві були `surfaceAlt` і зливались у подвійну смугу.
+// Тепер полотно сторінки одне (`c.page`), а глибину дають картки (`c.surface`)
+// та лінії (`c.line`). Значення все ще можна перекрити пропом `bg`, але робити
+// це варто свідомо — за замовчуванням усі секції однакові.
 export function Section({ children, ...rest }: BoxProps) {
   return (
-    <Box as="section" px={{ base: 5, md: 8 }} py={{ base: 16, md: 24 }} {...rest}>
+    <Box
+      as="section"
+      bg={c.page}
+      px={{ base: 5, md: 8 }}
+      py={{ base: 16, md: 24 }}
+      {...rest}
+    >
       <Box maxW={CONTENT_MAX_WIDTH} mx="auto">
         {children}
       </Box>

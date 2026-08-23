@@ -1,0 +1,36 @@
+.wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.spin {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  /* Без цього глобальний скид (img { max-width: 100% }) обнуляє ширину:
+     .wrap навмисно 0×0 (щоб не займати місце й не ловити кліки), а
+     відсоток від нульового батька — теж нуль, і він переважає явний width. */
+  max-width: none;
+  margin-left: -15px;
+  margin-top: -15px;
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin {
+    animation: none;
+  }
+}

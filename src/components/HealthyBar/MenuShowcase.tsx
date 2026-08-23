@@ -1,6 +1,6 @@
 import { Box, Flex, Grid, Heading, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
-import { Eyebrow, Lead, Section, SectionTitle } from './primitives';
+import { Eyebrow, Lead, Section, SectionTitle } from '@/components/shared/primitives';
 import { c } from './tokens';
 
 type MenuItem = { name: string; ingredients: string; tag: string };
@@ -12,7 +12,6 @@ export default async function MenuShowcase() {
   return (
     <Section
       id="menu"
-      bg={c.surfaceAlt}
       // Якір веде під зафіксовану шапку, тому лишаємо їй місце.
       scrollMarginTop="80px"
     >

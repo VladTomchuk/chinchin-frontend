@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { ColorModeToggle } from '../ui/ColorModeToggle';
 import { useColorModeValue } from '../ui/color-mode';
 import LocaleSwitcher from '../LocaleSwitcherSelect/LocaleSwitcher';
+import { usePathname } from '@/i18n/navigation';
 
 export default function Navbar() {
   const { resolvedTheme } = useTheme();
@@ -20,7 +21,23 @@ export default function Navbar() {
   const NavbarBg = useColorModeValue('brand.lightBg', 'brand.darkBg');
   const currentBg = mounted ? NavbarBg : 'brand.lightBg';
 
+  // usePathname() у next-intl повертає internal (нелокалізований) шлях —
+  // '/' однаково для /en і /ua, тож порівняння не залежить від мови.
+  const pathname = usePathname();
+  const isHomepage = pathname === '/';
+
   const visible = showNavbar;
+
+  // На головній перша секція (IntroBanner) — повноекранний зум-хіро без
+  // навбару зверху; він з'являється лише починаючи з другої секції, і лише
+  // якщо скролити вгору — не одразу при вході в неї. На інших сторінках
+  // лишається звичайна поведінка (видно біля верху, ховається/показується
+  // залежно від напрямку скролу).
+  useEffect(() => {
+    const currentY = Math.max(window.scrollY, 0);
+    setShowNavbar(isHomepage ? currentY >= window.innerHeight : true);
+    setLastScrollY(currentY);
+  }, [isHomepage]);
 
   useEffect(() => {
     let ticking = false;
@@ -35,7 +52,17 @@ export default function Navbar() {
         const delta = currentY - lastScrollY;
         const scrollThreshold = 8;
 
-        if (currentY <= 80) {
+        if (isHomepage) {
+          const sectionOneEnd = window.innerHeight; // одна секція = один екран
+
+          if (currentY < sectionOneEnd) {
+            setShowNavbar(false); // у першій секції навбар завжди прихований
+          } else if (delta < -scrollThreshold) {
+            setShowNavbar(true); // з'являється лише на скрол угору
+          } else if (delta > scrollThreshold) {
+            setShowNavbar(false); // і ховається знову на скрол вниз
+          }
+        } else if (currentY <= 80) {
           setShowNavbar(true); // біля самого верху — завжди показувати
         } else if (delta > scrollThreshold) {
           setShowNavbar(false); // скролимо вниз — ховати
@@ -50,7 +77,7 @@ export default function Navbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, isHomepage]);
 
   const srcLogo = mounted
     ? resolvedTheme === 'dark'

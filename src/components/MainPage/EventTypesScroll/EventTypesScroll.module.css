@@ -1,15 +1,13 @@
-/* Горизонтальний скрол за мотивами motion.dev/examples/react-scroll-horizontal:
-   висока обгортка .container задає вертикальну дистанцію скролу, .sticky
-   лишається пришпиленим на весь екран, а .track їде вбік — величину зсуву
-   рахує JS (EventTypesScroll.tsx) від реальної ширини треку, а не тут. */
+/* Горизонтальний скрол через GSAP ScrollTrigger (pin + scrub) — див. коментар
+   у EventTypesScroll.tsx. .container — сам тригер і пінований елемент: GSAP
+   на льоту обгортає його пін-спейсером потрібної висоти і на час піна сам
+   перемикає його на position:fixed, тож тут задаємо лише "стан спокою"
+   (як він виглядає до/після піна, коли track ще/вже не зафіксований). Раніше
+   тут була пара .container (висота, яку рахував JS) + .sticky (position:
+   sticky) — з GSAP-піном це один елемент, ручний розрахунок висоти зайвий. */
 
 .container {
   position: relative;
-}
-
-.sticky {
-  position: sticky;
-  top: 0;
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -55,15 +53,15 @@
 }
 
 :global(html.dark) .slide:focus-visible {
-  outline-color: #af9c30;
+  outline-color: #f1d2d3;
 }
 */
 
 /* .photo — вікно з overflow:hidden; .photoInner — сама картинка, свідомо
    більша за вікно з усіх боків (inset заходить у мінус), щоб паралакс-зсув
-   (ParallaxPhoto у .tsx) не оголював порожні краї. Відступ (130px) із
-   запасом більший за PARALLAX_AMPLITUDE (100px) у компоненті — тримати їх
-   узгодженими, інакше на краю зсуву буде видно порожню смугу. */
+   (GSAP-tween у EventTypesScroll.tsx) не оголював порожні краї. Відступ
+   (130px) із запасом більший за PARALLAX_AMPLITUDE (100px) у компоненті —
+   тримати їх узгодженими, інакше на краю зсуву буде видно порожню смугу. */
 .photo {
   position: relative;
   width: 50%;
@@ -77,6 +75,11 @@
   position: absolute;
   inset: 0 -130px;
   height: 100%;
+  /* На кожен кадр паралакса (GSAP-tween x у EventTypesScroll.tsx) — без
+     will-change браузер не завжди завчасно виносить шар у композитинг і
+     може перерахунковувати стилі/фарбувати по головному потоку щокадру,
+     що на 10 слайдах разом і давало помітне дергання. */
+  will-change: transform;
 }
 
 .photoInner img {
@@ -103,7 +106,7 @@
 }
 
 :global(html.dark) .cta {
-  color: #af9c30;
+  color: #f1d2d3;
 }
 
 @media (max-width: 640px) {
@@ -126,12 +129,11 @@
   }
 }
 
+/* JS (EventTypesScroll.tsx) сам не створює ScrollTrigger/пін за цих умов —
+   тут лише те, як секція виглядає без нього: звичайний блок і нативний
+   горизонтальний скрол зі скрол-снепом замість піна на всю висоту екрана. */
 @media (prefers-reduced-motion: reduce) {
   .container {
-    height: auto !important;
-  }
-
-  .sticky {
     position: static;
     height: auto;
     padding: clamp(3rem, 8vw, 5rem) 0;

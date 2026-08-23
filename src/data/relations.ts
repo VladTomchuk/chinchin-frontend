@@ -27,3 +27,31 @@ export function isServiceSlug(value: string): value is ServiceSlug {
 export function isEventTypeSlug(value: string): value is EventTypeSlug {
   return (eventTypeSlugs as readonly string[]).includes(value);
 }
+
+/**
+ * Споріднені послуги для блоку перелінковки внизу сторінки послуги. Беремо
+ * ручний список із services[].related, вирізаємо саму сторінку (щоб вона не
+ * посилалась на себе) і добираємо до мінімуму рештою каталогу — так блок ніколи
+ * не буває порожнім чи з однією карткою, навіть якщо для нової послуги звʼязки
+ * ще не проставили.
+ */
+const RELATED_MIN = 2;
+const RELATED_MAX = 3;
+
+export function getRelatedServices(serviceSlug: ServiceSlug): Service[] {
+  const current = services.find((item) => item.slug === serviceSlug);
+
+  const curated = (current?.related ?? [])
+    .filter((slug) => slug !== serviceSlug)
+    .map((slug) => services.find((item) => item.slug === slug))
+    .filter((item): item is Service => item !== undefined);
+
+  const picked = curated.slice(0, RELATED_MAX);
+  if (picked.length >= RELATED_MIN) return picked;
+
+  const fallback = services.filter(
+    (item) => item.slug !== serviceSlug && !picked.some((chosen) => chosen.slug === item.slug),
+  );
+
+  return [...picked, ...fallback].slice(0, RELATED_MAX);
+}

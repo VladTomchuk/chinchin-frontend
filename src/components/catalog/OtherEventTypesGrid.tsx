@@ -1,7 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { eventTypes, type EventTypeSlug } from '@/data/eventTypes';
 import { Eyebrow, Section, SectionTitle } from '@/components/shared/primitives';
-import { c } from '@/components/shared/tokens';
 import CatalogGrid, { type CatalogEntry } from './CatalogGrid';
 
 /**
@@ -23,7 +22,7 @@ export default async function OtherEventTypesGrid({ currentSlug }: { currentSlug
   }));
 
   return (
-    <Section bg={c.page}>
+    <Section>
       <Eyebrow>{t('otherEventsEyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 8, md: 12 }}>{t('otherEventsTitle')}</SectionTitle>
 

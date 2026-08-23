@@ -1,6 +1,6 @@
 import { Accordion, Box, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
-import { Eyebrow, Section, SectionTitle } from './primitives';
+import { Eyebrow, Section, SectionTitle } from '@/components/shared/primitives';
 import { c, FOCUS_RING } from './tokens';
 
 type FaqItem = { question: string; answer: string };
@@ -20,7 +20,7 @@ export default async function Faq() {
   };
 
   return (
-    <Section bg={c.page}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 8, md: 12 }}>{t('title')}</SectionTitle>
 

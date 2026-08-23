@@ -7,7 +7,7 @@ export default async function Hero() {
   const t = await getTranslations('CorporateEvents.hero');
 
   return (
-    <Section as="header" bg={c.page} pt={NAVBAR_OFFSET} pb={{ base: 12, md: 16 }}>
+    <Section as="header" pt={NAVBAR_OFFSET} pb={{ base: 12, md: 16 }}>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
 
       {/* Заголовок довгий, тому кегль менший за типовий PageTitle — інакше він

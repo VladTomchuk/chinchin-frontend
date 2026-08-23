@@ -61,3 +61,12 @@ html {
 html.dark {
   color-scheme: dark;
 }
+
+/* Поки NextTopLoader (shared/TopLoader.tsx) показує смужку прогресу зверху —
+   nprogress, на якому він побудований, сам вішає цей клас на <html> на весь
+   час завантаження. Системний курсор на цей час ховаємо: замість нього
+   LoadingCursor.tsx малює свій — hands.svg, що крутиться й слідує за мишкою. */
+html.nprogress-busy,
+html.nprogress-busy * {
+  cursor: none !important;
+}

@@ -2,7 +2,6 @@ import { getTranslations } from 'next-intl/server';
 import type { ServiceSlug } from '@/data/services';
 import { getEventTypesForService } from '@/data/relations';
 import { Eyebrow, Lead, Section, SectionTitle } from '@/components/shared/primitives';
-import { c } from '@/components/shared/tokens';
 import CatalogGrid, { type CatalogEntry } from './CatalogGrid';
 
 /**
@@ -25,7 +24,7 @@ export default async function RelatedEventTypesGrid({ serviceSlug }: { serviceSl
   }));
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Eyebrow>{t('relatedEventsEyebrow')}</Eyebrow>
       <SectionTitle mb={5}>{t('relatedEventsTitle')}</SectionTitle>
       <Lead mb={{ base: 10, md: 12 }}>{t('relatedEventsLead')}</Lead>

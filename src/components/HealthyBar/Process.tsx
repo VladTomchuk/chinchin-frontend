@@ -1,6 +1,6 @@
 import { Box, Grid, Heading, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
-import { Eyebrow, Section, SectionTitle } from './primitives';
+import { Eyebrow, Section, SectionTitle } from '@/components/shared/primitives';
 import { c } from './tokens';
 
 type Step = { name: string; text: string };
@@ -10,7 +10,7 @@ export default async function Process() {
   const items = t.raw('items') as Step[];
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Eyebrow>{t('eyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 10, md: 14 }}>{t('title')}</SectionTitle>
 

@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
-import { Eyebrow, Section, SectionTitle } from './primitives';
+import { Eyebrow, Section, SectionTitle } from '@/components/shared/primitives';
 import { c } from './tokens';
 
 export default async function Intro() {
@@ -8,7 +8,7 @@ export default async function Intro() {
   const paragraphs = t.raw('paragraphs') as string[];
 
   return (
-    <Section bg={c.surfaceAlt}>
+    <Section>
       <Grid gap={{ base: 8, lg: 16 }} templateColumns={{ base: '1fr', lg: '0.9fr 1.1fr' }}>
         <Box>
           <Eyebrow>{t('eyebrow')}</Eyebrow>
