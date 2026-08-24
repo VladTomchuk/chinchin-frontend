@@ -162,13 +162,10 @@ function ReviewCard({ review, locale }: { review: Review; locale: Locale }) {
               src={review.author.photoUri}
               alt=""
               fill
-              // Google вже віддає аватар готовим маленьким файлом (=s128 у
-              // кінці URL), а показуємо ми його 44×44 — оптимізувати тут
-              // нічого. Пропуск через next/image лише витрачав би квоту
-              // трансформацій хостингу на файл, що й так менший за екран,
-              // причому URL Google періодично змінює, тож кожен новий рахувався
-              // б як нове зображення.
-              unoptimized
+              // НЕ unoptimized: /_next/image мусить проксіювати запит через
+              // сервер, інакше Google віддає 429 і Chromium ховає це як
+              // net::ERR_BLOCKED_BY_ORB — деталі в next.config.ts.
+              sizes="44px"
               style={{ objectFit: 'cover' }}
             />
           </Box>
