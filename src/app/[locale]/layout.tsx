@@ -11,6 +11,7 @@ import SmoothScroll from '@/components/shared/SmoothScroll';
 import TopLoader from '@/components/shared/TopLoader';
 import LoadingCursor from '@/components/shared/LoadingCursor';
 import WhatsAppButton from '@/components/WhatsAppButton/WhatsAppButton';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { brandFont, monotonFont, uiFont } from '@/fonts/fonts';
 import { SITE_URL } from '@/config/site';
 
@@ -65,6 +66,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             </Provider>
           </ThemeProvider>
         </NextIntlClientProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
