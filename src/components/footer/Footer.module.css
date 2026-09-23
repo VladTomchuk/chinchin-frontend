@@ -1,0 +1,44 @@
+/* Колір тут, а не Chakra-пропом: посилання — звичайні <a> (next-intl Link і
+   plain <a> для mailto/WhatsApp), а не Chakra-компоненти, тож conditional
+   {base,_dark} з tokens.ts (c.text) до них не докласти напряму. Значення
+   дублюють c.text/c.accent — та сама причина, що й у BackLink.module.css. */
+.link {
+  width: fit-content;
+  font-size: 0.9rem;
+  color: #3d3d3d;
+  opacity: 0.92;
+  transition: opacity 150ms ease;
+}
+
+:global(html.dark) .link {
+  color: #fff9f6;
+}
+
+.link:hover {
+  opacity: 0.65;
+}
+
+.link:focus-visible {
+  outline: 2px solid #6b5f1c;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+:global(html.dark) .link:focus-visible {
+  outline-color: #f1d2d3;
+}
+
+/* Лого-варіант за темою — та сама схема "обидва в DOM, CSS ховає зайвий", що
+   й .onPage/.onPhoto в BackLink.module.css, тільки перемикається сам колір
+   логотипу (SVG), а не CSS-властивість. */
+.logoDark {
+  display: none;
+}
+
+:global(html.dark) .logoLight {
+  display: none;
+}
+
+:global(html.dark) .logoDark {
+  display: block;
+}

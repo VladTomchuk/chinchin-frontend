@@ -1,10 +1,10 @@
-import { Box, Button, Heading, List, Text } from '@chakra-ui/react';
+import { Box, Heading, List, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
 import type { ServiceSlug } from '@/data/services';
 import { Section, SectionTitle } from '@/components/shared/primitives';
-import { c, FOCUS_RING } from '@/components/shared/tokens';
-import { CONTACT_EMAIL } from '@/config/site';
+import { c } from '@/components/shared/tokens';
 import JsonLd from '@/components/shared/JsonLd';
+import QuoteFormSection from '@/components/shared/QuoteForm/QuoteFormSection';
 
 /**
  * Тіло сторінки послуги. Увесь текст — з messages/{en,ua}.json під
@@ -68,8 +68,6 @@ function Stack({ children, gap = 4 }: { children: React.ReactNode; gap?: number 
 
 export default async function ServiceBody({ slug }: { slug: ServiceSlug }) {
   const t = await getTranslations(`ServiceItems.${slug}.body`);
-  const tItem = await getTranslations(`ServiceItems.${slug}`);
-  const tCatalog = await getTranslations('Catalog');
 
   const intro = t.raw('intro.paragraphs') as string[];
   const includedItems = t.raw('included.items') as string[];
@@ -191,36 +189,17 @@ export default async function ServiceBody({ slug }: { slug: ServiceSlug }) {
         )}
       </Section>
 
-      <Section pt={0}>
-        <SectionTitle mb={{ base: 5, md: 6 }}>{t('cta.title')}</SectionTitle>
-        <Body>{t('cta.text')}</Body>
-
-        {/* Та сама кнопка й та сама адреса, що в шапці: заклик у доку є, а
-            підпису кнопки немає, тож беремо вже затверджений рядок із Catalog,
-            а не вигадуємо новий. */}
-        <Button
-          asChild
-          mt={8}
-          size="lg"
-          px={8}
-          rounded="full"
-          bg={c.accent}
-          color={c.accentContrast}
-          fontFamily="var(--font-brand-ui)"
-          fontWeight="600"
-          transition="opacity 200ms ease"
-          _hover={{ opacity: 0.86, textDecoration: 'none' }}
-          _focusVisible={FOCUS_RING}
-        >
-          <a
-            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-              `${tItem('name')} — ${tCatalog('quoteEmailSubject')}`,
-            )}`}
-          >
-            {tCatalog('ctaQuote')}
-          </a>
-        </Button>
-      </Section>
+      {/* Той самий блок, що раніше був CTA-кнопкою на mailto: заголовок і
+          текст із доку лишаються (cta.title/cta.text), а замість кнопки —
+          вбудована форма запиту прорахунку. Послуга підставляється в форму
+          сама (defaultService) — відвідувач бачить її вже обраною, але може
+          змінити. Якір quote-form — ціль кнопки в ServiceHero.tsx вище. */}
+      <QuoteFormSection
+        id="quote-form"
+        title={t('cta.title')}
+        text={t('cta.text')}
+        defaultService={slug}
+      />
     </>
   );
 }

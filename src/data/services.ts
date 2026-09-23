@@ -2,7 +2,6 @@ import type { IconType } from 'react-icons';
 import {
   LuBeer,
   LuCoffee,
-  LuGlassWater,
   LuHandPlatter,
   LuLeaf,
   LuMartini,
@@ -40,7 +39,6 @@ export const serviceSlugs = [
   'coffee-corner',
   'matcha-bar',
   'healthy-bar',
-  'dry-bar',
 ] as const;
 
 export type ServiceSlug = (typeof serviceSlugs)[number];
@@ -88,9 +86,16 @@ export type Service = {
    * і так перемагає динамічний, а генерувати обидва немає сенсу.
    */
   customPage?: true;
+  /**
+   * 'soon' — послуга ще не готова до запуску: картка (в усіх місцях, де вона
+   * зʼявляється) показує позначку "Soon", а посилання на сторінку послуги —
+   * неактивне (немає сенсу вести на сторінку, якої фактично ще нема в
+   * продажі). Відсутність поля — звичайна, "жива" послуга.
+   */
+  status?: 'soon';
 };
 
-export const services: Service[] = [
+const SERVICES_AUTHORED: Service[] = [
   {
     slug: 'mobile-cocktail-bar',
     Icon: LuMartini,
@@ -100,9 +105,9 @@ export const services: Service[] = [
     // УВАГА: оригінал 6016×4016 і 9.3 МБ. next/image стисне його на льоту, але
     // перший незакешований запит буде повільним — варто покласти поряд
     // зменшену копію (довша сторона ~2400px).
-    heroImage: '/hero/betby_cocktail.jpg',
+    heroImage: '/hero/cocktail_bar.png',
     eventTypes: ['corporate-business-events', 'weddings'],
-    related: ['open-bar', 'dry-bar', 'self-service-bar'],
+    related: ['open-bar', 'self-service-bar'],
   },
   {
     slug: 'bartender-for-events',
@@ -110,10 +115,11 @@ export const services: Service[] = [
     // Гість-бармен за роботою на терасі. Кадр не привʼязаний до цього формату
     // конкретно (той самий, що й hero-04 деінде на сайті) — послуга про
     // персонал, а не про конкретний бар, тож підійде будь-яке фото бармена.
-    heroImage: '/hero/hero-04.jpg',
+    heroImage: '/hero/wine-serving.png',
     heroImageIsStandIn: true,
     eventTypes: ['corporate-business-events', 'weddings'],
     related: ['mobile-cocktail-bar', 'open-bar', 'self-service-bar'],
+    status: 'soon',
   },
   {
     slug: 'open-bar',
@@ -122,65 +128,80 @@ export const services: Service[] = [
     heroImage: '/hero/hero-06.jpg',
     eventTypes: ['corporate-business-events', 'weddings'],
     related: ['mobile-cocktail-bar', 'draught-beer-bar', 'self-service-bar'],
+    status: 'soon',
   },
   {
     slug: 'self-service-bar',
     Icon: LuHandPlatter,
-    // Барна станція з виставленим посудом. Станція на кадрі з барменами, а не
-    // без них, — реального self-service-кадру в public/ немає.
-    heroImage: '/about_us/IMG_8979.jpeg',
+    // Барна станція з виставленим посудом — реального self-service-кадру в
+    // public/ немає. Раніше тут стояв IMG_8979.jpeg (селфі впритул двох
+    // барменів): у карусель-картці (EventServicesSlider) з фіксованим 9:10
+    // object-fit:cover кожне фото розтягується на всю ширину блока, тож
+    // тісний кадр робив суб'єктів помітно "більшими", ніж на сусідніх картках
+    // (де кадри зняті здалеку, з повітрям навколо). piramyde.jpg — так само
+    // стенд-ін не по темі напряму, зате знятий з тієї самої дистанції, що й
+    // решта карток (стіл із келихами, простір довкола) — картка більше не
+    // виділяється розміром "начинки" серед інших.
+    heroImage: '/hero/piramyde.jpg',
     heroImageIsStandIn: true,
     eventTypes: ['corporate-business-events', 'weddings'],
     related: ['open-bar', 'draught-beer-bar', 'coffee-corner'],
+    status: 'soon',
   },
   {
     slug: 'draught-beer-bar',
     Icon: LuBeer,
     // Гість із келихом на події просто неба. Пива, кранів і кег у public/ немає
     // жодного кадру — це найближчий за настроєм, але не за напоєм.
-    heroImage: '/hero/hero-02.jpg',
+    heroImage: '/hero/tap-beer.jpg',
     heroImageIsStandIn: true,
     eventTypes: ['corporate-business-events'],
     related: ['open-bar', 'self-service-bar', 'mobile-cocktail-bar'],
-  },
-  {
-    slug: 'coffee-corner',
-    Icon: LuCoffee,
-    // Трафарет над пінкою в темному стакані — найближче до кавової станції.
-    heroImage: '/hero/hero-08.jpg',
-    heroImageIsStandIn: true,
-    eventTypes: ['corporate-business-events'],
-    related: ['matcha-bar', 'healthy-bar', 'self-service-bar'],
+    status: 'soon',
   },
   {
     slug: 'matcha-bar',
     Icon: LuSprout,
     // Напій із густою пінкою й листком у руках. Матчі, вінчика та зеленого чаю
     // в public/ немає взагалі — кадр стоїть за формою, не за вмістом.
-    heroImage: '/events/bar-service-06.jpg',
+    heroImage: '/hero/matcha-bar.jpg',
     heroImageIsStandIn: true,
     eventTypes: ['corporate-business-events'],
-    related: ['coffee-corner', 'healthy-bar', 'dry-bar'],
+    related: ['coffee-corner', 'healthy-bar'],
+    status: 'soon',
+  },
+  {
+    slug: 'coffee-corner',
+    Icon: LuCoffee,
+    // Трафарет над пінкою в темному стакані — найближче до кавової станції.
+    heroImage: '/hero/coffee-break.JPG',
+    heroImageIsStandIn: true,
+    eventTypes: ['corporate-business-events'],
+    related: ['matcha-bar', 'healthy-bar', 'self-service-bar'],
+    status: 'soon',
   },
   {
     slug: 'healthy-bar',
     Icon: LuLeaf,
     // Кадр уже стоїть у HealthyBar/Hero.tsx — лишаємо той самий, щоб сторінка й
     // її картка в каталозі показували одне фото.
-    heroImage: '/hero/hero-03.jpg',
+    heroImage: '/hero/healthy-bar.png',
     heroImageIsStandIn: true,
     eventTypes: ['corporate-business-events'],
-    related: ['matcha-bar', 'dry-bar', 'coffee-corner'],
+    related: ['matcha-bar', 'coffee-corner'],
     customPage: true,
-  },
-  {
-    slug: 'dry-bar',
-    Icon: LuGlassWater,
-    // Одинокий келих із пінкою на нейтральному тлі: у кадрі немає ні пляшок, ні
-    // барної стійки, тож він не суперечить безалкогольному формату.
-    heroImage: '/hero/hero-01.jpg',
-    heroImageIsStandIn: true,
-    eventTypes: ['corporate-business-events', 'weddings'],
-    related: ['healthy-bar', 'matcha-bar', 'mobile-cocktail-bar'],
+    status: 'soon',
   },
 ];
+
+/**
+ * Стабільне сортування (Array#sort гарантує стабільність) — soon-послуги йдуть
+ * в кінець списку, а решта лишається в авторському порядку вище (SERVICES_AUTHORED
+ * і так до нікого, крім цього рядка, не потрапляє — саме тому не експортований).
+ * Усі похідні списки (services.map/filter деінде в проєкті, включно з
+ * getServicesForEvent у relations.ts) успадковують цей порядок автоматично, бо
+ * map/filter його не порушують — сортувати доводиться рівно в одному місці.
+ */
+export const services: Service[] = [...SERVICES_AUTHORED].sort(
+  (a, b) => Number(a.status === 'soon') - Number(b.status === 'soon'),
+);

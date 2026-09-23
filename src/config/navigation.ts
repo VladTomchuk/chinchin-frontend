@@ -1,32 +1,38 @@
 import type { IconType } from 'react-icons';
-import { LuConciergeBell, LuInstagram, LuPartyPopper, LuUsers } from 'react-icons/lu';
-import { INSTAGRAM_URL } from './socials';
+import { LuConciergeBell, LuMail, LuUsers } from 'react-icons/lu';
 
-type InternalItem = {
-  key: 'services' | 'events' | 'about';
-  kind: 'internal';
-  // Шлях має бути оголошений у pathnames (i18n/routing.ts), інакше типізований
-  // Link із next-intl його не прийме.
-  href: '/services' | '/events' | '/about';
+export type NavItem = {
+  key: 'services' | 'about' | 'contacts';
+  // Усі три пункти ведуть не на окремі сторінки, а на якорі відповідних
+  // секцій прямо на головній: "Послуги" — на каруселі послуг
+  // (EventServicesSlider, id="services-by-event"), "About" — на секцію "про
+  // нас" (TeamPreview, id="about"; сама сторінка /about тимчасово прихована,
+  // ABOUT_HIDDEN нижче), "Контакти" — на форму запиту (ContactSection,
+  // id="quote-form"). Сторінки /services і /about лишаються доступними
+  // напряму за URL, просто поза меню. Значення мусить бути оголошене в
+  // pathnames (i18n/routing.ts), інакше типізований Link із next-intl його не
+  // прийме.
+  href: { pathname: '/'; hash: string };
   Icon: IconType;
 };
 
-type ExternalItem = {
-  key: 'instagram';
-  kind: 'external';
-  href: string;
-  Icon: IconType;
-};
-
-export type NavItem = InternalItem | ExternalItem;
+// ТИМЧАСОВО: ці дві сторінки прибрані з показу — той самий принцип, що
+// Service.status === 'soon' у data/services.ts. Кожен прапорець керує адресою
+// в сайтмапі (app/sitemap.ts) і самим вмістом сторінки (app/[locale]/about/
+// page.tsx, app/[locale]/services/page.tsx — показують заглушку замість
+// реального вмісту), а також кнопками по сайту, що вели на ці сторінки
+// (About/Hero, About/Offer, TeamPreview, EventServicesSlider тощо — там
+// лишається "Soon"). У меню (NAV_ITEMS нижче) обидва прапорці більше не
+// задіяні: пункти "Послуги" й "About" ведуть на якорі домашньої сторінки, а
+// не на самі приховані сторінки, тож позначка "Soon" там не потрібна.
+export const ABOUT_HIDDEN = true;
+export const SERVICES_CATALOG_HIDDEN = true;
 
 // Порядок — згори вниз, як у меню.
 export const NAV_ITEMS: NavItem[] = [
-  { key: 'services', kind: 'internal', href: '/services', Icon: LuConciergeBell },
-  { key: 'events', kind: 'internal', href: '/events', Icon: LuPartyPopper },
-  { key: 'about', kind: 'internal', href: '/about', Icon: LuUsers },
-  { key: 'instagram', kind: 'external', href: INSTAGRAM_URL, Icon: LuInstagram },
+  { key: 'services', href: { pathname: '/', hash: 'services-by-event' }, Icon: LuConciergeBell },
+  { key: 'about', href: { pathname: '/', hash: 'about' }, Icon: LuUsers },
+  { key: 'contacts', href: { pathname: '/', hash: 'quote-form' }, Icon: LuMail },
 ];
 
-// Пункти без адреси не показуємо: краще коротше меню, ніж посилання в нікуди.
-export const visibleNavItems = () => NAV_ITEMS.filter((item) => item.href.length > 0);
+export const visibleNavItems = () => NAV_ITEMS;

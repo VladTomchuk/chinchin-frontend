@@ -15,6 +15,16 @@
   transition: opacity 200ms ease;
 }
 
+/* disabled=true: span замість Link (див. .tsx) — нікуди вести, тож стрілка
+   лишається на місці, без свого hover-зсуву (.link:hover .arrow нижче все ще
+   спрацював би на span при наведенні, якби не opacity/cursor тут погашали
+   сенс цього руху). */
+.disabled {
+  gap: 12px;
+  opacity: 0.55;
+  cursor: default;
+}
+
 .link:hover {
   opacity: 0.78;
   text-decoration: none;

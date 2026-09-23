@@ -1,0 +1,302 @@
+/* Карусель відгуків Google на головній — див. коментар у ReviewsCarousel.tsx
+   про причину заміни попередньої пін+кросфейд версії.
+
+   Кольори нижче — ті самі значення, що й c.* у components/shared/tokens.ts.
+   CSS-модуль не може імпортувати TS-константи, тож дублюємо вручну (той
+   самий компроміс, що й у ReviewsLateralScroll.module.css /
+   EventServicesSlider.module.css) — тримати значення тут і в tokens.ts
+   синхронними при правках. */
+
+.root {
+  --rc-page: #fff9f6;
+  --rc-surface: #ffffff;
+  --rc-surface-alt: #fbf2ec;
+  --rc-accent: #6b5f1c;
+  --rc-accent-soft: #f1eddc;
+  --rc-text: #3d3d3d;
+  --rc-text-muted: #5c5c5c;
+  --rc-line: #e7ded8;
+
+  position: relative;
+}
+
+:global(html.dark) .root {
+  --rc-page: #09090b;
+  --rc-surface: #131316;
+  --rc-surface-alt: #101013;
+  --rc-accent: #f1d2d3;
+  --rc-accent-soft: #231516;
+  --rc-text: #fff9f6;
+  --rc-text-muted: #c9c3bf;
+  --rc-line: #26262b;
+}
+
+/* Один відгук на екран: .slide займає всю ширину .viewport, доріжка
+   перемикається транслюванням X на цілі кроки (--rc-index). Горизонтальний
+   жест забирає карусель собі, вертикальний лишається сторінці — той самий
+   touch-action, що й у EventServicesSlider. */
+.viewport {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.viewport:focus-visible {
+  outline: 2px solid var(--rc-accent);
+  outline-offset: 6px;
+}
+
+.track {
+  display: flex;
+  align-items: stretch;
+  transform: translateX(calc(-1 * var(--rc-index, 0) * 100% + var(--rc-drag, 0px)));
+  transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Поки палець тримає доріжку, вона йде за ним без інерції. */
+.dragging .track {
+  transition: none;
+}
+
+.slide {
+  display: flex;
+  flex: 0 0 100%;
+  min-width: 0;
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 640px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: clamp(20px, 2vw, 28px);
+  border: 1px solid var(--rc-line);
+  background-color: var(--rc-surface);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.quoteMark {
+  position: absolute;
+  top: clamp(1rem, 2vw, 1.5rem);
+  right: clamp(1.25rem, 2.4vw, 1.75rem);
+  color: var(--rc-accent);
+  opacity: 0.14;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.avatar {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: var(--rc-surface-alt);
+}
+
+.avatar img {
+  object-fit: cover;
+}
+
+.avatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background-color: var(--rc-surface-alt);
+  color: var(--rc-accent);
+  font-family: var(--font-brand-ui);
+  font-weight: 600;
+}
+
+.meta {
+  min-width: 0;
+}
+
+.name {
+  display: block;
+  font-family: var(--font-brand-ui);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  color: var(--rc-text);
+}
+
+.sub {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.date {
+  font-family: var(--font-brand-ui);
+  font-size: 0.75rem;
+  color: var(--rc-text-muted);
+}
+
+/* Довжина відгуку не контрольована (Google): раніше довгий текст просто
+   обрізався по 7-му рядку (-webkit-line-clamp) без жодного способу прочитати
+   решту. Тепер висота фіксована (та сама, що давав clamp), а текст, що не
+   влазить, гортається власним скролом усередині — надто довгий відгук більше
+   не втрачає кінець.
+   height, а не max-height: усі картки лишаються однакової висоти незалежно
+   від довжини конкретного відгуку (короткий просто не займає її всю), а не
+   "стрибають" розміром одна відносно одної під час перемикання. */
+.text {
+  position: relative;
+  height: clamp(9.5rem, 21vw, 12rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.6rem;
+  font-family: var(--font-brand-ui);
+  font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--rc-text-muted);
+  white-space: pre-line;
+
+  /* Тонкий скролбар у кольорах теми — водночас і єдина візуальна підказка,
+     що в картці є ще текст нижче (Firefox). */
+  scrollbar-width: thin;
+  scrollbar-color: var(--rc-line) transparent;
+}
+
+/* Той самий скролбар для Chromium/Safari — там scrollbar-color не працює. */
+.text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.text::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.text::-webkit-scrollbar-thumb {
+  background-color: var(--rc-line);
+  border-radius: 999px;
+}
+
+.text::-webkit-scrollbar-thumb:hover {
+  background-color: var(--rc-accent);
+}
+
+/* tabIndex=0 у розмітці — щоб клавіатура (Tab, потім стрілки/Page Down) і
+   читалка могли дістатись до скролу картки: сама .viewport перехоплює
+   ArrowLeft/ArrowRight під перемикання слайдів, тож без власного фокуса на
+   .text до вертикального скролу з клавіатури не дістатись. */
+.text:focus-visible {
+  outline: 2px solid var(--rc-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Керування: стрілки + крапки в одному рядку під карткою ──
+   Свідомо не абсолютне позиціювання стрілок по боках картки (як буває в
+   типових слайдерах): на вузьких екранах вони тоді або наїжджають на текст
+   картки, або вимагають окремого мобільного розкладу. Один рядок під
+   карткою працює однаково на будь-якій ширині без медіа-запитів. */
+.navRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.85rem, 2.4vw, 1.5rem);
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--rc-line);
+  background-color: var(--rc-surface);
+  color: var(--rc-text);
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.arrow:hover {
+  border-color: var(--rc-accent);
+  background-color: var(--rc-accent-soft);
+  color: var(--rc-accent);
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--rc-accent);
+  outline-offset: 3px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background-color: var(--rc-line);
+  cursor: pointer;
+  transition:
+    width 200ms ease,
+    background-color 200ms ease;
+}
+
+.dot:hover {
+  background-color: var(--rc-accent);
+  opacity: 0.6;
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--rc-accent);
+  outline-offset: 3px;
+}
+
+.dotActive,
+.dotActive:hover {
+  width: 22px;
+  background-color: var(--rc-accent);
+  opacity: 1;
+}
+
+/* Перелік для читалок екрана — візуально прихований, але фокусований. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    transition: none;
+  }
+}

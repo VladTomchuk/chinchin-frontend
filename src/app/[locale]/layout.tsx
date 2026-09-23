@@ -7,13 +7,14 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Navbar from '@/components/navbar/page';
+import Footer from '@/components/footer/Footer';
 import SmoothScroll from '@/components/shared/SmoothScroll';
 import TopLoader from '@/components/shared/TopLoader';
 import LoadingCursor from '@/components/shared/LoadingCursor';
 import WhatsAppButton from '@/components/WhatsAppButton/WhatsAppButton';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { brandFont, monotonFont, uiFont } from '@/fonts/fonts';
+import { brandFont, headingFont, monotonFont, uiFont } from '@/fonts/fonts';
 import { SITE_URL } from '@/config/site';
 
 type Props = {
@@ -51,10 +52,21 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html
       lang={htmlLang}
-      className={`${brandFont.variable} ${uiFont.variable} ${monotonFont.variable}`}
+      className={`${brandFont.variable} ${uiFont.variable} ${monotonFont.variable} ${headingFont.variable}`}
       suppressHydrationWarning
     >
       <body>
+        {/* Climate Crisis (заголовок хіро для укр локалі, IntroBanner.tsx) —
+            напряму з Google Fonts, а не через next/font: у файлу, самохостнутого
+            через next/font/local, вийшов не той нарис. Пінуємо вісь YEAR на
+            1979 — той самий інстанс, що й дефолт на сторінці шрифту в Google
+            Fonts. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Climate+Crisis:YEAR@1979&display=swap"
+          rel="stylesheet"
+        />
         <NextIntlClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Provider>
@@ -63,6 +75,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               <SmoothScroll />
               <Navbar />
               {children}
+              <Footer />
               <WhatsAppButton />
             </Provider>
           </ThemeProvider>

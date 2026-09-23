@@ -1,16 +1,27 @@
 'use client';
 
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { LuArrowLeft, LuArrowRight } from 'react-icons/lu';
+import { LuArrowRight } from 'react-icons/lu';
 import { Link } from '@/i18n/navigation';
 import type { EventTypeSlug } from '@/data/eventTypes';
 import { services } from '@/data/services';
+import type { ServiceSlug } from '@/data/services';
+import { SERVICES_CATALOG_HIDDEN } from '@/config/navigation';
+import { Eyebrow, SectionTitle } from '@/components/shared/primitives';
 import styles from './EventServicesSlider.module.css';
 
 /** 'all' — окремий стан фільтра, а не тип події: показує весь каталог. */
 type Filter = EventTypeSlug | 'all';
+
+// Прибрані з ЦІЄЇ каруселі конкретно (не з каталогу послуг і не зі сторінки
+// /services/{slug} — там усе лишається як є). self-service-bar: для картки в
+// цьому слайдері немає власного фото з тією самою композицією, що в сусідніх
+// карток (усі стенд-іни під рукою — або надто тісний кадр, що ламає єдиний
+// шаблон розміру "начинки" картки, або вже зайняті іншими картками). Легко
+// повернути — досить прибрати слаг звідси, коли з'явиться підхоже фото.
+const HIDDEN_IN_SLIDER: ServiceSlug[] = ['self-service-bar'];
 
 // Наскільки далеко треба протягнути доріжку, щоб відпускання перемкнуло слайд.
 // Менше — випадковий рух пальця гортає карусель, більше — свайп «не спрацьовує».
@@ -18,6 +29,11 @@ const DRAG_THRESHOLD_PX = 60;
 
 // З якого зсуву вважаємо, що це перетягування, а не тап.
 const DRAG_CLICK_SUPPRESSION_PX = 8;
+
+// Пауза автопрокрутки між слайдами. Перерахунок таймера на кожну зміну index
+// (і автоматичну, і ручну) — див. ефект нижче — тож це заодно й час, за який
+// автогортання відновлюється після ручного втручання.
+const AUTOPLAY_INTERVAL_MS = 3000;
 
 // Частину описів послуг ще не написано — у messages/{ua,en}.json на їх місці
 // стоять заглушки виду "[COPY PENDING — … — Short Description]". У картці такий
@@ -68,22 +84,53 @@ const LOREM_TITLE = 'Lorem ipsum';
  * (єдине джерело правди, див. data/relations.ts) — досить повернути UI, який
  * зможе його змінювати, і фільтрація одразу запрацює знову.
  *
- * Кожен слайд — повноцінне посилання на сторінку послуги, і активний, і бічні:
+ * Посилання на сторінку послуги — тільки кнопка "Детальніше" (.cta):
  * так усі девʼять адрес лишаються в розмітці для читалок і пошуковика без
- * дубльованого прихованого списку. Клік по бічному слайду не веде за
- * посиланням, а підводить його в центр (перший клік — вибір, другий — перехід).
- * Тип елемента при цьому не міняється, тому фокус нікуди не зникає — а от
- * підміна <button> на <a> при зміні активного слайда фокус би губила.
+ * дубльованого прихованого списку, а сама картка (фото, назва, опис) —
+ * некликабельна щодо переходу. Обгортка слайда — звичайний <div>, а не
+ * <a>: клік по бічному (неактивному) слайду підводить його в центр
+ * (goTo), клік по вже активному — нічого не робить, бо переходити з нього
+ * нема куди, крім як через .cta. Таб теж заходить не в обгортку, а
+ * напряму в .cta (єдиний фокусований елемент слайда) — фокус на кнопці
+ * бічної картки так само підводить її в центр через onFocus, тож клавіатурний
+ * і мишачий сценарії лишаються еквівалентними.
+ *
+ * Видно завжди рівно три картки: активну й по одній сусідній з кожного боку —
+ * решта обрізана переповненням .viewport, а не просто "не показана" (усі
+ * девʼять і далі рендеряться в .track, посилання нікуди не діваються). Ширина
+ * .viewport — саме "3 картки + 2 проміжки" (--ess-slide-w на десктопі так само
+ * порахований, щоб рівно три вміщались у 3/4 екрана), тому нічого не виїжджає
+ * за нього як фон під вступний текст.
+ *
+ * Стрілок керування більше немає — перемикання ручне (клік по бічній картці,
+ * стрілки клавіатури, свайп) і автоматичне: кожні AUTOPLAY_INTERVAL_MS
+ * карусель сама йде до наступного слайда (з переходом через останній назад на
+ * перший). Автогортання ставиться на паузу під час перетягування, наведення
+ * курсору чи фокуса всередині .viewport (щоб не тікати з-під клавіатурного
+ * користувача) і не вмикається зовсім при prefers-reduced-motion. Один
+ * useEffect керує і автоматичним, і ручним переходом: він перезапускає
+ * таймер на КОЖНУ зміну index, тож ручний клік так само відсуває наступне
+ * автоматичне перемикання на AUTOPLAY_INTERVAL_MS вперед, а не бореться з ним.
  */
 export default function EventServicesSlider() {
   const t = useTranslations('EventServicesSlider');
   const tItems = useTranslations('ServiceItems');
   const tCatalog = useTranslations('Catalog');
+  // Інтро-блок ліворуч від першої картки навмисно бере текст із
+  // ServicesLateralScroll (той самий вступ і той самий перелік послуг), а не
+  // з власних (наразі невикористаних) ключів eyebrow/title/lead цього
+  // компонента — щоб не тримати два різні формулювання одного вступу.
+  const tServices = useTranslations('ServicesLateralScroll');
+  const servicesListText = (tServices.raw('servicesList') as string[]).join(' · ');
 
   const [filter] = useState<Filter>('all');
   const [index, setIndex] = useState(0);
   const [dragDx, setDragDx] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  // Наведення й фокус ставлять автогортання на паузу — інакше воно тікало б
+  // з-під людини, яка саме читає картку чи тягнеться до кнопки .cta.
+  const [isHovering, setIsHovering] = useState(false);
+  const [isFocusWithin, setIsFocusWithin] = useState(false);
 
   // Стан жесту живе в ref, а не в state, з двох причин: між кадрами pointermove
   // він не має викликати ререндер, і — головне — його читають обробники того
@@ -96,24 +143,54 @@ export default function EventServicesSlider() {
   const dragging = useRef(false);
 
   const visibleServices = useMemo(
-    () => (filter === 'all' ? services : services.filter((s) => s.eventTypes.includes(filter))),
+    () =>
+      (filter === 'all' ? services : services.filter((s) => s.eventTypes.includes(filter))).filter(
+        (s) => !HIDDEN_IN_SLIDER.includes(s.slug),
+      ),
     [filter],
   );
 
-  const lastIndex = visibleServices.length - 1;
+  // +1 — псевдо-картка "Переглянути всі послуги" в кінці доріжки (див. JSX
+  // після .map нижче): вона в загальній карусельній ротації нарівні з
+  // рештою, тож усе, що рахує загальну кількість слайдів для індексації,
+  // враховує і її.
+  const slideCount = visibleServices.length + 1;
 
-  const clamp = useCallback(
-    (next: number) => Math.min(Math.max(next, 0), Math.max(lastIndex, 0)),
-    [lastIndex],
+  // Індекс завжди по колу (модуло, а не min/max-затискання): стрілок керування
+  // немає, а автогортання без цього просто зупинилось би на останній картці
+  // замість піти на першу. + length перед % рятує від'ємний delta (-1) від
+  // від'ємного залишку — у JS % не еквівалентний математичному модулю.
+  const wrapIndex = useCallback(
+    (next: number) => ((next % slideCount) + slideCount) % slideCount,
+    [slideCount],
   );
 
-  const goTo = useCallback((next: number) => setIndex(() => clamp(next)), [clamp]);
+  const goTo = useCallback((next: number) => setIndex(() => wrapIndex(next)), [wrapIndex]);
 
   /** Крок від ПОПЕРЕДНЬОГО стану, а не від значення з поточного рендеру: два
       кліки в одному тіку (швидке подвійне натискання стрілки) інакше обидва
       порахували б index + 1 від того самого index і зсунули б карусель на один
       слайд замість двох. */
-  const step = useCallback((delta: number) => setIndex((prev) => clamp(prev + delta)), [clamp]);
+  const step = useCallback(
+    (delta: number) => setIndex((prev) => wrapIndex(prev + delta)),
+    [wrapIndex],
+  );
+
+  // Одна пружина і на ручне, і на автоматичне перемикання: ефект перезапускає
+  // таймер на КОЖНУ зміну index (байдуже, звідки вона — клік, свайп, стрілка
+  // клавіатури чи попередній тік самого автогортання), тож ручне втручання
+  // просто відсуває наступний автоматичний крок на AUTOPLAY_INTERVAL_MS
+  // вперед, а не змагається з таймером, який тим часом рахує далі.
+  useEffect(() => {
+    if (slideCount <= 1) return undefined;
+    if (isDragging || isHovering || isFocusWithin) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    const id = window.setTimeout(() => step(1), AUTOPLAY_INTERVAL_MS);
+    return () => window.clearTimeout(id);
+    // index у деп-масиві навмисно: step сам по собі стабільний (useCallback),
+    // тож без index тут ефект не перезапускав би таймер на кожен крок.
+  }, [index, slideCount, isDragging, isHovering, isFocusWithin, step]);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     // Мишею доріжку не тягнуть: на десктопі слайди гортаються тільки стрілками
@@ -187,11 +264,13 @@ export default function EventServicesSlider() {
     }
   };
 
-  // Перший клік по бічному слайду вибирає його, а не переходить на сторінку:
-  // текст картки поки під завісою, тож переходити було б наосліп.
-  const onSlideClick = (e: React.MouseEvent, i: number) => {
+  // Клік по бічному (неактивному) слайду вибирає його — підводить у центр,
+  // а не переходить: текст картки поки під завісою, тож переходити було б
+  // наосліп. Клік по вже активному слайду нічого не робить: обгортка — не
+  // посилання (єдине посилання картки — кнопка .cta нижче), переходити
+  // звідси нема на що.
+  const onSlideSelect = (i: number) => {
     if (i === index) return;
-    e.preventDefault();
     goTo(i);
   };
 
@@ -200,7 +279,43 @@ export default function EventServicesSlider() {
       {visibleServices.length === 0 ? (
         <p className={styles.empty}>{t('empty')}</p>
       ) : (
-        <>
+        <div className={styles.layout}>
+          {/* Ліворуч від першої (активної) картки — статичний вступ, той
+              самий текст, що й у leftCard ServicesLateralScroll. На десктопі
+              лежить абсолютом у полі, яке .track і так лишає порожнім зліва
+              від відцентрованого слайда (.track має padding-inline-start =
+              половина цього поля, див. CSS-модуль) — жодних додаткових
+              вимірювань не потрібно, ширина рахується тим самим calc().
+              Картка не рухається разом з доріжкою (вона поза .track), тож
+              лишається на місці, ліворуч від активного слайда, на будь-якому
+              індексі — не тільки на нульовому. */}
+          <div className={styles.introCard}>
+            <div className={styles.introHead}>
+              <Eyebrow mb={0}>{tServices('eyebrow')}</Eyebrow>
+              <SectionTitle whiteSpace="pre-line">{tServices('title')}</SectionTitle>
+              {SERVICES_CATALOG_HIDDEN ? (
+                <div className={styles.introCtaRow}>
+                  <span
+                    className={`${styles.introCta} ${styles.introCtaDisabled}`}
+                    aria-disabled="true"
+                  >
+                    {tServices('cta')}
+                    <LuArrowRight size={16} aria-hidden />
+                  </span>
+                  <span className={styles.soonTag}>{tCatalog('soon')}</span>
+                </div>
+              ) : (
+                <Link href="/services" className={styles.introCta}>
+                  {tServices('cta')}
+                  <LuArrowRight size={16} aria-hidden />
+                </Link>
+              )}
+            </div>
+            <div className={styles.introBody}>
+              <p className={styles.introLead}>{tServices('lead')}</p>
+            </div>
+          </div>
+
           <div
             className={`${styles.viewport} ${isDragging ? styles.dragging : ''}`}
             role="group"
@@ -213,6 +328,14 @@ export default function EventServicesSlider() {
             onPointerUp={endDrag}
             onPointerCancel={endDrag}
             onClickCapture={onSlideClickCapture}
+            // Пауза автогортання — курсор і фокус (Tab у .cta) означають, що
+            // людина саме зараз читає чи цілиться в картку. onFocus/onBlur тут
+            // ловлять фокус УСЬОГО піддерева (включно з .cta всередині кожного
+            // слайда) так само, як звичайні focusin/focusout.
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+            onFocus={() => setIsFocusWithin(true)}
+            onBlur={() => setIsFocusWithin(false)}
           >
             <div
               className={styles.track}
@@ -225,6 +348,7 @@ export default function EventServicesSlider() {
             >
               {visibleServices.map((service, i) => {
                 const isActive = i === index;
+                const isSoon = service.status === 'soon';
                 const rawName = tItems(`${service.slug}.name`);
                 const rawDescription = tItems(`${service.slug}.shortDescription`);
                 const name = rawName.startsWith(COPY_PENDING_PREFIX) ? LOREM_TITLE : rawName;
@@ -233,16 +357,13 @@ export default function EventServicesSlider() {
                   : rawDescription;
 
                 return (
-                  <Link
+                  <div
                     key={service.slug}
-                    href={{ pathname: '/services/[slug]', params: { slug: service.slug } }}
+                    role="group"
                     aria-label={name}
                     aria-current={isActive ? 'true' : undefined}
                     className={`${styles.slide} ${isActive ? styles.slideActive : ''}`}
-                    onClick={(e) => onSlideClick(e, i)}
-                    // Таб по слайдах підводить сфокусований у центр — інакше
-                    // фокус ішов би в картку, яку майже не видно.
-                    onFocus={() => goTo(i)}
+                    onClick={() => onSlideSelect(i)}
                   >
                     <div className={styles.content}>
                       <div className={styles.photo}>
@@ -261,11 +382,14 @@ export default function EventServicesSlider() {
                           className={styles.photoImg}
                         />
                         <span className={styles.photoFade} />
+                        {isSoon && <span className={styles.soonRibbon}>{tCatalog('soon')}</span>}
                       </div>
 
-                      <div className={`${styles.name} ${styles.clip}`}>
-                        <div className={styles.clipInner}>
-                          <span className={styles.nameText}>{name}</span>
+                      <div className={styles.nameBox}>
+                        <div className={`${styles.name} ${styles.clip}`}>
+                          <div className={styles.clipInner}>
+                            <span className={styles.nameText}>{name}</span>
+                          </div>
                         </div>
                       </div>
 
@@ -277,46 +401,139 @@ export default function EventServicesSlider() {
 
                       <div className={`${styles.ctaWrap} ${styles.clip}`}>
                         <div className={styles.clipInner}>
-                          <span className={styles.cta}>{tCatalog('cta')}</span>
+                          <div className={styles.ctaRow}>
+                            {isSoon ? (
+                              // Soon-послуга: нема куди вести, тож замість Link —
+                              // звичайний span. tabIndex/onFocus лишаються (той
+                              // самий механізм, що й у живого CTA нижче) — бічна
+                              // картка так само підводиться в центр по Tab, тільки
+                              // Enter/клік уже нікуди не ведуть (немає href).
+                              <span
+                                aria-disabled="true"
+                                aria-label={`${tCatalog('soon')} — ${name}`}
+                                tabIndex={0}
+                                className={`${styles.cta} ${styles.ctaDisabled}`}
+                                onFocus={() => goTo(i)}
+                              >
+                                {tCatalog('cta')}
+                              </span>
+                            ) : (
+                              // Єдине справжнє посилання картки. aria-label дублює
+                              // видимий текст назвою послуги — інакше дев'ять
+                              // однакових "Детальніше" в списку посилань читалки
+                              // нічим не різняться. Клік тут не спливає в нічого,
+                              // що йому заважало б: onClick обгортки вище лише
+                              // вибирає бічний слайд (i !== index), для активного
+                              // (i === index, а ми клікаємо саме тут) — це no-op.
+                              <Link
+                                href={{
+                                  pathname: '/services/[slug]',
+                                  params: { slug: service.slug },
+                                }}
+                                aria-label={`${tCatalog('cta')} — ${name}`}
+                                className={styles.cta}
+                                // Таб заходить сюди, а не в обгортку слайда — це
+                                // єдиний фокусований елемент картки. Фокус на
+                                // кнопці бічного слайду підводить його в центр так
+                                // само, як раніше робив фокус на всій картці.
+                                onFocus={() => goTo(i)}
+                              >
+                                {tCatalog('cta')}
+                              </Link>
+                            )}
+                            {isSoon && <span className={styles.soonTag}>{tCatalog('soon')}</span>}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 );
               })}
+
+              {/* Псевдо-картка в кінці доріжки — не послуга, а вихід у
+                  загальний каталог. Та сама структура класів (.slide/.content/
+                  .photo/.nameBox/.description/.ctaWrap), що й у справжніх
+                  карток, — тому має той самий розмір і бере участь у тій самій
+                  анімації масштабування й тій самій каруселі (клік/свайп/
+                  клавіші/автогортання просто по колу доходять і до неї, індекс
+                  — visibleServices.length, останній за реальними послугами).
+                  Фото нема — .photo лишається порожнім, тільки з власним фоном
+                  і іконкою замість знімка. */}
+              {(() => {
+                const i = visibleServices.length;
+                const isActive = i === index;
+
+                return (
+                  <div
+                    role="group"
+                    aria-label={tServices('cta')}
+                    aria-current={isActive ? 'true' : undefined}
+                    className={`${styles.slide} ${isActive ? styles.slideActive : ''}`}
+                    onClick={() => onSlideSelect(i)}
+                  >
+                    <div className={styles.content}>
+                      <div className={`${styles.photo} ${styles.photoCatalog}`}>
+                        <LuArrowRight size={40} aria-hidden />
+                      </div>
+
+                      <div className={styles.nameBox}>
+                        <div className={`${styles.name} ${styles.clip}`}>
+                          <div className={styles.clipInner}>
+                            <span className={styles.nameText}>{tServices('cta')}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className={`${styles.description} ${styles.clip}`}>
+                        <div className={styles.clipInner}>
+                          <p className={styles.descriptionText}>{tServices('lead')}</p>
+                        </div>
+                      </div>
+
+                      <div className={`${styles.ctaWrap} ${styles.clip}`}>
+                        <div className={styles.clipInner}>
+                          <div className={styles.ctaRow}>
+                            {SERVICES_CATALOG_HIDDEN ? (
+                              <span
+                                aria-disabled="true"
+                                aria-label={`${tCatalog('soon')} — ${tServices('cta')}`}
+                                tabIndex={0}
+                                className={`${styles.cta} ${styles.ctaDisabled}`}
+                                onFocus={() => goTo(i)}
+                              >
+                                {tCatalog('cta')}
+                              </span>
+                            ) : (
+                              <Link
+                                href="/services"
+                                aria-label={`${tCatalog('cta')} — ${tServices('cta')}`}
+                                className={styles.cta}
+                                onFocus={() => goTo(i)}
+                              >
+                                {tCatalog('cta')}
+                              </Link>
+                            )}
+                            {SERVICES_CATALOG_HIDDEN && (
+                              <span className={styles.soonTag}>{tCatalog('soon')}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
 
-            <div className={styles.controls}>
-              {/* Видимого лічильника немає, але зміну слайда все одно треба
-                озвучити: інакше натискання стрілки для читалки нічим не
-                відрізняється від натискання в порожнечу. */}
-              <span className={styles.srOnly} aria-live="polite">
-                {t('counter', { current: index + 1, total: visibleServices.length })}
-              </span>
-
-              <div className={styles.arrows}>
-                <button
-                  type="button"
-                  className={styles.arrow}
-                  aria-label={t('prev')}
-                  disabled={index === 0}
-                  onClick={() => step(-1)}
-                >
-                  <LuArrowLeft size={20} aria-hidden />
-                </button>
-                <button
-                  type="button"
-                  className={styles.arrow}
-                  aria-label={t('next')}
-                  disabled={index === lastIndex}
-                  onClick={() => step(1)}
-                >
-                  <LuArrowRight size={20} aria-hidden />
-                </button>
-              </div>
-            </div>
+            {/* Видимих стрілок немає (перемикання ручне через клік/свайп/клавіші
+                й автоматичне через автогортання), але зміну слайда все одно
+                треба озвучити — інакше для читалки автоматичний перехід
+                нічим не відрізняється від тиші. */}
+            <span className={styles.srOnly} aria-live="polite">
+              {t('counter', { current: index + 1, total: slideCount })}
+            </span>
           </div>
-        </>
+        </div>
       )}
     </section>
   );

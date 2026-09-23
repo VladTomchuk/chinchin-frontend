@@ -8,8 +8,10 @@ import { buildServiceJsonLd, buildServiceMetadata } from '@/lib/seo';
 import JsonLd from '@/components/shared/JsonLd';
 import ServiceHero from '@/components/catalog/ServiceHero';
 import ServiceBody from '@/components/catalog/ServiceBody';
+import ServiceComingSoon from '@/components/catalog/ServiceComingSoon';
 import RelatedEventTypesGrid from '@/components/catalog/RelatedEventTypesGrid';
 import OtherServicesGrid from '@/components/catalog/OtherServicesGrid';
+import ReviewsSection from '@/components/GoogleReviews/ReviewsSection';
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -48,6 +50,19 @@ export default async function ServicePage({ params }: Props) {
   const service = services.find((item) => item.slug === slug);
   if (!service) notFound();
 
+  // Послуга ще не запущена (Service.status === 'soon') — навіть прямий заход
+  // за URL не повинен показувати ServiceBody: у частини таких послуг там усе
+  // ще [COPY PENDING …] замість готового тексту. ComingSoon бере лише name і
+  // shortDescription (готові поля), без jsonLd (сторінки без тіла нема сенсу
+  // розмічати як Service).
+  if (service.status === 'soon') {
+    return (
+      <main>
+        <ServiceComingSoon slug={slug} />
+      </main>
+    );
+  }
+
   const jsonLd = await buildServiceJsonLd(locale as Locale, slug);
 
   return (
@@ -60,6 +75,7 @@ export default async function ServicePage({ params }: Props) {
           мові. */}
       <RelatedEventTypesGrid serviceSlug={slug} />
       <OtherServicesGrid currentSlug={slug} />
+      <ReviewsSection />
 
       {jsonLd && <JsonLd data={jsonLd} />}
     </main>

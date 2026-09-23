@@ -18,7 +18,7 @@ export default function FloatingActionButton() {
   const reduceMotion = useReducedMotion();
 
   // Пункти без адреси не показуємо: краще коротше меню, ніж посилання в нікуди.
-  const items = FAB_ITEMS.filter((item) => item.href.length > 0);
+  const items = FAB_ITEMS.filter((item) => Boolean(item.href));
 
   useEffect(() => {
     if (!open) return;
@@ -102,21 +102,9 @@ export default function FloatingActionButton() {
                     variants={itemVariants}
                     whileTap={reduceMotion ? undefined : { scale: 0.96 }}
                   >
-                    {item.kind === 'internal' ? (
-                      <Link href={item.href} className={styles.link} onClick={() => setOpen(false)}>
-                        {content}
-                      </Link>
-                    ) : (
-                      <a
-                        href={item.href}
-                        className={styles.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => setOpen(false)}
-                      >
-                        {content}
-                      </a>
-                    )}
+                    <Link href={item.href} className={styles.link} onClick={() => setOpen(false)}>
+                      {content}
+                    </Link>
                   </motion.li>
                 );
               })}

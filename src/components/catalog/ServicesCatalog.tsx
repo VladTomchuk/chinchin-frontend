@@ -17,11 +17,12 @@ export default async function ServicesCatalog() {
     name: tItems(`${service.slug}.name`),
     description: tItems(`${service.slug}.shortDescription`),
     Icon: service.Icon,
+    isSoon: service.status === 'soon',
   }));
 
   return (
     <Section pt={0}>
-      <CatalogGrid kind="service" entries={entries} cta={t('cta')} />
+      <CatalogGrid kind="service" entries={entries} cta={t('cta')} soon={t('soon')} />
     </Section>
   );
 }

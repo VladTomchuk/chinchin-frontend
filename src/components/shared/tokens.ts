@@ -40,4 +40,4 @@ export const FOCUS_RING = {
 // сторінки повинен починатися нижче, інакше заголовок ховається під нею.
 export const NAVBAR_OFFSET = { base: '84px', md: '96px' };
 
-export const CONTENT_MAX_WIDTH = '1120px';
+export const CONTENT_MAX_WIDTH = '1200px';

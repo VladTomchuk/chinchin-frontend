@@ -1,21 +1,23 @@
 import { getTranslations } from 'next-intl/server';
-import { Eyebrow, Lead, Section, SectionTitle } from '@/components/shared/primitives';
-import QuoteForm from './QuoteForm';
+import QuoteFormSection from '@/components/shared/QuoteForm/QuoteFormSection';
 
 /**
- * Обгортка серверного рівня: заголовки й опис рендеряться на сервері, а
- * клієнтським лишається тільки саме поле форми.
+ * Раніше тут була власна форма (QuoteForm.tsx, вилучена) з полем "тип події"
+ * на основі форматів заходу (CorporateEvents.formats) і сабмітом через
+ * mailto:. Тепер це єдина форма сайту (components/shared/QuoteForm) — поле
+ * "Тип події" веде до спільного каталогу типів подій, і сторінка просто
+ * підставляє свій тип (corporate-business-events) як обраний за замовчуванням.
  */
 export default async function QuoteSection() {
   const t = await getTranslations('CorporateEvents.quote');
 
   return (
-    <Section id="quote" scrollMarginTop="80px">
-      <Eyebrow>{t('eyebrow')}</Eyebrow>
-      <SectionTitle mb={5}>{t('title')}</SectionTitle>
-      <Lead mb={{ base: 8, md: 10 }}>{t('text')}</Lead>
-
-      <QuoteForm />
-    </Section>
+    <QuoteFormSection
+      id="quote-form"
+      eyebrow={t('eyebrow')}
+      title={t('title')}
+      text={t('text')}
+      defaultEventType="corporate-business-events"
+    />
   );
 }

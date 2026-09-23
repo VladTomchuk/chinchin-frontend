@@ -3,7 +3,9 @@ import { getTranslations } from 'next-intl/server';
 import { LuArrowRight } from 'react-icons/lu';
 import { services } from '@/data/services';
 import { eventTypes } from '@/data/eventTypes';
+import { SERVICES_CATALOG_HIDDEN } from '@/config/navigation';
 import { Eyebrow, Lead, Section, SectionTitle } from '@/components/shared/primitives';
+import SoonBadge from '@/components/shared/SoonBadge';
 import { c } from '@/components/shared/tokens';
 import { Link } from '@/i18n/navigation';
 import CatalogGrid, { type CatalogEntry } from '@/components/catalog/CatalogGrid';
@@ -25,6 +27,7 @@ export default async function Offer() {
     name: tServices(`${service.slug}.name`),
     description: tServices(`${service.slug}.shortDescription`),
     Icon: service.Icon,
+    isSoon: service.status === 'soon',
   }));
 
   const eventEntries: CatalogEntry[] = eventTypes.map((eventType) => ({
@@ -53,21 +56,39 @@ export default async function Offer() {
         >
           {t('servicesLabel')}
         </Heading>
-        <CatalogGrid kind="service" entries={serviceEntries} cta={tCatalog('cta')} />
-        <Link href="/services">
-          <Flex
-            align="center"
-            gap={2}
-            mt={6}
-            fontFamily="var(--font-brand-ui)"
-            fontWeight="600"
-            fontSize="sm"
-            color={c.accent}
-          >
-            {t('servicesCta')}
-            <LuArrowRight size={16} aria-hidden />
+        <CatalogGrid kind="service" entries={serviceEntries} cta={tCatalog('cta')} soon={tCatalog('soon')} />
+        {SERVICES_CATALOG_HIDDEN ? (
+          <Flex align="center" gap={3} mt={6} aria-disabled="true">
+            <Flex
+              align="center"
+              gap={2}
+              opacity={0.55}
+              fontFamily="var(--font-brand-ui)"
+              fontWeight="600"
+              fontSize="sm"
+              color={c.text}
+            >
+              {t('servicesCta')}
+              <LuArrowRight size={16} aria-hidden />
+            </Flex>
+            <SoonBadge label={tCatalog('soon')} />
           </Flex>
-        </Link>
+        ) : (
+          <Link href="/services">
+            <Flex
+              align="center"
+              gap={2}
+              mt={6}
+              fontFamily="var(--font-brand-ui)"
+              fontWeight="600"
+              fontSize="sm"
+              color={c.accent}
+            >
+              {t('servicesCta')}
+              <LuArrowRight size={16} aria-hidden />
+            </Flex>
+          </Link>
+        )}
       </Box>
 
       <Box>
@@ -83,7 +104,7 @@ export default async function Offer() {
         >
           {t('eventsLabel')}
         </Heading>
-        <CatalogGrid kind="event" entries={eventEntries} cta={tCatalog('cta')} />
+        <CatalogGrid kind="event" entries={eventEntries} cta={tCatalog('cta')} soon={tCatalog('soon')} />
         <Link href="/events">
           <Flex
             align="center"

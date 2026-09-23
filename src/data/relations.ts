@@ -47,11 +47,18 @@ export function getRelatedServices(serviceSlug: ServiceSlug): Service[] {
     .filter((item): item is Service => item !== undefined);
 
   const picked = curated.slice(0, RELATED_MAX);
-  if (picked.length >= RELATED_MIN) return picked;
+  const result =
+    picked.length >= RELATED_MIN
+      ? picked
+      : [
+          ...picked,
+          ...services.filter(
+            (item) => item.slug !== serviceSlug && !picked.some((chosen) => chosen.slug === item.slug),
+          ),
+        ].slice(0, RELATED_MAX);
 
-  const fallback = services.filter(
-    (item) => item.slug !== serviceSlug && !picked.some((chosen) => chosen.slug === item.slug),
-  );
-
-  return [...picked, ...fallback].slice(0, RELATED_MAX);
+  // .related — ручний список (див. коментар у Service.related), тож на
+  // відміну від services[] сам по собі не гарантує soon-в-кінці; сортуємо тут
+  // явно, тим самим стабільним порівнянням, що й при побудові services[].
+  return [...result].sort((a, b) => Number(a.status === 'soon') - Number(b.status === 'soon'));
 }

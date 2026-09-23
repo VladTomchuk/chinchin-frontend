@@ -2,9 +2,9 @@ import Image from 'next/image';
 import { Box, Button } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
 import type { Service } from '@/data/services';
+import { SERVICES_CATALOG_HIDDEN } from '@/config/navigation';
 import { PageTitle } from '@/components/shared/primitives';
 import { CONTENT_MAX_WIDTH } from '@/components/shared/tokens';
-import { CONTACT_EMAIL } from '@/config/site';
 import BackLink from '@/components/shared/BackLink';
 
 /**
@@ -41,9 +41,6 @@ export default async function ServiceHero({ service }: { service: Service }) {
   const t = await getTranslations(`ServiceItems.${service.slug}`);
   const tPage = await getTranslations('ServicesPage');
   const tCatalog = await getTranslations('Catalog');
-
-  const subject = `${t('name')} — ${tCatalog('quoteEmailSubject')}`;
-  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
 
   return (
     <Box
@@ -101,7 +98,13 @@ export default async function ServiceHero({ service }: { service: Service }) {
                 той, що клікається. Стоїть у тій самій колонці, що h1 і кнопка,
                 тому лівий край у всіх трьох спільний. */}
             <Box mb={4}>
-              <BackLink href="/services" label={tPage('hero.eyebrow')} tone="onPhoto" />
+              <BackLink
+                href="/services"
+                label={tPage('hero.eyebrow')}
+                tone="onPhoto"
+                disabled={SERVICES_CATALOG_HIDDEN}
+                soonLabel={tCatalog('soon')}
+              />
             </Box>
 
             {/* Короткого опису тут навмисно немає: одразу під героєм іде вступ
@@ -128,7 +131,10 @@ export default async function ServiceHero({ service }: { service: Service }) {
               _hover={{ opacity: 0.86, textDecoration: 'none' }}
               _focusVisible={FOCUS_RING_ON_PHOTO}
             >
-              <a href={mailto}>{tCatalog('ctaQuote')}</a>
+              {/* Скролить до вбудованої форми внизу сторінки (ServiceBody.tsx),
+                  а не відкриває mailto: — заявка йде реально, не лишає
+                  відвідувача самого в чужому поштовому клієнті. */}
+              <a href="#quote-form">{tCatalog('ctaQuote')}</a>
             </Button>
           </Box>
         </Box>

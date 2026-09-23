@@ -1,7 +1,9 @@
 import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { ABOUT_HIDDEN } from '@/config/navigation';
 import { Eyebrow, Lead, Section, SectionTitle } from '@/components/shared/primitives';
+import SoonBadge from '@/components/shared/SoonBadge';
 import { c, FOCUS_RING } from '@/components/shared/tokens';
 import { SOCIAL_LINKS } from '@/config/socials';
 import ShakerReveal from './ShakerReveal';
@@ -25,13 +27,18 @@ const TEAM_PHOTOS = [
 // "/about/team" в маршрутизації (i18n/routing.ts) поки нема.
 export default async function TeamPreview() {
   const t = await getTranslations('TeamPreview');
+  const tCatalog = await getTranslations('Catalog');
 
   return (
-    <Section>
+    // id — якір для пункту "About" у меню (config/navigation.ts): сама
+    // сторінка /about тимчасово прихована (ABOUT_HIDDEN), тож пункт меню веде
+    // не на неї, а сюди — на секцію "про нас" прямо на головній.
+    <Section id="about">
+      <Eyebrow>{t('eyebrow')}</Eyebrow>
+
       <Flex justify="space-between" align="center" gap={8} mb={{ base: 10, md: 14 }}>
         <Box maxW="60ch">
-          <Eyebrow>{t('eyebrow')}</Eyebrow>
-          <SectionTitle mb={4}>{t('title')}</SectionTitle>
+          <SectionTitle mb={10}>{t('title')}</SectionTitle>
           <Lead>{t('lead')}</Lead>
         </Box>
 
@@ -68,25 +75,47 @@ export default async function TeamPreview() {
         justify="space-between"
         gap={6}
       >
-        <Link href="/about">
-          <Flex
-            align="center"
-            gap={2}
-            px={7}
-            py={3.5}
-            rounded="full"
-            bg={c.accent}
-            color={c.accentContrast}
-            fontFamily="var(--font-brand-ui)"
-            fontWeight="600"
-            fontSize="sm"
-            transition="opacity 200ms ease"
-            _hover={{ opacity: 0.86 }}
-            _focusVisible={FOCUS_RING}
-          >
-            {t('cta')}
+        {ABOUT_HIDDEN ? (
+          <Flex align="center" gap={3} aria-disabled="true">
+            <Flex
+              align="center"
+              gap={2}
+              px={7}
+              py={3.5}
+              rounded="full"
+              bg={c.accent}
+              color={c.accentContrast}
+              fontFamily="var(--font-brand-ui)"
+              fontWeight="600"
+              fontSize="sm"
+              opacity={0.55}
+              cursor="default"
+            >
+              {t('cta')}
+            </Flex>
+            <SoonBadge label={tCatalog('soon')} />
           </Flex>
-        </Link>
+        ) : (
+          <Link href="/about">
+            <Flex
+              align="center"
+              gap={2}
+              px={7}
+              py={3.5}
+              rounded="full"
+              bg={c.accent}
+              color={c.accentContrast}
+              fontFamily="var(--font-brand-ui)"
+              fontWeight="600"
+              fontSize="sm"
+              transition="opacity 200ms ease"
+              _hover={{ opacity: 0.86 }}
+              _focusVisible={FOCUS_RING}
+            >
+              {t('cta')}
+            </Flex>
+          </Link>
+        )}
 
         <Flex align="center" gap={4}>
           <Text

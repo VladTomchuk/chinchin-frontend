@@ -1,0 +1,292 @@
+/* Пінована секція "як ми працюємо" — див. коментар у HowWeWork.tsx.
+   .container сам стає пін-спейсером через GSAP (pin:true) і сам перемикає
+   себе в position:fixed на час піна, тож тут задано лише "стан спокою" (як
+   секція виглядає до/після піна) — той самий підхід, що й у
+   ServicesLateralScroll.module.css/EventTypesScroll.module.css.
+
+   Кольори нижче — ті самі значення, що й c.* у components/shared/tokens.ts.
+   CSS-модуль не може імпортувати TS-константи, тож дублюємо вручну (той самий
+   компроміс, що й у сусідніх модулях) — тримати значення тут і в tokens.ts
+   синхронними при правках. */
+
+.container {
+  --hww-page: #fff9f6;
+  --hww-surface: #ffffff;
+  --hww-text: #3d3d3d;
+  --hww-text-muted: #5c5c5c;
+  --hww-accent: #6b5f1c;
+  --hww-accent-contrast: #fff9f6;
+  --hww-line: #e7ded8;
+
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--hww-page);
+}
+
+:global(html.dark) .container {
+  --hww-page: #09090b;
+  --hww-surface: #131316;
+  --hww-text: #fff9f6;
+  --hww-text-muted: #c9c3bf;
+  --hww-accent: #f1d2d3;
+  --hww-accent-contrast: #09090b;
+  --hww-line: #26262b;
+}
+
+/* Дві колонки: зліва назви кроків з рейкою-індикатором, праворуч — стек
+   карток з описом активного кроку. */
+.inner {
+  display: grid;
+  height: min(78vh, 640px);
+  max-width: 1200px;
+  grid-template-columns: minmax(260px, 0.85fr) 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 2rem);
+
+  /* .inner центрується у 100vh .container вертикально, той самий прийом, що
+     й .inner у ServicesLateralScroll.module.css. */
+  position: absolute;
+  inset: 0;
+  margin-block: auto;
+}
+
+/* ── Ліва колонка: заголовок, рейка з назвами кроків, CTA ── */
+.left {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.railWrap {
+  position: relative;
+  margin-top: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+/* Бейдж кожного кроку (.badge) має свій w/h = --badge і сидить по центру
+   рейки — 1px компенсує саме́ 2px-ширину лінії, щоб вона лягала точно
+   посередині бейджа, а не з half-піксельним зсувом. */
+.railWrap {
+  --badge: 2.5rem;
+}
+
+.railTrack,
+.railFill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--badge) / 2 - 1px);
+  width: 2px;
+}
+
+.railTrack {
+  background-color: var(--hww-line);
+}
+
+/* Росте зверху вниз під керуванням GSAP (scaleY 0 → 1, transformOrigin top) —
+   безперервний прогрес-бар на весь час піна, синхронний з тим, який крок
+   зараз активний (див. tl.to(fill, ...) у HowWeWork.tsx). Стартове scaleY(0)
+   тут лише запобіжник проти спалаху перед тим, як JS виставить реальне
+   значення (1 / кількість кроків) на монтуванні. */
+.railFill {
+  background-color: var(--hww-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.list {
+  position: relative;
+  /* Above .railTrack/.railFill so badges (opaque bg) mask the line ends. */
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.6rem 0;
+  color: var(--hww-text-muted);
+  transition: color 200ms ease;
+}
+
+/* Стан спокою до монтування JS — перший крок уже активний (той самий стан,
+   який gsap.set() виставляє в useGSAP), решта приглушені. */
+.listItem:first-child {
+  color: var(--hww-accent);
+}
+
+/* border-color: currentColor і color: inherit — тож досить, що GSAP міняє
+   лише color на батьківському <li> (.listItem), а кільце бейджа й цифра
+   підхоплюють нове значення самі, без окремого таргетингу в JS. */
+.badge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--badge);
+  height: var(--badge);
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  background-color: var(--hww-surface);
+  color: inherit;
+  font-family: var(--font-brand-ui);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  transition:
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.itemName {
+  font-family: var(--font-brand-ui);
+  font-weight: 600;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  color: inherit;
+}
+
+/* ── Права колонка: стек карток з описом, що перехресно проявляються ── */
+.right {
+  position: relative;
+  min-width: 0;
+}
+
+/* Картки накладені одна на одну (inset:0). Базові opacity/visibility — той
+   самий стан спокою, який інакше на мить було б видно до першого gsap.set()
+   (той самий прийом, що .cardPanel у ServicesLateralScroll.module.css). */
+.card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  border-radius: clamp(20px, 2vw, 28px);
+  border: 1px solid var(--hww-line);
+  background-color: var(--hww-surface);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.card:first-child {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cardIndex {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  line-height: 1;
+  color: var(--hww-line);
+  margin-bottom: 0.5rem;
+}
+
+/* Перелік для читалок екрана — картки праворуч перехресно проявляються
+   (autoAlpha/visibility ховає неактивні з дерева доступності), тож повний
+   текст кожного кроку дублюємо тут звичайним списком (той самий прийом, що
+   й .srOnly у ServicesLateralScroll.module.css). */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Фолбек: вузькі екрани та reduced-motion ──
+   JS (HowWeWork.tsx) за цих умов не будує пін/кросфейд/рейку. Тут — як
+   секція виглядає без нього: рейку з назвами ховаємо (дублювала б заголовки
+   карток нижче), картки стають звичайним видимим стовпчиком. Обидва @media
+   дають однаковий результат, тож правила продубльовано (той самий підхід, що
+   й у сусідніх модулях). */
+@media (max-width: 900px) {
+  .container {
+    height: auto;
+    padding: clamp(3rem, 8vw, 5rem) 0;
+    overflow: visible;
+  }
+
+  .inner {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-block: 0;
+    gap: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .left {
+    height: auto;
+  }
+
+  .railWrap {
+    display: none;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 3vw, 1.15rem);
+  }
+
+  .card {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    height: auto;
+    padding: clamp(3rem, 8vw, 5rem) 0;
+    overflow: visible;
+  }
+
+  .inner {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-block: 0;
+    gap: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .left {
+    height: auto;
+  }
+
+  .railWrap {
+    display: none;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 3vw, 1.15rem);
+  }
+
+  .card {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+    min-height: 0;
+  }
+
+  .listItem,
+  .badge {
+    transition: none;
+  }
+}

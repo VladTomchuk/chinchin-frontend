@@ -1,7 +1,7 @@
 import { Button, Heading } from '@chakra-ui/react';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
+import type { Locale } from '@/i18n/routing';
 import { c, FOCUS_RING } from '@/components/shared/tokens';
-import { CONTACT_EMAIL } from '@/components/HealthyBar/tokens';
 import styles from './IntroBanner.module.css';
 
 // Повноекранне відео-хіро на всю ширину. Раніше тут пробували "розсічення на
@@ -12,7 +12,17 @@ import styles from './IntroBanner.module.css';
 // md+) просто поверх скриму на відео.
 export default async function IntroBanner() {
   const t = await getTranslations('HeroSection');
-  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t('quoteEmailSubject'))}`;
+  const locale = (await getLocale()) as Locale;
+
+  // Monoton не має кирилічних нарисів — для укр локалі заголовок хіро
+  // рендеримо Climate Crisis, решта мов лишаються на Monoton. Climate Crisis
+  // підключений напряму з Google Fonts (layout.tsx, <link> на YEAR@1979) —
+  // самохостнута через next/font/local версія давала не той нарис, тож від
+  // неї відмовились.
+  const isUkrainian = locale === 'ua';
+  const titleFontFamily = isUkrainian
+    ? "'Climate Crisis', sans-serif"
+    : 'var(--font-monoton)';
 
   return (
     <header className={styles.hero}>
@@ -34,7 +44,7 @@ export default async function IntroBanner() {
       <div className={styles.content}>
         <Heading
           as="h1"
-          fontFamily="var(--font-monoton)"
+          fontFamily={titleFontFamily}
           fontWeight="400"
           lineHeight="1.4"
           letterSpacing="0.02em"
@@ -61,7 +71,7 @@ export default async function IntroBanner() {
           _hover={{ opacity: 0.86, textDecoration: 'none' }}
           _focusVisible={FOCUS_RING}
         >
-          <a href={mailto}>{t('ctaQuote')}</a>
+          <a href="#quote-form">{t('ctaQuote')}</a>
         </Button>
       </div>
     </header>

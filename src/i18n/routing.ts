@@ -1,7 +1,7 @@
 import { defineRouting } from 'next-intl/routing';
 
 export const routing = defineRouting({
-  locales: ['en', 'ua'],
+  locales: ['en', 'ua', 'es'],
   defaultLocale: 'en',
   // Значення — шлях БЕЗ префікса локалі: його додає middleware.
   //
@@ -27,6 +27,7 @@ export const routing = defineRouting({
     '/events': '/events',
     '/events/corporate-business-events': '/events/corporate-business-events',
     '/events/[slug]': '/events/[slug]',
+    '/contacts': '/contacts',
   },
 });
 

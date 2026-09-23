@@ -63,9 +63,17 @@ export default function DrawerMenu() {
       triggerRef.current?.focus();
     };
 
-    // Поки меню відкрите, сторінка під ним не прокручується. Ширину смуги
-    // прокрутки компенсуємо падінгом: якщо цього не зробити, у момент
-    // блокування смуга зникає і весь контент стрибає вбік на її ширину.
+    // Поки меню відкрите, сторінка під ним не прокручується. `position:
+    // fixed` на body тут навмисно НЕ використовуємо: він обнуляє
+    // window.scrollY, а від нього залежить логіка навбару (приховування в
+    // першому екрані на головній) — обнулення хибно ховало навбар, і
+    // відновлення прокрутки через scrollTo після закриття було помітною
+    // анімацією "з самого верху" через глобальний scroll-behavior: smooth.
+    // Просто overflow: hidden скрол-позицію не чіпає. Тач-скрол крізь
+    // підкладку на iOS блокує вже touch-action/overscroll-behavior на
+    // .backdrop у CSS-модулі. Ширину смуги прокрутки компенсуємо падінгом:
+    // без цього в момент блокування смуга зникає і контент стрибає вбік на
+    // її ширину.
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     const previousOverflow = document.body.style.overflow;
     const previousPaddingRight = document.body.style.paddingRight;
@@ -181,21 +189,9 @@ export default function DrawerMenu() {
                     variants={itemVariants}
                     whileTap={reduceMotion ? undefined : { scale: 0.96 }}
                   >
-                    {item.kind === 'internal' ? (
-                      <Link href={item.href} className={styles.link} onClick={close}>
-                        {content}
-                      </Link>
-                    ) : (
-                      <a
-                        href={item.href}
-                        className={styles.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={close}
-                      >
-                        {content}
-                      </a>
-                    )}
+                    <Link href={item.href} className={styles.link} onClick={close}>
+                      {content}
+                    </Link>
                   </motion.li>
                 );
               })}

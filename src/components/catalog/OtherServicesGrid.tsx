@@ -26,6 +26,7 @@ export default async function OtherServicesGrid({ currentSlug }: { currentSlug: 
     name: tItems(`${service.slug}.name`),
     description: tItems(`${service.slug}.shortDescription`),
     Icon: service.Icon,
+    isSoon: service.status === 'soon',
   }));
 
   return (
@@ -33,7 +34,7 @@ export default async function OtherServicesGrid({ currentSlug }: { currentSlug: 
       <Eyebrow>{t('otherServicesEyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 8, md: 12 }}>{t('otherServicesTitle')}</SectionTitle>
 
-      <CatalogGrid kind="service" entries={entries} cta={t('cta')} />
+      <CatalogGrid kind="service" entries={entries} cta={t('cta')} soon={t('soon')} />
     </Section>
   );
 }

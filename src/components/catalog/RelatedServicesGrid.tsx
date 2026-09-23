@@ -21,6 +21,7 @@ export default async function RelatedServicesGrid({ eventSlug }: { eventSlug: Ev
     name: tItems(`${service.slug}.name`),
     description: tItems(`${service.slug}.shortDescription`),
     Icon: service.Icon,
+    isSoon: service.status === 'soon',
   }));
 
   return (
@@ -29,7 +30,7 @@ export default async function RelatedServicesGrid({ eventSlug }: { eventSlug: Ev
       <SectionTitle mb={5}>{t('relatedServicesTitle')}</SectionTitle>
       <Lead mb={{ base: 10, md: 12 }}>{t('relatedServicesLead')}</Lead>
 
-      <CatalogGrid kind="service" entries={entries} cta={t('cta')} />
+      <CatalogGrid kind="service" entries={entries} cta={t('cta')} soon={t('soon')} />
     </Section>
   );
 }

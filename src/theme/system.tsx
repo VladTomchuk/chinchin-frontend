@@ -14,7 +14,7 @@ const config = defineConfig({
         },
       },
       fonts: {
-        heading: {},
+        heading: { value: 'var(--font-heading), serif' },
         body: { value: 'var(--font-brand), sans-serif' },
       },
     },

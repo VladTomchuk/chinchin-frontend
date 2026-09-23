@@ -2,6 +2,8 @@ import { Box, Heading, Text } from '@chakra-ui/react';
 import type { BoxProps } from '@chakra-ui/react';
 import { c, CONTENT_MAX_WIDTH } from './tokens';
 
+export { Eyebrow } from './Eyebrow';
+
 // Спільні будівельні блоки для сторінок каталогу (services, events) і для
 // шаблонних сторінок [slug]. PageTitle і SectionTitle розділені навмисно: на
 // сторінці має бути рівно один h1, решта заголовків секцій — h2.
@@ -15,13 +17,7 @@ import { c, CONTENT_MAX_WIDTH } from './tokens';
 // це варто свідомо — за замовчуванням усі секції однакові.
 export function Section({ children, ...rest }: BoxProps) {
   return (
-    <Box
-      as="section"
-      bg={c.page}
-      px={{ base: 5, md: 8 }}
-      py={{ base: 16, md: 24 }}
-      {...rest}
-    >
+    <Box as="section" bg={c.page} px={{ base: 5, md: 8 }} py={{ base: 16, md: 24 }} {...rest}>
       <Box maxW={CONTENT_MAX_WIDTH} mx="auto">
         {children}
       </Box>
@@ -29,28 +25,13 @@ export function Section({ children, ...rest }: BoxProps) {
   );
 }
 
-export function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <Text
-      fontFamily="var(--font-brand-ui)"
-      fontWeight="600"
-      fontSize="xs"
-      letterSpacing="0.16em"
-      textTransform="uppercase"
-      color={c.accent}
-      mb={4}
-    >
-      {children}
-    </Text>
-  );
-}
-
 export function PageTitle({ children, ...rest }: BoxProps) {
   return (
     <Heading
       as="h1"
-      fontFamily="var(--font-brand)"
-      fontWeight="200"
+      fontFamily="var(--font-brand-ui)"
+      fontWeight="700"
+      textTransform="uppercase"
       lineHeight="1.1"
       fontSize={{ base: '2.5rem', md: '3.5rem' }}
       color={c.text}
@@ -65,11 +46,12 @@ export function SectionTitle({ children, ...rest }: BoxProps) {
   return (
     <Heading
       as="h2"
-      fontFamily="var(--font-brand)"
-      fontWeight="200"
+      fontFamily="var(--font-brand-ui)"
+      fontWeight="700"
+      textTransform="uppercase"
       lineHeight="1.1"
-      fontSize={{ base: '2rem', md: '3rem' }}
-      color={c.text}
+      fontSize={{ base: '2.25rem', md: '3.5rem' }}
+      color={c.accent}
       {...rest}
     >
       {children}

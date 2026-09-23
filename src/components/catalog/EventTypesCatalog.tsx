@@ -21,7 +21,7 @@ export default async function EventTypesCatalog() {
 
   return (
     <Section pt={0}>
-      <CatalogGrid kind="event" entries={entries} cta={t('cta')} />
+      <CatalogGrid kind="event" entries={entries} cta={t('cta')} soon={t('soon')} />
     </Section>
   );
 }

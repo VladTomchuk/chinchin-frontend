@@ -47,8 +47,18 @@
      зручнішим, але значення бере участь у множенні всередині translateX
      (див. .track), а percentage в операнді добутку резолвиться не від ширини
      елемента — слайд з'їжджав повз центр. Центрування натомість зроблене
-     відступом доріжки, де відсоток працює звично (від контейнера). */
-  --ess-slide-w: clamp(16rem, 30vw, 27rem);
+     відступом доріжки, де відсоток працює звично (від контейнера).
+
+     Формула — не довільний clamp, а рівно "3 картки + 2 проміжки влазять у
+     100vw" (.viewport тепер окремим рядком на всю ширину екрана, див. .layout
+     нижче): 100vw мінус два проміжки, поділене на три картки. Так .viewport
+     (де width — той самий вираз ×3 +2 проміжки, див. нижче) завжди рівно на
+     три картки завширшки — жодна четверта чи п'ята не влазить і не «зазирає»
+     з-під обрізки. vw, а не %, — з тієї самої причини, що й вище: множення в
+     translateX. Стеля/підлога — щоб на дуже вузьких (близько 900px, межі
+     медіа-запиту) чи дуже широких екранах картка не стискалась/не
+     роздувалась до неоковирних розмірів. */
+  --ess-slide-w: clamp(14rem, calc((100vw - 2 * var(--ess-gap)) / 3), 26rem);
   --ess-gap: clamp(1rem, 2vw, 1.75rem);
 
   /* Криві Webflow: ease-out-quad / ease-in-out-circ / ease-out-circ. */
@@ -88,11 +98,182 @@
   --ess-line: #26262b;
 }
 
+/* ── Вступний блок над каруселлю ── */
+
+/* Один стовпчик (grid без grid-template-columns — авто-колонка на всю
+   ширину .layout), два рядки: .introCard і .viewport просто йдуть один за
+   одним у порядку розмітки. Вступний блок займає половину ширини першого
+   рядка (.introCard, width: 50%), слайдер під ним — усю ширину другого
+   (.viewport лишається без явної ширини колонки, тобто на всю доступну).
+
+   .introCard не потребує justify-self/align-self, щоб лишитись зліва:
+   grid-елемент з явним width (не auto) за умовчанням не тягнеться на всю
+   комірку (stretch діє лише для auto-розміру), а падає до 'start' — тобто
+   рівно до лівого краю рядка, там само, де раніше починалась колонка 1fr.
+
+   padding-top тут — суто відступ над вступним блоком, додатковий до
+   .section.padding-block; на вузьких екранах його скасовує медіа-запит
+   нижче (900px), щоб не подвоювати відступ там, де він і без того вже
+   помітний на малому екрані. */
+.layout {
+  position: relative;
+  display: grid;
+  gap: clamp(3rem, 6vw, 4.5rem);
+  padding-top: clamp(2rem, 5vw, 2rem);
+}
+
+/* padding-inline нижче — той самий прийом центрування, що дає спільний
+   Section (components/shared/primitives.tsx: два вкладені Box, зовнішній з
+   px, внутрішній з maxW+mx:auto), але з ширшою за Section (1120px) контентною
+   колонкою (1520px) — навмисно вужчий гутер, ніж у сусідніх секцій: заголовку
+   в .introHead (3/4 цієї ширини) потрібно більше місця в рядку, щоб обидва
+   рядки з ручним переносом (\n у перекладі, whiteSpace="pre-line" на
+   SectionTitle) вміщались по одному рядку кожен, а не переносились вдруге. На
+   широких екранах відступ від краю фактично дорівнює (100% - 1520px) / 2 —
+   сам px там "згасає", бо центрування внутрішнього блока переважає. max()
+   рахує звичайний гутер, поки контент вужчий за 1520px (вузькі екрани — де
+   calc() йде в мінус і programmatically програє), і рівно (100% - 1520px) / 2,
+   щойно контент переріс 1520px (широкі екрани). Простий max-width: 1520px;
+   margin-inline: auto із власним padding-inline поверх (як у .empty нижче)
+   тут не підійде — на відміну від .empty (немає сусідніх Section-секцій для
+   порівняння), .introCard стоїть поруч із ними на сторінці, і той самий гутер
+   поверх max-width дав би подвійний відступ, уже помітний на око.
+
+   .section і .layout навмисно лишаються без обмеження ширини (каруселі
+   потрібен вихід у самий край для ефекту "зазирання" сусідніх карток, див.
+   .section).
+
+   flex-direction: row — .introHead (eyebrow + заголовок) і .introBody (лід +
+   кнопка) навмисно два окремі елементи у пропорції 3:1 (заголовок займає
+   3/4 ширини, лід — 1/4): flex: 3 / flex: 1 (а не width: 75%/25%) ділить
+   ширину в цій пропорції з урахуванням gap між ними, а не поверх нього. На
+   вузьких екранах (900px) обидва знову складаються у стовпчик, див.
+   медіа-запит нижче. */
+.introCard {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: clamp(1rem, 4vw, 2rem);
+  padding-inline: max(clamp(1rem, 3vw, 1.5rem), calc((100% - 1520px) / 1));
+}
+
+.introHead {
+  display: flex;
+  flex: 3;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.introBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Розмір/line-height — ті самі, що й у спільного Lead (shared/primitives.tsx):
+   1rem/1.7 на вузьких екранах (нижче замінює медіа-запит), 1.125rem від 900px —
+   цей абзац на вигляд не повинен відрізнятись від Lead деінде на сайті. */
+.introLead {
+  max-width: 100%;
+  color: var(--ess-text-muted);
+  font-family: var(--font-brand-ui);
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* Той самий прийом, що й .servicesList у ServicesLateralScroll: суцільний
+   рядок з « · » замість списку — продовження lead-абзацу, тільки приглушеніше
+   й дрібніше. */
+.introList {
+  max-width: 34ch;
+  color: var(--ess-text-muted);
+  font-family: var(--font-brand-ui);
+  font-size: clamp(0.75rem, 1vw, 0.8125rem);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.introCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+  color: var(--ess-text);
+  font-family: var(--font-brand-ui);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    gap 200ms ease,
+    opacity 200ms ease;
+}
+
+.introCta:hover {
+  gap: 0.6rem;
+  opacity: 0.86;
+}
+
+.introCta:focus-visible {
+  outline: 2px solid var(--ess-accent);
+  outline-offset: 3px;
+}
+
+/* SERVICES_CATALOG_HIDDEN (config/navigation.ts) — span замість Link (див.
+   .tsx), позначка "Soon" (.soonTag, нижче в файлі) поруч, а не замість самого
+   .introCta. Той самий принцип, що .ctaRow/.ctaDisabled у per-slide CTA. */
+.introCtaRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 0.25rem;
+}
+
+.introCtaDisabled {
+  margin-top: 0;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.introCtaDisabled:hover {
+  gap: 0.4rem;
+  opacity: 0.45;
+}
+
 /* ── Доріжка слайдів ── */
 
 .viewport {
   position: relative;
-  margin-top: clamp(2rem, 5vw, 3.5rem);
+  /* .track усередині — це flex-рядок із 8-9 нестискних карток
+     (flex: 0 0 var(--ess-slide-w) кожна) і навмисно ширший за .viewport —
+     решта карток за рахунок цього і "висить" за краєм слайдера. Але grid-
+     елемент за замовчуванням не стискається нижче свого "природного" (за
+     вмістом) мінімуму, тому без min-width: 0 колонка ігнорувалась і .viewport
+     розтягувався на всю ширину вмісту — той самий клас багу, що й min-height
+     auto в flex-елементів (див. .name у секції "Текст" нижче). */
+  min-width: 0;
+  /* Видно рівно активну картку + по одній сусідній: ширина — точно "3 картки
+     + 2 проміжки" (--ess-slide-w сам порахований так, щоб це вкладалось у
+     всю ширину рядка, див. коментар у .section), а overflow ріже все, що
+     виходить за цю ширину, — решта карток не "зазирає" збоку. margin-inline:
+     auto — на випадок, коли --ess-slide-w впирається в стелю/підлогу clamp()
+     і вже не рівно 100%: тоді слайдер просто лишається по центру свого рядка,
+     без перекосу в один бік.
+
+     Саме clip, а не hidden — той самий прийом і з тієї ж причини, що й на
+     .section (див. коментар там): картки, яких зараз не видно, лишаються в
+     розмітці зі своїм .cta-посиланням (для читалок і табу), і клавіатурний
+     фокус на далекій (обрізаній) кнопці інакше змусив би браузер нативно
+     проскролити .viewport, щоб підвести її у видиму зону, — а transform на
+     .track цей скрол ніяк не враховує, тож центрування назавжди зʼїжджало б.
+     overflow: hidden створив би для цього скрол-контейнер, overflow: clip —
+     ні. */
+  width: calc(3 * var(--ess-slide-w) + 2 * var(--ess-gap));
+  margin-inline: auto;
+  overflow: clip;
+  /* Відступ згори — на .layout (padding-top), не тут: див. коментар там. */
   /* Горизонтальний жест забирає слайдер, вертикальний лишається сторінці.
      Мишею доріжку не тягнуть узагалі (див. onPointerDown у компоненті), тож і
      курсор-«рука» тут не потрібен — на десктопі слайди гортають тільки
@@ -185,7 +366,7 @@
 .photo {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 9 / 10;
+  aspect-ratio: 3 / 4;
   background-color: var(--ess-surface-alt);
   /* Жодних підказок композитингу тут навмисно немає: обрізка має лишатись
      звичайною, щоб її межа малювалась разом із вмістом у шарі .content
@@ -196,6 +377,17 @@
    у чиєму scale фото бере участь як звичайний піксель картки. */
 .photoImg {
   object-fit: cover;
+}
+
+/* Псевдо-картці "Переглянути всі послуги" нема звідки взяти фото — замість
+   .photoImg тут просто стрілка на власному фоні (акцентний колір на м'якому
+   акцентному тлі — ті самі --ess-accent/--ess-accent-soft), по центру .photo. */
+.photoCatalog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ess-accent);
+  background-color: var(--ess-accent-soft);
 }
 
 /* Низ кадру розчиняється у тлі сторінки. У референсі назва біла на темному
@@ -210,6 +402,26 @@
   left: 0;
   height: 26%;
   background-image: linear-gradient(to top, var(--ess-page) 18%, transparent 100%);
+}
+
+/* Позначка "soon" (Service.status у data/services.ts) — у куті кадру, поверх
+   фото й завіси. .photo сам ріже все, що виходить за його межі (overflow:
+   hidden), тож абсолютний відступ від top/right лишається чинним навіть на
+   бічних (зменшених scale) картках. */
+.soonRibbon {
+  position: absolute;
+  z-index: 3;
+  top: 0.75rem;
+  right: 0.75rem;
+  border-radius: 100px;
+  padding: 0.3rem 0.7rem;
+  background-color: var(--ess-accent);
+  color: var(--ess-accent-contrast);
+  font-family: var(--font-brand-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* ── Текст ──
@@ -237,6 +449,18 @@
     opacity var(--ess-text-dur) var(--ess-out-circ);
 }
 
+/* .name — єдиний .clip, що сидить у флекс-обгортці з фіксованою висотою
+   (.nameBox): без цього флексу він сам нічого не важить. Але саме тому, що
+   в нього overflow: hidden (від .clip), специфікація флексбоксу скидає його
+   автоматичний мінімальний розмір по головній осі до 0 (для елементів з
+   overflow, відмінним від visible, min-height:auto не рахує вміст) — і без
+   flex-shrink: 0 браузер СТИСКАВ би .name до висоти .nameBox замість того,
+   щоб дати другому рядку вивалитись за її межі. Тобто без цього рядка другий
+   рядок довгої назви просто зникає, а не спливає на фото. */
+.name {
+  flex-shrink: 0;
+}
+
 /* Сходинка затримок із референсу: назва → опис → кнопка. */
 .slideActive .name .clipInner {
   transition-delay: 700ms;
@@ -250,15 +474,28 @@
   transition-delay: 900ms;
 }
 
-/* Від'ємний верхній відступ заводить назву на кадр — у референсі це -48px при
-   кеглі 64px, тобто -0.75em, тож в em воно лишається пропорційним на будь-якій
-   ширині екрана. */
-.name {
+/* Обгортка тримає висоту РІВНО одного рядка (1.05em — line-height
+   .nameText, звідти й дублюється), тож довжина назви більше не впливає на
+   висоту картки. Коли назва не влазить в один рядок, другий рядок не додає
+   висоти обгортці (вона лишається 1.05em), а виїжджає за її верхній край:
+   justify-content: flex-end притискає текст до низу, і все, що не влізло,
+   «спливає» вгору. overflow навмисно visible (на відміну від .clip/.name
+   нижче, де він hidden для маски анімації) — другий рядок має лишитись
+   видимим і накластись на фото, а не зникнути.
+
+   Від'ємний верхній відступ заводить обгортку на кадр — у референсі це -48px
+   при кеглі 64px, тобто -0.75em, тож в em воно лишається пропорційним на
+   будь-якій ширині екрана. */
+.nameBox {
   position: relative;
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: visible;
+  height: 1.05em;
   margin-top: -0.75em;
-  margin-bottom: 1.5rem;
-  font-size: clamp(2.25rem, 4.6vw, 4rem);
+  font-size: clamp(1.3125rem, 2.55vw, 2.25rem);
 }
 
 .nameText {
@@ -267,15 +504,30 @@
   font-family: var(--font-brand-ui);
   font-size: inherit;
   font-weight: 700;
-  line-height: 1.3;
+  /* Щільніше за типовий текстовий line-height навмисно — це заголовна вивіска
+     на 2-4rem, і при 1.3 другий рядок довгої назви виглядав неприродно
+     розрідженим. 1.05 лишає трохи повітря під низхідні елементи (g, j),
+     не злипаючись. УВАГА: це значення продубльоване в .nameBox (1.05em) —
+     звідти вважається висота одного рядка для механізму "спливання" другого
+     рядка на фото (див. коментар там), і два числа мають лишатись
+     синхронними. */
+  line-height: 1.05;
   letter-spacing: -0.05em;
 }
 
+/* Максимум 3 рядки — довші описи ріжуться по слову з "…" наприкінці.
+   -webkit-line-clamp — тут не хак під один браузер: Chromium, Firefox і
+   Safari підтримують цю трійку властивостей уже кілька років, попри
+   "webkit" у назві. */
 .descriptionText {
+  display: -webkit-box;
+  overflow: hidden;
   color: var(--ess-text-muted);
   font-family: var(--font-brand-ui);
   font-size: clamp(0.9375rem, 1.3vw, 1.125rem);
   line-height: 1.6;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .ctaWrap {
@@ -303,66 +555,46 @@
   color: var(--ess-page);
 }
 
-/* ── Керування ── */
-
-/* Стрілки стоять не під слайдером, а в самій доріжці — праворуч, на рівні
-   нижньої частини кадру активної картки, як у референсі.
-
-   Верхня координата рахується з геометрії картки, а не підбирається на око:
-   кадр має aspect-ratio 9/10, тож його низ лежить на «ширина слайда × 10/9»
-   від верху доріжки. Кнопки ставимо трохи нижче цієї лінії — бічні картки
-   зменшені навколо власного центру, тому їхні кадри опускаються нижче за
-   активний, і на самій лінії кнопки лягали б просто на сусіднє фото.
-   Праворуч вони тримаються контентної колонки (1120px), а на вузьких екранах —
-   звичайного поля секції. */
-.controls {
-  position: absolute;
-  z-index: 4;
-  top: calc(var(--ess-slide-w) * 10 / 9 + 2rem);
-  right: max(clamp(1.25rem, 5vw, 2rem), calc((100% - 1120px) / 2));
-  display: flex;
+.ctaRow {
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.625rem;
 }
 
-.arrows {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.arrow {
-  display: flex;
-  width: 3.25rem;
-  height: 3.25rem;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--ess-line);
+/* Той самий візуал, що й .soonRibbon на фото, тільки в потоці тексту, а не
+   абсолютом — біля кнопки переходу для тих, хто гортає з клавіатури чи на
+   читалці не бачить кута фотографії. */
+.soonTag {
   border-radius: 100px;
-  background-color: var(--ess-surface);
+  padding: 0.3rem 0.7rem;
+  background-color: var(--ess-accent-soft);
+  color: var(--ess-accent);
+  font-family: var(--font-brand-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* span замість Link (див. .tsx) — нікуди вести, тож і border-color/колір
+   лишаються ті самі, що й у живого .cta, просто приглушені opacity й
+   not-allowed курсором. Друге правило (після .slideActive:hover .cta вище)
+   навмисно повторно перекриває заливку на ховері: та сама специфічність,
+   тож порядок у файлі — це те, що вирішує каскад. */
+.ctaDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.slideActive:hover .ctaDisabled {
+  background-color: transparent;
   color: var(--ess-text);
-  cursor: pointer;
-  transition:
-    background-color 200ms ease,
-    border-color 200ms ease,
-    color 200ms ease,
-    opacity 200ms ease;
 }
 
-.arrow:hover:not(:disabled) {
-  border-color: var(--ess-accent);
-  background-color: var(--ess-accent);
-  color: var(--ess-accent-contrast);
-}
-
-.arrow:disabled {
-  cursor: default;
-  opacity: 0.35;
-}
-
-.arrow:focus-visible {
-  outline: 2px solid var(--ess-accent);
-  outline-offset: 3px;
-}
+/* ── Керування ──
+   Видимих стрілок немає (перемикання ручне через клік/свайп/клавіші й
+   автоматичне через автогортання, див. коментар у .tsx) — .srOnly нижче
+   лишається єдиним, суто для читалок: озвучує зміну активного слайда. */
 
 .srOnly {
   position: absolute;
@@ -382,14 +614,48 @@
 }
 
 @media (max-width: 900px) {
-  /* Збоку від картки тут уже немає вільного місця — кнопки повертаються під
-     слайдер, інакше вони лягли б просто на сусідній кадр. */
-  .controls {
-    position: static;
-    max-width: 1120px;
-    justify-content: flex-end;
-    margin: clamp(1.5rem, 4vw, 2rem) auto 0;
-    padding-inline: clamp(1.25rem, 5vw, 2rem);
+  /* .layout лишається grid (single-column) — перемикати на flex тут не
+     потрібно, базове правило й так складає .introCard і .viewport у
+     стовпчик рядків. */
+  .layout {
+    /* .section і без цього має власний padding-block зверху — на вузькому
+       екрані додатковий відступ над вступним блоком лише забирає місце. */
+    padding-top: 0;
+  }
+
+  /* .introHead і .introBody на десктопі стоять поряд (flex-direction: row у
+     базовому правилі) — тут для них уже немає вільної ширини, тож
+     .introCard знову складається в стовпчик, той самий підхід, що й у
+     ServicesLateralScroll (двоколонковий грід теж розтягується на всю
+     ширину нижче 900px). */
+  .introCard {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding-inline: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  /* flex: 1 у базовому правилі ділить ГОРИЗОНТАЛЬНУ (row) вісь порівну —
+     у стовпчику (flex-direction: column вище) та сама властивість почала б
+     розтягувати .introHead/.introBody порівну по ВИСОТІ на всю висоту
+     .introCard, замість природної висоти вмісту. Скидаємо на дефолт. */
+  .introHead,
+  .introBody {
+    flex: initial;
+  }
+
+  /* Кегль і line-height тепер самі йдуть за базовим правилом (те саме, що
+     й Lead) — тут лишається скинути тільки ширину: .introCard і так уже на
+     всю ширину екрана, тож вузький max-width звідти більше не потрібен. */
+  .introLead {
+    max-width: none;
+  }
+
+  /* Ширину скидаємо: десктопна формула "3 картки + 2 проміжки" тут не діє —
+     .section перевизначає --ess-slide-w на min(80vw, 24rem) нижче (768px), і
+     той самий вираз ×3 дав би втричі ширший за екран .viewport. */
+  .viewport {
+    width: 100%;
   }
 }
 

@@ -1,5 +1,6 @@
 import { LuArrowLeft } from 'react-icons/lu';
 import { Link } from '@/i18n/navigation';
+import SoonBadge from './SoonBadge';
 import styles from './BackLink.module.css';
 
 type Props = {
@@ -8,11 +9,21 @@ type Props = {
    * типізований Link із next-intl інших не приймає. Він же підставляє поточну
    * локаль, тож з української сторінки перехід лишається українським.
    */
-  href: '/services' | '/events';
+  href: '/services' | '/events' | '/';
   /** Назва сторінки, на яку повертаємось. Береться з перекладів, не з href. */
   label: string;
   /** onPhoto — коли посилання лежить поверх затемненого фото. */
   tone?: 'onPhoto' | 'onPage';
+  /**
+   * true — ціль тимчасово прибрана з показу (ABOUT_HIDDEN /
+   * SERVICES_CATALOG_HIDDEN у config/navigation.ts): замість Link — span без
+   * переходу, з позначкою "Soon" (soonLabel) поруч. Той самий принцип, що
+   * isSoon-картки в CatalogGrid.tsx.
+   */
+  disabled?: boolean;
+  /** Текст позначки "Soon" — обовʼязковий, коли disabled. Catalog.soon у
+   * виклику. */
+  soonLabel?: string;
 };
 
 /**
@@ -25,13 +36,28 @@ type Props = {
  * сторінки послуги основний сценарій. Посилання ж працює завжди, показує
  * конкретну назву й додає перелінковку вгору по структурі сайту.
  */
-export default function BackLink({ href, label, tone = 'onPage' }: Props) {
-  return (
-    <Link href={href} className={`${styles.link} ${styles[tone]}`}>
+export default function BackLink({ href, label, tone = 'onPage', disabled = false, soonLabel }: Props) {
+  const content = (
+    <>
       <span className={styles.arrow} aria-hidden>
         <LuArrowLeft size={14} />
       </span>
       {label}
+    </>
+  );
+
+  if (disabled) {
+    return (
+      <span className={`${styles.link} ${styles[tone]} ${styles.disabled}`} aria-disabled="true">
+        {content}
+        {soonLabel && <SoonBadge label={soonLabel} />}
+      </span>
+    );
+  }
+
+  return (
+    <Link href={href} className={`${styles.link} ${styles[tone]}`}>
+      {content}
     </Link>
   );
 }

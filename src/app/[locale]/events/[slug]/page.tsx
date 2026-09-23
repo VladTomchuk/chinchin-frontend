@@ -6,6 +6,8 @@ import { routing } from '@/i18n/routing';
 import { eventTypes } from '@/data/eventTypes';
 import { isEventTypeSlug } from '@/data/relations';
 import RelatedServicesGrid from '@/components/catalog/RelatedServicesGrid';
+import ReviewsSection from '@/components/GoogleReviews/ReviewsSection';
+import QuoteFormSection from '@/components/shared/QuoteForm/QuoteFormSection';
 import { Eyebrow, Lead, PageTitle, Section } from '@/components/shared/primitives';
 import { c, NAVBAR_OFFSET } from '@/components/shared/tokens';
 
@@ -75,6 +77,10 @@ export default async function EventTypePage({ params }: Props) {
       </Section>
 
       <RelatedServicesGrid eventSlug={slug} />
+      <ReviewsSection />
+
+      {/* Тип події вже підставлений — відвідувач лише обирає чи змінює послугу. */}
+      <QuoteFormSection defaultEventType={slug} />
     </main>
   );
 }

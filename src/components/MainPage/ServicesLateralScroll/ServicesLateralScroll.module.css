@@ -33,7 +33,7 @@
 .inner {
   display: grid;
   height: min(82vh, 660px);
-  max-width: 1120px;
+  max-width: 1200px;
   grid-template-columns: 1.18fr 0.82fr;
   gap: clamp(0.75rem, 1.6vw, 1.25rem);
   margin: 0 auto;
@@ -84,29 +84,14 @@
   padding: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 0.4rem 0.85rem;
-  border-radius: 999px;
-  font-family: var(--font-brand-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  /* Стоїть на темному фото — світла напівпрозора пігулка з розмиттям. */
-  background-color: rgba(255, 249, 246, 0.9);
-  color: #1a1a1a;
-  backdrop-filter: blur(6px);
-}
-
+/* Кегль/line-height — ті самі, що й у спільного Lead (shared/primitives.tsx):
+   1.125rem/1.7 тут, 1rem нижче 900px (медіа-запит унизу файлу). */
 .lead {
   max-width: 40ch;
   color: rgba(255, 249, 246, 0.88);
   font-family: var(--font-brand-ui);
-  font-size: clamp(0.8125rem, 1.1vw, 0.9375rem);
-  line-height: 1.55;
+  font-size: 1.125rem;
+  line-height: 1.7;
 }
 
 /* Перелік послуг — суцільний рядок з « · » як роздільником (той самий
@@ -130,7 +115,9 @@
   font-size: 0.8125rem;
   font-weight: 600;
   text-decoration: none;
-  transition: gap 200ms ease, opacity 200ms ease;
+  transition:
+    gap 200ms ease,
+    opacity 200ms ease;
 }
 
 .cta:hover {
@@ -141,6 +128,26 @@
 .cta:focus-visible {
   outline: 2px solid var(--services-accent);
   outline-offset: 3px;
+}
+
+/* SERVICES_CATALOG_HIDDEN (config/navigation.ts) — span замість Link (див.
+   .tsx), з позначкою "Soon" (SoonBadge) поруч, а не замість самого .cta. */
+.ctaRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 0.25rem;
+}
+
+.ctaDisabled {
+  margin-top: 0;
+  opacity: 0.55;
+  cursor: default;
+}
+
+.ctaDisabled:hover {
+  gap: 0.4rem;
+  opacity: 0.55;
 }
 
 /* ── Права колонка: стек фото-карток, що перехресно проявляються ── */
@@ -309,6 +316,10 @@
     min-height: clamp(320px, 60vw, 460px);
   }
 
+  .lead {
+    font-size: 1rem;
+  }
+
   .rightStage {
     position: static;
     display: flex;
@@ -342,6 +353,10 @@
 
   .leftCard {
     min-height: clamp(320px, 60vw, 460px);
+  }
+
+  .lead {
+    font-size: 1rem;
   }
 
   .rightStage {

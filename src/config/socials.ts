@@ -15,7 +15,7 @@ export const YOUTUBE_URL = '';
 // TODO: замінити на реальний номер (код країни + номер, без "+", пробілів і
 // провідного 0), напр. іспанський '34612345678'. Поки що заглушка, кнопка
 // WhatsApp відкриє чат із неіснуючим номером, доки значення не замінять.
-export const WHATSAPP_NUMBER = '34698458286';
+export const WHATSAPP_NUMBER = '34698458276';
 export const WHATSAPP_MESSAGE = 'Hola! Me gustaría pedir información sobre Chin Chin catering.';
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 

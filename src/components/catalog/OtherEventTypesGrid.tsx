@@ -26,7 +26,7 @@ export default async function OtherEventTypesGrid({ currentSlug }: { currentSlug
       <Eyebrow>{t('otherEventsEyebrow')}</Eyebrow>
       <SectionTitle mb={{ base: 8, md: 12 }}>{t('otherEventsTitle')}</SectionTitle>
 
-      <CatalogGrid kind="event" entries={entries} cta={t('cta')} />
+      <CatalogGrid kind="event" entries={entries} cta={t('cta')} soon={t('soon')} />
     </Section>
   );
 }

@@ -1,15 +1,15 @@
-import { Box, Button, Link, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
 import { Section, SectionTitle } from '@/components/shared/primitives';
-import { c, FOCUS_RING } from '@/components/shared/tokens';
-import { CONTACT_EMAIL } from '@/components/HealthyBar/tokens';
+import { c } from '@/components/shared/tokens';
+import QuoteForm from '@/components/shared/QuoteForm/QuoteForm';
 
+/** Якір quote-form — ціль кнопки "ctaPrimary" у Hero.tsx й CTA в Process.tsx. */
 export default async function FinalCta() {
   const t = await getTranslations('About.cta');
-  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t('emailSubject'))}`;
 
   return (
-    <Section>
+    <Section id="quote-form" scrollMarginTop="80px">
       <Box
         bg={c.surface}
         borderWidth="1px"
@@ -17,9 +17,11 @@ export default async function FinalCta() {
         rounded="3xl"
         px={{ base: 6, md: 16 }}
         py={{ base: 12, md: 20 }}
-        textAlign="center"
+        textAlign={{ base: 'left', md: 'center' }}
       >
-        <SectionTitle mb={5}>{t('title')}</SectionTitle>
+        <SectionTitle mb={5} textAlign={{ base: 'left', md: 'center' }}>
+          {t('title')}
+        </SectionTitle>
 
         <Text
           fontFamily="var(--font-brand-ui)"
@@ -27,46 +29,15 @@ export default async function FinalCta() {
           lineHeight="1.7"
           color={c.textMuted}
           maxW="52ch"
-          mx="auto"
+          mx={{ base: 0, md: 'auto' }}
           mb={9}
         >
           {t('text')}
         </Text>
 
-        <Button
-          asChild
-          size="lg"
-          px={8}
-          rounded="full"
-          bg={c.accent}
-          color={c.accentContrast}
-          fontFamily="var(--font-brand-ui)"
-          fontWeight="600"
-          transition="opacity 200ms ease"
-          _hover={{ opacity: 0.86, textDecoration: 'none' }}
-          _focusVisible={FOCUS_RING}
-        >
-          <a href={mailto}>{t('button')}</a>
-        </Button>
-
-        <Text
-          fontFamily="var(--font-brand-ui)"
-          fontSize="sm"
-          color={c.textMuted}
-          mt={3}
-          wordBreak="break-word"
-        >
-          <Link
-            href={mailto}
-            display="inline-block"
-            py={3}
-            color="inherit"
-            _hover={{ color: c.accent }}
-            _focusVisible={FOCUS_RING}
-          >
-            {CONTACT_EMAIL}
-          </Link>
-        </Text>
+        <Box maxW="640px" mx="auto" textAlign="left">
+          <QuoteForm />
+        </Box>
       </Box>
     </Section>
   );

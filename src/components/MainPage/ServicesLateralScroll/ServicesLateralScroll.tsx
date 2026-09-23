@@ -10,6 +10,9 @@ import { Heading } from '@chakra-ui/react';
 import { LuArrowRight, LuArrowUpRight } from 'react-icons/lu';
 import { Link } from '@/i18n/navigation';
 import { services, type ServiceSlug } from '@/data/services';
+import { SERVICES_CATALOG_HIDDEN } from '@/config/navigation';
+import { Eyebrow } from '@/components/shared/primitives';
+import SoonBadge from '@/components/shared/SoonBadge';
 import styles from './ServicesLateralScroll.module.css';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -94,6 +97,7 @@ const TRANSITION_FRACTION = 0.4;
 export default function ServicesLateralScroll() {
   const t = useTranslations('ServicesLateralScroll');
   const tItems = useTranslations('ServiceItems');
+  const tCatalog = useTranslations('Catalog');
 
   const containerRef = useRef<HTMLDivElement>(null);
   const cardPanelRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -191,11 +195,14 @@ export default function ServicesLateralScroll() {
           />
           <div className={styles.leftOverlay} />
           <div className={styles.leftContent}>
-            <span className={styles.chip}>{t('eyebrow')}</span>
+            <Eyebrow tone="onPhoto" mb={0}>
+              {t('eyebrow')}
+            </Eyebrow>
             <Heading
               as="h2"
-              fontFamily="var(--font-brand)"
-              fontWeight="200"
+              fontFamily="var(--font-brand-ui)"
+              fontWeight="700"
+              textTransform="uppercase"
               lineHeight="1.05"
               fontSize={{ base: '1.75rem', md: '2.75rem' }}
               color="#fff9f6"
@@ -204,10 +211,20 @@ export default function ServicesLateralScroll() {
             </Heading>
             <p className={styles.lead}>{t('lead')}</p>
             <p className={styles.servicesList}>{servicesListText}</p>
-            <Link href="/services" className={styles.cta}>
-              {t('cta')}
-              <LuArrowRight size={16} aria-hidden />
-            </Link>
+            {SERVICES_CATALOG_HIDDEN ? (
+              <span className={styles.ctaRow}>
+                <span className={`${styles.cta} ${styles.ctaDisabled}`} aria-disabled="true">
+                  {t('cta')}
+                  <LuArrowRight size={16} aria-hidden />
+                </span>
+                <SoonBadge label={tCatalog('soon')} />
+              </span>
+            ) : (
+              <Link href="/services" className={styles.cta}>
+                {t('cta')}
+                <LuArrowRight size={16} aria-hidden />
+              </Link>
+            )}
           </div>
         </div>
 

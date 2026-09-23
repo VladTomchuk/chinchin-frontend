@@ -29,7 +29,7 @@ export default async function RelatedEventTypesGrid({ serviceSlug }: { serviceSl
       <SectionTitle mb={5}>{t('relatedEventsTitle')}</SectionTitle>
       <Lead mb={{ base: 10, md: 12 }}>{t('relatedEventsLead')}</Lead>
 
-      <CatalogGrid kind="event" entries={entries} cta={t('cta')} />
+      <CatalogGrid kind="event" entries={entries} cta={t('cta')} soon={t('soon')} />
     </Section>
   );
 }

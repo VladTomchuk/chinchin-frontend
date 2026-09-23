@@ -9,6 +9,7 @@ import Included from '@/components/CorporateEvents/Included';
 import WhyUs from '@/components/CorporateEvents/WhyUs';
 import QuoteSection from '@/components/CorporateEvents/QuoteSection';
 import { buildServiceSchema } from '@/components/CorporateEvents/schema';
+import ReviewsSection from '@/components/GoogleReviews/ReviewsSection';
 import RelatedServicesGrid from '@/components/catalog/RelatedServicesGrid';
 import OtherEventTypesGrid from '@/components/catalog/OtherEventTypesGrid';
 
@@ -55,6 +56,7 @@ export default async function CorporateEventsPage({ params }: Props) {
       <EventFormats />
       <Included />
       <WhyUs />
+      <ReviewsSection />
       <QuoteSection />
 
       {/* Перелінковка зі спільного шару даних: послуги для цього типу події

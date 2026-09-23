@@ -50,10 +50,20 @@ export async function buildServiceMetadata(locale: Locale, slug: ServiceSlug): P
   if (!service) return {};
 
   const t = await getTranslations({ locale, namespace: `ServiceItems.${slug}` });
+  const isSoon = service.status === 'soon';
 
-  const title = t('metaTitle');
-  const description = t('metaDescription');
+  const name = t('name');
   const shortDescription = t('shortDescription');
+  // metaTitle/metaDescription пишуться в тому ж доку, що й body (ServiceBody.tsx
+  // — коментар там же) — поки послуга 'soon', у частини з них там усе ще
+  // [COPY PENDING …]. Сторінка й так уже не показує body (ServiceComingSoon),
+  // тож для title/description теж не можна покладатись на ще не написаний
+  // текст: беремо завжди готові name/shortDescription замість metaTitle/metaDescription.
+  const comingSoonEyebrow = isSoon
+    ? (await getTranslations({ locale, namespace: 'ServiceComingSoon' }))('eyebrow')
+    : null;
+  const title = isSoon ? `${name} — ${comingSoonEyebrow} | ChinChin` : t('metaTitle');
+  const description = isSoon ? shortDescription : t('metaDescription');
   const url = absoluteUrl(servicePathname(locale, slug));
   const image = {
     url: absoluteUrl(service.heroImage),
@@ -63,6 +73,11 @@ export async function buildServiceMetadata(locale: Locale, slug: ServiceSlug): P
   return {
     title,
     description,
+    // 'soon' — послуга ще не запущена, URL показує ComingSoon замість тіла
+    // сторінки (ServicePage / HealthyBarPage). noindex не дає пошуковику
+    // проіндексувати цю заглушку, навіть якщо посилання десь засвітиться поза
+    // sitemap.ts (він сам такі URL уже не перелічує).
+    ...(service.status === 'soon' && { robots: { index: false, follow: false } }),
     alternates: {
       canonical: url,
       languages: serviceLanguageAlternates(slug),

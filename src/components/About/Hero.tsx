@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import { Box, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
+import { SERVICES_CATALOG_HIDDEN } from '@/config/navigation';
 import { Eyebrow } from '@/components/shared/primitives';
+import SoonBadge from '@/components/shared/SoonBadge';
 import { c, CONTENT_MAX_WIDTH, FOCUS_RING, NAVBAR_OFFSET } from '@/components/shared/tokens';
 import { Link } from '@/i18n/navigation';
-import { CONTACT_EMAIL } from '@/components/HealthyBar/tokens';
 
 export default async function Hero() {
   const t = await getTranslations('About.hero');
-  const tCta = await getTranslations('About.cta');
-  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(tCta('emailSubject'))}`;
+  const tCatalog = await getTranslations('Catalog');
 
   return (
     <Box as="header" px={{ base: 5, md: 8 }} pt={NAVBAR_OFFSET} pb={{ base: 12, md: 20 }}>
@@ -25,8 +25,9 @@ export default async function Hero() {
 
           <Heading
             as="h1"
-            fontFamily="var(--font-brand)"
-            fontWeight="200"
+            fontFamily="var(--font-brand-ui)"
+            fontWeight="700"
+            textTransform="uppercase"
             lineHeight="1.08"
             fontSize={{ base: '2.5rem', md: '3.5rem', lg: '4rem' }}
             color={c.text}
@@ -73,25 +74,46 @@ export default async function Hero() {
               _hover={{ opacity: 0.86, textDecoration: 'none' }}
               _focusVisible={FOCUS_RING}
             >
-              <a href={mailto}>{t('ctaPrimary')}</a>
+              <a href="#quote-form">{t('ctaPrimary')}</a>
             </Button>
 
-            <Button
-              asChild
-              size="lg"
-              px={7}
-              rounded="full"
-              variant="outline"
-              borderColor={c.line}
-              color={c.text}
-              fontFamily="var(--font-brand-ui)"
-              fontWeight="500"
-              transition="background-color 200ms ease, border-color 200ms ease"
-              _hover={{ bg: c.accentSoft, borderColor: c.accent, textDecoration: 'none' }}
-              _focusVisible={FOCUS_RING}
-            >
-              <Link href="/services">{t('ctaSecondary')}</Link>
-            </Button>
+            {SERVICES_CATALOG_HIDDEN ? (
+              <Button
+                size="lg"
+                px={7}
+                rounded="full"
+                variant="outline"
+                borderColor={c.line}
+                color={c.text}
+                fontFamily="var(--font-brand-ui)"
+                fontWeight="500"
+                gap={3}
+                opacity={0.55}
+                cursor="default"
+                disabled
+                _hover={{}}
+              >
+                {t('ctaSecondary')}
+                <SoonBadge label={tCatalog('soon')} />
+              </Button>
+            ) : (
+              <Button
+                asChild
+                size="lg"
+                px={7}
+                rounded="full"
+                variant="outline"
+                borderColor={c.line}
+                color={c.text}
+                fontFamily="var(--font-brand-ui)"
+                fontWeight="500"
+                transition="background-color 200ms ease, border-color 200ms ease"
+                _hover={{ bg: c.accentSoft, borderColor: c.accent, textDecoration: 'none' }}
+                _focusVisible={FOCUS_RING}
+              >
+                <Link href="/services">{t('ctaSecondary')}</Link>
+              </Button>
+            )}
           </Flex>
         </Box>
 

@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 import { services } from '@/data/services';
 import { eventTypes } from '@/data/eventTypes';
+import { ABOUT_HIDDEN, SERVICES_CATALOG_HIDDEN } from '@/config/navigation';
 import { absoluteUrl, BCP47_LOCALE } from '@/config/site';
 
 /**
@@ -19,22 +20,35 @@ import { absoluteUrl, BCP47_LOCALE } from '@/config/site';
  */
 
 // Шляхи без префікса локалі — префікс додається для кожної мови нижче.
-const STATIC_PATHS = ['', '/about', '/services', '/events'] as const;
+const STATIC_PATHS = ['', '/about', '/services', '/events', '/contacts'] as const;
 
 type Entry = { path: string; changeFrequency: 'monthly' | 'yearly'; priority: number };
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: Entry[] = [
-    ...STATIC_PATHS.map((path) => ({
+    // ABOUT_HIDDEN / SERVICES_CATALOG_HIDDEN (config/navigation.ts) — сторінки
+    // тимчасово прибрані, URL віддає заглушку з noindex (about/page.tsx,
+    // services/page.tsx), тож у мапі їм робити нічого.
+    ...STATIC_PATHS.filter((path) => {
+      if (path === '/about') return !ABOUT_HIDDEN;
+      if (path === '/services') return !SERVICES_CATALOG_HIDDEN;
+      return true;
+    }).map((path) => ({
       path,
       changeFrequency: 'monthly' as const,
       priority: path === '' ? 1 : 0.8,
     })),
-    ...services.map((service) => ({
-      path: `/services/${service.slug}`,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    })),
+    // 'soon' — послуга ще не запущена, URL віддає ComingSoon (робить noindex,
+    // src/lib/seo.ts) замість сторінки послуги, тож у мапі їй робити нічого:
+    // sitemap не повинен активно пропонувати пошуковику саме те, що noindex
+    // просить не індексувати.
+    ...services
+      .filter((service) => service.status !== 'soon')
+      .map((service) => ({
+        path: `/services/${service.slug}`,
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      })),
     ...eventTypes.map((eventType) => ({
       path: `/events/${eventType.slug}`,
       changeFrequency: 'monthly' as const,

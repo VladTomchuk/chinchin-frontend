@@ -1,19 +1,18 @@
 import Image from 'next/image';
 import { Box, Button, Flex, Grid, Heading, Text } from '@chakra-ui/react';
 import { getTranslations } from 'next-intl/server';
+import { SERVICES_CATALOG_HIDDEN } from '@/config/navigation';
 import { Eyebrow } from '@/components/shared/primitives';
 import BackLink from '@/components/shared/BackLink';
-import { c, CONTACT_EMAIL, CONTENT_MAX_WIDTH, FOCUS_RING, NAVBAR_OFFSET } from './tokens';
+import { c, CONTENT_MAX_WIDTH, FOCUS_RING, NAVBAR_OFFSET } from './tokens';
 
 type Stat = { value: string; label: string };
 
 export default async function Hero() {
   const t = await getTranslations('HealthyBar.hero');
-  const tCta = await getTranslations('HealthyBar.cta');
   const tNav = await getTranslations('Navbar');
+  const tCatalog = await getTranslations('Catalog');
   const stats = t.raw('stats') as Stat[];
-
-  const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(tCta('emailSubject'))}`;
 
   return (
     <Box as="header" px={{ base: 5, md: 8 }} pt={NAVBAR_OFFSET} pb={{ base: 12, md: 20 }}>
@@ -29,15 +28,21 @@ export default async function Hero() {
               рубрика несе іншу назву («Хелсі бар»), тож посилання стоїть над
               нею, а не замість неї. */}
           <Box mb={4}>
-            <BackLink href="/services" label={tNav('services')} />
+            <BackLink
+              href="/services"
+              label={tNav('services')}
+              disabled={SERVICES_CATALOG_HIDDEN}
+              soonLabel={tCatalog('soon')}
+            />
           </Box>
 
           <Eyebrow>{t('eyebrow')}</Eyebrow>
 
           <Heading
             as="h1"
-            fontFamily="var(--font-brand)"
-            fontWeight="200"
+            fontFamily="var(--font-brand-ui)"
+            fontWeight="700"
+            textTransform="uppercase"
             // pre-line, бо заголовок у перекладах розбитий на рядки вручну:
             // ритм рядків тут частина верстки, а не випадковість переносу.
             whiteSpace="pre-line"
@@ -74,7 +79,7 @@ export default async function Hero() {
               _hover={{ opacity: 0.86, textDecoration: 'none' }}
               _focusVisible={FOCUS_RING}
             >
-              <a href={mailto}>{t('ctaPrimary')}</a>
+              <a href="#quote-form">{t('ctaPrimary')}</a>
             </Button>
 
             <Button

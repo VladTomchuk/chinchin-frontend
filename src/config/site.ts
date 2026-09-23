@@ -31,10 +31,10 @@ export const ORGANIZATION = {
  * html[lang] у layout.tsx: в адресі лишається /ua, а пошуковику і hreflang
  * віддаємо 'uk', інакше Google просто проігнорує невідомий йому код мови.
  */
-export const BCP47_LOCALE: Record<Locale, string> = { en: 'en', ua: 'uk' };
+export const BCP47_LOCALE: Record<Locale, string> = { en: 'en', ua: 'uk', es: 'es' };
 
 /** Open Graph очікує формат language_TERRITORY, а не голий код мови. */
-export const OG_LOCALE: Record<Locale, string> = { en: 'en_US', ua: 'uk_UA' };
+export const OG_LOCALE: Record<Locale, string> = { en: 'en_US', ua: 'uk_UA', es: 'es_ES' };
 
 /** Абсолютний URL із шляху від кореня сайту. Потрібен для canonical, OG і JSON-LD. */
 export function absoluteUrl(path: string): string {
