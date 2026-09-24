@@ -161,7 +161,7 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
             замість нього показує власну підказку формату, а на мобільному
             часто взагалі нічого) — тож тут, на відміну від решти полів,
             лейбл лишаємо видимим, а не sr-only. */}
-        <FormField label={t('eventDate')} htmlFor={`${id}-eventDate`} labelVisible>
+        <FormField label={t('eventDate')} htmlFor={`${id}-eventDate`}>
           <input id={`${id}-eventDate`} name="eventDate" type="date" className={styles.input} />
         </FormField>
 
