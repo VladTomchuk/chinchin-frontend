@@ -69,6 +69,16 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
   // не мають звідки взяти. Лінива ініціалізація useState рахує Date.now()
   // рівно один раз, при першому рендері, а не на кожен ре-рендер.
   const [renderedAt] = useState(() => Date.now());
+  // type="date" не приймає атрибут placeholder — Safari на мобільному просто
+  // лишає порожнє поле без жодного тексту, а десктопні Chrome/Chromium
+  // замість цього самі малюють "дд/мм/рррр". Обидва прапорці нижче керують
+  // власною підказкою поверх поля (styles.datePlaceholder, див. нижче): поки
+  // значення нема, текст інпута робимо прозорим (ховає й нативну підказку
+  // Chrome, і порожнечу Safari) і показуємо свій текст замість неї — але
+  // лише коли поле не в фокусі, інакше під час набору дати з клавіатури
+  // прозорий колір ховав би від користувача те, що він щойно ввів.
+  const [hasEventDate, setHasEventDate] = useState(false);
+  const [isEventDateFocused, setIsEventDateFocused] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -157,12 +167,29 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
           />
         </FormField>
 
-        {/* type="date" не підтримує звичайний текстовий placeholder (браузер
-            замість нього показує власну підказку формату, а на мобільному
-            часто взагалі нічого) — тож тут, на відміну від решти полів,
-            лейбл лишаємо видимим, а не sr-only. */}
+        {/* Лейбл, як і в решти полів, sr-only — підказку показує
+            styles.datePlaceholder (див. коментар над hasEventDate вище). */}
         <FormField label={t('eventDate')} htmlFor={`${id}-eventDate`}>
-          <input id={`${id}-eventDate`} name="eventDate" type="date" className={styles.input} />
+          <div className={styles.dateWrapper}>
+            <input
+              id={`${id}-eventDate`}
+              name="eventDate"
+              type="date"
+              className={styles.input}
+              style={hasEventDate || isEventDateFocused ? undefined : { color: 'transparent' }}
+              onChange={(event) => setHasEventDate(event.target.value !== '')}
+              onFocus={() => setIsEventDateFocused(true)}
+              onBlur={(event) => {
+                setIsEventDateFocused(false);
+                setHasEventDate(event.target.value !== '');
+              }}
+            />
+            {!hasEventDate && !isEventDateFocused && (
+              <span className={styles.datePlaceholder} aria-hidden="true">
+                {t('eventDate')}
+              </span>
+            )}
+          </div>
         </FormField>
 
         <FormField label={t('eventType')} htmlFor={`${id}-eventType`}>

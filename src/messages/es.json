@@ -983,7 +983,7 @@
       "text": "Rellena el formulario y te responderemos por email, normalmente en 24 horas.",
       "name": "Nombre completo",
       "email": "Email",
-      "phone": "Teléfono (opcional)",
+      "phone": "Teléfono",
       "message": "Cuéntanos sobre tu evento",
       "messagePlaceholder": "Fecha, ubicación, número de invitados, formato: todo ayuda.",
       "submit": "Enviar solicitud",
@@ -996,19 +996,19 @@
   "QuoteForm": {
     "name": "Nombre completo",
     "email": "Email",
-    "phone": "Teléfono (opcional)",
-    "eventType": "Tipo de evento (opcional)",
+    "phone": "Teléfono",
+    "eventType": "Tipo de evento",
     "eventTypePlaceholder": "Selecciona el tipo de evento",
     "eventTypeExtra": {
       "privateParty": "Fiesta privada",
       "brandActivation": "Activación de marca",
       "other": "Otro"
     },
-    "eventDate": "Fecha del evento (opcional)",
-    "service": "Servicio (opcional)",
+    "eventDate": "Fecha del evento",
+    "service": "Servicio",
     "servicePlaceholder": "Selecciona el servicio",
-    "guests": "Número de invitados (opcional)",
-    "location": "Ubicación / ciudad (opcional)",
+    "guests": "Número de invitados",
+    "location": "Ubicación / ciudad",
     "message": "Cuéntanos sobre tu evento",
     "messagePlaceholder": "Fecha, formato: cualquier otro detalle que ayude.",
     "consent": "Acepto la <link>Política de privacidad</link> y el tratamiento de mis datos para responder a esta consulta.",
@@ -1043,7 +1043,9 @@
       },
       {
         "title": "Qué datos recopilamos",
-        "paragraphs": ["Según cómo uses el sitio, podemos tratar las siguientes categorías de datos:"],
+        "paragraphs": [
+          "Según cómo uses el sitio, podemos tratar las siguientes categorías de datos:"
+        ],
         "items": [
           "Datos del formulario de contacto: nombre, email y mensaje (campos obligatorios), además de teléfono, tipo de evento, servicio, número de invitados y ubicación si los rellenas.",
           "Datos analíticos, solo si pulsas «Aceptar» en el banner de cookies: páginas visitadas, una fuente de referencia aproximada e interacción con los anuncios de Google Ads (a través de Google Analytics y Google Ads).",
@@ -1068,7 +1070,9 @@
       },
       {
         "title": "Con quién compartimos los datos",
-        "paragraphs": ["Solo compartimos datos con proveedores que nos ayudan a operar el sitio, y solo en la medida necesaria para su servicio. No vendemos tus datos ni los cedemos a terceros para sus propios fines de marketing:"],
+        "paragraphs": [
+          "Solo compartimos datos con proveedores que nos ayudan a operar el sitio, y solo en la medida necesaria para su servicio. No vendemos tus datos ni los cedemos a terceros para sus propios fines de marketing:"
+        ],
         "items": [
           "Titan Email — el proveedor de correo a través del cual las solicitudes del formulario llegan a nuestro equipo.",
           "Google (Google Analytics, Google Ads) — solo si has aceptado las cookies analíticas en el banner.",
@@ -1077,11 +1081,15 @@
       },
       {
         "title": "Transferencias internacionales de datos",
-        "paragraphs": ["Google y Vercel pueden tratar datos en servidores fuera del Espacio Económico Europeo (por ejemplo, en EE. UU.). En esos casos se basan en las Cláusulas Contractuales Tipo de la Comisión Europea u otras garantías de protección de datos reconocidas."]
+        "paragraphs": [
+          "Google y Vercel pueden tratar datos en servidores fuera del Espacio Económico Europeo (por ejemplo, en EE. UU.). En esos casos se basan en las Cláusulas Contractuales Tipo de la Comisión Europea u otras garantías de protección de datos reconocidas."
+        ]
       },
       {
         "title": "Cuánto tiempo conservamos los datos",
-        "paragraphs": ["Conservamos los datos de la solicitud el tiempo necesario para gestionar tu consulta, y hasta 24 meses adicionales tras el último contacto, por si vuelves a escribirnos. Un plazo mayor solo se aplica cuando lo exige la ley, por ejemplo los datos de una reserva necesarios para la contabilidad."]
+        "paragraphs": [
+          "Conservamos los datos de la solicitud el tiempo necesario para gestionar tu consulta, y hasta 24 meses adicionales tras el último contacto, por si vuelves a escribirnos. Un plazo mayor solo se aplica cuando lo exige la ley, por ejemplo los datos de una reserva necesarios para la contabilidad."
+        ]
       },
       {
         "title": "Tus derechos",
@@ -1100,19 +1108,27 @@
       },
       {
         "title": "Cookies",
-        "paragraphs": ["El sitio no carga ninguna cookie analítica o publicitaria (Google Analytics, Google Ads) hasta que pulsas «Aceptar» en el banner de la parte inferior de la pantalla. Vercel Analytics y Speed Insights funcionan siempre sin cookies y no requieren consentimiento. Para cambiar tu elección, borra los datos del sitio en la configuración de tu navegador: el banner volverá a aparecer."]
+        "paragraphs": [
+          "El sitio no carga ninguna cookie analítica o publicitaria (Google Analytics, Google Ads) hasta que pulsas «Aceptar» en el banner de la parte inferior de la pantalla. Vercel Analytics y Speed Insights funcionan siempre sin cookies y no requieren consentimiento. Para cambiar tu elección, borra los datos del sitio en la configuración de tu navegador: el banner volverá a aparecer."
+        ]
       },
       {
         "title": "Seguridad de los datos",
-        "paragraphs": ["Aplicamos medidas técnicas y organizativas razonables para proteger tus datos frente a pérdidas, accesos no autorizados o divulgación."]
+        "paragraphs": [
+          "Aplicamos medidas técnicas y organizativas razonables para proteger tus datos frente a pérdidas, accesos no autorizados o divulgación."
+        ]
       },
       {
         "title": "Cambios en esta política",
-        "paragraphs": ["Podemos actualizar esta política de vez en cuando, por ejemplo si cambian las herramientas que usamos en el sitio. La fecha de la última actualización aparece al principio de esta página."]
+        "paragraphs": [
+          "Podemos actualizar esta política de vez en cuando, por ejemplo si cambian las herramientas que usamos en el sitio. La fecha de la última actualización aparece al principio de esta página."
+        ]
       },
       {
         "title": "Contacto",
-        "paragraphs": ["Para cualquier duda sobre esta política o sobre el tratamiento de tus datos, escribe a info@chinchinevents.com."]
+        "paragraphs": [
+          "Para cualquier duda sobre esta política o sobre el tratamiento de tus datos, escribe a info@chinchinevents.com."
+        ]
       }
     ]
   }
