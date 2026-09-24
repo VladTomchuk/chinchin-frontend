@@ -16,8 +16,28 @@ export const YOUTUBE_URL = '';
 // провідного 0), напр. іспанський '34612345678'. Поки що заглушка, кнопка
 // WhatsApp відкриє чат із неіснуючим номером, доки значення не замінять.
 export const WHATSAPP_NUMBER = '34698458276';
+// Другий номер — картка контактів показує обидва поруч через "/", кожен зі
+// своїм посиланням на чат (два канали замість одного).
+export const WHATSAPP_NUMBER_2 = '34698458286';
 export const WHATSAPP_MESSAGE = 'Hola! Me gustaría pedir información sobre Chin Chin catering.';
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+export const WHATSAPP_URL_2 = `https://wa.me/${WHATSAPP_NUMBER_2}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+
+// Людський формат номера (код країни + групи по 3 цифри) для показу в UI,
+// напр. картка контактів на сторінці Contacts. WHATSAPP_URL лишається
+// суцільним рядком під wa.me — це лише похідне значення для відображення.
+function formatDisplayPhone(number: string): string {
+  return `+${number.slice(0, 2)} ${number.slice(2).match(/.{1,3}/g)?.join(' ') ?? number.slice(2)}`;
+}
+
+export const WHATSAPP_DISPLAY = formatDisplayPhone(WHATSAPP_NUMBER);
+export const WHATSAPP_DISPLAY_2 = formatDisplayPhone(WHATSAPP_NUMBER_2);
+
+// Той самий номер — Telegram deep-link за номером телефону (не за юзернеймом,
+// якого в команди нема): https://t.me/+<номер> відкриває чат так само, як
+// wa.me робить для WhatsApp.
+export const TELEGRAM_URL = `https://t.me/+${WHATSAPP_NUMBER}`;
+export const TELEGRAM_URL_2 = `https://t.me/+${WHATSAPP_NUMBER_2}`;
 
 export type SocialKey = 'instagram' | 'linkedin' | 'facebook' | 'youtube';
 

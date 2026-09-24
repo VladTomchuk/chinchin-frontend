@@ -20,7 +20,7 @@ import { absoluteUrl, BCP47_LOCALE } from '@/config/site';
  */
 
 // Шляхи без префікса локалі — префікс додається для кожної мови нижче.
-const STATIC_PATHS = ['', '/about', '/services', '/events', '/contacts'] as const;
+const STATIC_PATHS = ['', '/about', '/services', '/events', '/contacts', '/privacy-policy'] as const;
 
 type Entry = { path: string; changeFrequency: 'monthly' | 'yearly'; priority: number };
 
@@ -36,7 +36,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }).map((path) => ({
       path,
       changeFrequency: 'monthly' as const,
-      priority: path === '' ? 1 : 0.8,
+      // Юридична сторінка — не веде трафік і не мусить конкурувати за пошукову
+      // видимість з рештою статичних сторінок.
+      priority: path === '' ? 1 : path === '/privacy-policy' ? 0.3 : 0.8,
     })),
     // 'soon' — послуга ще не запущена, URL віддає ComingSoon (робить noindex,
     // src/lib/seo.ts) замість сторінки послуги, тож у мапі їй робити нічого:

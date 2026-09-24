@@ -55,9 +55,30 @@
 
 .menu {
   inset: 0;
+  /* Падінги, а не просто center: соцмережі, пункти й кнопка розведені через
+     space-between (нижче) по всій висоті екрана, і без них перший блок
+     сидів би під самою шапкою, а останній — впритул до нижнього краю. */
+  padding: 96px 24px 40px;
   gap: 2px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+/* Обгортка пунктів-посилань — один флекс-блок .menu серед трьох (соцмережі /
+   пункти / кнопка), а не три окремих, інакше space-between розвело б кожен
+   пункт окремо замість трьох груп. */
+.navGroup {
+  display: flex;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .label {
@@ -93,6 +114,85 @@
   outline-color: #f1d2d3;
 }
 
+/* Кнопка запиту на прорахунок — на відміну від звичайних пунктів (.label),
+   залита акцентом, щоб виділятись серед простих текстових посилань. */
+.ctaItem {
+  margin-top: 10px;
+}
+
+.ctaLabel {
+  display: inline-flex;
+  padding: 14px 32px;
+  border-radius: 999px;
+  background: #6b5f1c;
+  color: #fff9f6;
+  font-family: var(--font-brand-ui), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: opacity 200ms ease;
+}
+
+:global(html.dark) .ctaLabel {
+  background: #f1d2d3;
+  color: #09090b;
+}
+
+.link:hover .ctaLabel {
+  opacity: 0.86;
+}
+
+/* Іконки соцмереж. На вузьких екранах — просто перший пункт колонки (DOM-
+   порядок у DrawerMenu.tsx навмисно ставить їх перед пунктами меню), тож
+   рядок опиняється зверху. `order` тут не заданий — успадковує 0, як і решта
+   пунктів, і зверху лишається лише завдяки порядку в розмітці. */
+.socialItem {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.socialRow {
+  display: flex;
+  gap: 10px;
+}
+
+.socialLink {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f1eddc;
+  color: #6b5f1c;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.socialLink:hover {
+  background: #6b5f1c;
+  color: #fff9f6;
+}
+
+.socialLink:focus-visible {
+  outline: 2px solid #6b5f1c;
+  outline-offset: 3px;
+}
+
+:global(html.dark) .socialLink {
+  background: #231516;
+  color: #f1d2d3;
+}
+
+:global(html.dark) .socialLink:hover {
+  background: #f1d2d3;
+  color: #09090b;
+}
+
+:global(html.dark) .socialLink:focus-visible {
+  outline-color: #f1d2d3;
+}
+
 /* --- Широкі екрани: випадає з-під кнопки, пункти — пігулки. --- */
 
 @media (min-width: 48em) {
@@ -114,8 +214,32 @@
     inset: auto;
     top: 74px;
     right: 36px;
+    padding: 0;
     gap: 12px;
     align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  /* На вузьких екранах пункти центровані (.navList вище) — тут, навпаки,
+     пігулки мають стояти впритул до правого краю, кожна своєю шириною, як і
+     до групування посилань в один контейнер. */
+  .navList {
+    align-items: flex-end;
+  }
+
+  /* На широких екранах та сама кнопка вже стоїть окремо в шапці
+     (navbar/page.tsx) — тут вона зайва. */
+  .ctaItem {
+    display: none;
+  }
+
+  /* На вузьких екранах соцмережі йдуть першими за DOM-порядком (зверху над
+     пунктами). Тут же їх треба, навпаки, після списку пігулок — `order`
+     виносить пункт у кінець колонки, не чіпаючи розмітку. */
+  .socialItem {
+    order: 1;
+    margin-bottom: 0;
+    margin-top: 4px;
   }
 
   .label {

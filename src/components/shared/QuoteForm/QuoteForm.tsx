@@ -1,9 +1,17 @@
 'use client';
 
 import { useId, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { eventTypeSlugs, type EventTypeSlug } from '@/data/eventTypes';
+import { Link } from '@/i18n/navigation';
+import {
+  eventTypeSlugs,
+  extraEventTypeLabelKeys,
+  extraEventTypeValues,
+  type EventTypeSlug,
+} from '@/data/eventTypes';
 import { serviceSlugs, type ServiceSlug } from '@/data/services';
+import { trackQuoteFormConversion } from '@/lib/gtag';
 import {
   ConsentField,
   FormField,
@@ -40,12 +48,19 @@ type Props = {
  * і data/eventTypes.ts: підписи беруться з тих самих перекладів
  * (ServiceItems.*.name, EventItems.*.name), що й картки каталогу, тож нове
  * значення в даних саме з'явиться і тут, без окремого списку на підтримці.
+ * "Тип події" додатково має варіанти з extraEventTypeValues (data/eventTypes.ts)
+ * — пункти лише для цього селекта, без картки в каталозі й власної сторінки.
  */
 export default function QuoteForm({ defaultEventType = '', defaultService = '' }: Props = {}) {
   const t = useTranslations('QuoteForm');
   const tEventItems = useTranslations('EventItems');
   const tServiceItems = useTranslations('ServiceItems');
   const locale = useLocale();
+  // Реальний шлях у браузері (з префіксом локалі) — команда бачить у листі,
+  // з якої сторінки саме прийшла заявка (QuoteForm стоїть майже на кожній
+  // сторінці сайту, і "Послуга"/"Тип події" не завжди її однозначно видають:
+  // на /contacts чи головній обидва поля можуть лишитись порожніми).
+  const pathname = usePathname();
 
   const id = useId();
   const [status, setStatus] = useState<Status>('idle');
@@ -68,12 +83,14 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
       email: String(data.get('email') ?? ''),
       phone: String(data.get('phone') ?? ''),
       eventType: String(data.get('eventType') ?? ''),
+      eventDate: String(data.get('eventDate') ?? ''),
       service: String(data.get('service') ?? ''),
       guests: String(data.get('guests') ?? ''),
       location: String(data.get('location') ?? ''),
       message: String(data.get('message') ?? ''),
       company: String(data.get('company') ?? ''),
       locale,
+      page: pathname,
       renderedAt,
     };
 
@@ -87,6 +104,7 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
       setStatus('success');
+      trackQuoteFormConversion(pathname);
       try {
         form.reset();
       } catch {
@@ -110,6 +128,7 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
             name="name"
             type="text"
             autoComplete="name"
+            placeholder={`${t('name')} *`}
             className={styles.input}
             required
           />
@@ -121,9 +140,28 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
             name="email"
             type="email"
             autoComplete="email"
+            placeholder={`${t('email')} *`}
             className={styles.input}
             required
           />
+        </FormField>
+
+        <FormField label={t('phone')} htmlFor={`${id}-phone`}>
+          <input
+            id={`${id}-phone`}
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            placeholder={t('phone')}
+            className={styles.input}
+          />
+        </FormField>
+
+        {/* type="date" не підтримує звичайний текстовий placeholder (браузер
+            замість нього завжди показує власну підказку формату) — лейбл
+            лишається лише для скрінрідерів, як і в решти полів. */}
+        <FormField label={t('eventDate')} htmlFor={`${id}-eventDate`}>
+          <input id={`${id}-eventDate`} name="eventDate" type="date" className={styles.input} />
         </FormField>
 
         <FormField label={t('eventType')} htmlFor={`${id}-eventType`}>
@@ -137,6 +175,11 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
             {eventTypeSlugs.map((slug) => (
               <option key={slug} value={slug}>
                 {tEventItems(`${slug}.name`)}
+              </option>
+            ))}
+            {extraEventTypeValues.map((value) => (
+              <option key={value} value={value}>
+                {t(extraEventTypeLabelKeys[value])}
               </option>
             ))}
           </select>
@@ -165,6 +208,7 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
             type="number"
             min={1}
             inputMode="numeric"
+            placeholder={t('guests')}
             className={styles.input}
           />
         </FormField>
@@ -175,26 +219,17 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
             name="location"
             type="text"
             autoComplete="address-level2"
+            placeholder={t('location')}
             className={styles.input}
           />
         </FormField>
 
-        <FormField label={t('phone')} htmlFor={`${id}-phone`} wide>
-          <input
-            id={`${id}-phone`}
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            className={styles.input}
-          />
-        </FormField>
-
-        <FormField label={t('message')} htmlFor={`${id}-message`} wide required>
+        <FormField label={t('message')} htmlFor={`${id}-message`} wide>
           <textarea
             id={`${id}-message`}
             name="message"
-            rows={5}
-            placeholder={t('messagePlaceholder')}
+            rows={3}
+            placeholder={`* ${t('messagePlaceholder')}`}
             className={`${styles.input} ${styles.textarea}`}
             required
           />
@@ -206,7 +241,20 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
           <span className={styles.requiredMark} aria-hidden="true">
             *{' '}
           </span>
-          {t('consent')}
+          {t.rich('consent', {
+            // Нова вкладка — щоб перегляд політики не знімав із монтування
+            // цю форму (і разом з нею вже введені відвідувачем поля).
+            link: (chunks) => (
+              <Link
+                href="/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.consentLink}
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
         </ConsentField>
 
         <SubmitButton disabled={status === 'submitting'}>

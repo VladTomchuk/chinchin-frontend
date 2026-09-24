@@ -1,4 +1,10 @@
-import { eventTypeSlugs, eventTypes, type EventType, type EventTypeSlug } from './eventTypes';
+import {
+  eventTypeSlugs,
+  eventTypes,
+  extraEventTypeValues,
+  type EventType,
+  type EventTypeSlug,
+} from './eventTypes';
 import { serviceSlugs, services, type Service, type ServiceSlug } from './services';
 
 /**
@@ -26,6 +32,15 @@ export function isServiceSlug(value: string): value is ServiceSlug {
 
 export function isEventTypeSlug(value: string): value is EventTypeSlug {
   return (eventTypeSlugs as readonly string[]).includes(value);
+}
+
+// Поле "Тип події" у формі запиту (QuoteForm) приймає, крім слагів каталогу,
+// ще й extraEventTypeValues (напр. "Приватна вечірка") — тих сторінок нема,
+// тож isEventTypeSlug їх відхилить. Ця перевірка для валідації сабміту форми
+// (app/api/contact/route.ts), isEventTypeSlug лишається саме про сторінку
+// /events/{slug}.
+export function isEventTypeFormValue(value: string): boolean {
+  return isEventTypeSlug(value) || (extraEventTypeValues as readonly string[]).includes(value);
 }
 
 /**

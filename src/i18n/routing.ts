@@ -28,6 +28,7 @@ export const routing = defineRouting({
     '/events/corporate-business-events': '/events/corporate-business-events',
     '/events/[slug]': '/events/[slug]',
     '/contacts': '/contacts',
+    '/privacy-policy': '/privacy-policy',
   },
 });
 

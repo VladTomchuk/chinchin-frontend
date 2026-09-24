@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getTranslations } from 'next-intl/server';
 import { sendContactEmail } from '@/lib/mailer';
-import { isEventTypeSlug, isServiceSlug } from '@/data/relations';
+import { isEventTypeFormValue, isEventTypeSlug, isServiceSlug } from '@/data/relations';
+import { extraEventTypeLabelKeys, type ExtraEventTypeValue } from '@/data/eventTypes';
 import { routing } from '@/i18n/routing';
+import { absoluteUrl } from '@/config/site';
 
 /**
  * POST /api/contact
@@ -20,8 +22,18 @@ import { routing } from '@/i18n/routing';
  * передбачуваний JSON із кодом.
  */
 
-const MAX_LENGTHS = { name: 120, email: 200, phone: 40, location: 200, message: 5000 } as const;
+const MAX_LENGTHS = {
+  name: 120,
+  email: 200,
+  phone: 40,
+  location: 200,
+  message: 5000,
+  page: 300,
+} as const;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Формат input[type=date] завжди yyyy-mm-dd (ISO), незалежно від локалі
+// браузера — саме так його й віддає FormData, форматує сам браузер.
+const EVENT_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_GUESTS = 100000;
 
 // Проста заглушка від ботів: прихований інпут "company" у формі, який
@@ -110,9 +122,11 @@ export async function POST(request: Request) {
   const phone = typeof body.phone === 'string' ? body.phone.trim() : '';
   const message = typeof body.message === 'string' ? body.message.trim() : '';
   const eventTypeSlug = typeof body.eventType === 'string' ? body.eventType.trim() : '';
+  const eventDate = typeof body.eventDate === 'string' ? body.eventDate.trim() : '';
   const serviceSlug = typeof body.service === 'string' ? body.service.trim() : '';
   const guestsRaw = typeof body.guests === 'string' ? body.guests.trim() : '';
   const location = typeof body.location === 'string' ? body.location.trim() : '';
+  const page = typeof body.page === 'string' ? body.page.trim() : '';
   const requestedLocale = typeof body.locale === 'string' ? body.locale : '';
   const locale = (routing.locales as readonly string[]).includes(requestedLocale)
     ? requestedLocale
@@ -132,8 +146,13 @@ export async function POST(request: Request) {
   }
   // Обидва поля необов'язкові (загальна заявка з /contacts їх не заповнює),
   // але якщо щось прийшло — це має бути відомий слаг, а не довільний рядок.
-  if (eventTypeSlug && !isEventTypeSlug(eventTypeSlug)) {
+  // "Тип події" приймає і слаги каталогу, і extraEventTypeValues (напр.
+  // "Приватна вечірка") — див. коментар у isEventTypeFormValue.
+  if (eventTypeSlug && !isEventTypeFormValue(eventTypeSlug)) {
     return badRequest('Некоректний тип події.');
+  }
+  if (eventDate && (!EVENT_DATE_RE.test(eventDate) || Number.isNaN(new Date(eventDate).getTime()))) {
+    return badRequest('Некоректна дата події.');
   }
   if (serviceSlug && !isServiceSlug(serviceSlug)) {
     return badRequest('Некоректна послуга.');
@@ -147,13 +166,24 @@ export async function POST(request: Request) {
   if (location.length > MAX_LENGTHS.location) {
     return badRequest('Некоректна локація.');
   }
+  // Не обовʼязкове (querystring на прямий POST у цей ендпоінт міг його не
+  // прислати) — рядок береться з usePathname() на клієнті, тож він завжди
+  // починається з "/", коли взагалі присутній.
+  if (page && (page.length > MAX_LENGTHS.page || !page.startsWith('/'))) {
+    return badRequest('Некоректна сторінка заявки.');
+  }
 
   // Лист читає команда, тож у тілі має бути назва мовою відвідувача
   // ("Весілля"), а не техічний слаг ("weddings") — перекладаємо тут, а не в
   // mailer.ts, щоб той лишався простим форматером готових рядків.
   const tEventItems = await getTranslations({ locale, namespace: 'EventItems' });
   const tServiceItems = await getTranslations({ locale, namespace: 'ServiceItems' });
-  const eventType = eventTypeSlug ? tEventItems(`${eventTypeSlug}.name`) : '';
+  const tQuoteForm = await getTranslations({ locale, namespace: 'QuoteForm' });
+  const eventType = !eventTypeSlug
+    ? ''
+    : isEventTypeSlug(eventTypeSlug)
+      ? tEventItems(`${eventTypeSlug}.name`)
+      : tQuoteForm(extraEventTypeLabelKeys[eventTypeSlug as ExtraEventTypeValue]);
   const service = serviceSlug ? tServiceItems(`${serviceSlug}.name`) : '';
 
   const result = await sendContactEmail({
@@ -161,10 +191,12 @@ export async function POST(request: Request) {
     email,
     phone,
     eventType,
+    eventDate,
     service,
     guests: guestsRaw,
     location,
     message,
+    page: page ? absoluteUrl(page) : '',
   });
 
   if (result.status === 'ok') {

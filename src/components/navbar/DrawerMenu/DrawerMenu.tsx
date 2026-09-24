@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useColorModeValue } from '@/components/ui/color-mode';
 import { visibleNavItems } from '@/config/navigation';
+import { SOCIAL_LINKS } from '@/config/socials';
 import styles from './DrawerMenu.module.css';
 
 const MENU_ID = 'navbar-menu';
@@ -43,6 +44,7 @@ export default function DrawerMenu() {
   useEffect(() => setMounted(true), []);
 
   const t = useTranslations('Navbar');
+  const tSocial = useTranslations('Contacts.details');
   const isWide = useIsWideScreen();
   const reduceMotion = useReducedMotion();
   const items = visibleNavItems();
@@ -164,37 +166,93 @@ export default function DrawerMenu() {
               animate="visible"
               exit="hidden"
             >
-              {items.map((item) => {
-                // ТИМЧАСОВО: іконки біля пунктів прибрані. Щоб повернути —
-                // розкоментувати блок нижче разом із `const { Icon } = item;`
-                // та правилом .link у мобільній медіа-секції CSS-модуля.
-                // const { Icon } = item;
+              {/* Іконки соцмереж. Порядок у DOM навмисно перед пунктами меню:
+                  на вузьких екранах .menu — проста колонка й порядок = DOM,
+                  тож рядок опиняється зверху, над пунктами. На широких же
+                  екранах .socialItem отримує CSS `order`, що переносить його
+                  в кінець — після пунктів-пігулок. Так одна розмітка працює
+                  для обох макетів без дублювання JSX. */}
+              <motion.li
+                className={styles.socialItem}
+                variants={itemVariants}
+              >
+                <div className={styles.socialRow}>
+                  {SOCIAL_LINKS.map(({ key, href, Icon }) => {
+                    if (!href) return null;
+                    return (
+                      <a
+                        key={key}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.socialLink}
+                        aria-label={tSocial(`social.${key}`)}
+                      >
+                        <Icon size={20} aria-hidden />
+                      </a>
+                    );
+                  })}
+                </div>
+              </motion.li>
 
-                const content = (
-                  <>
-                    <span className={styles.label}>{t(item.key)}</span>
-                    {/*
-                    Колір не задаємо пропом: кружечок залитий акцентом, і
-                    гліф має брати контрастний currentColor із CSS.
-                    <span className={styles.icon}>
-                      <Icon size={20} aria-hidden />
-                    </span>
-                    */}
-                  </>
-                );
+              {/* Пункти-посилання на секції згорнуті в один контейнер: на
+                  вузьких екранах .menu розводить свої прямі діти через
+                  `justify-content: space-between` (соцмережі — пункти —
+                  кнопка), і для цього пункти мають рахуватись одним блоком, а
+                  не трьома окремими. */}
+              <li className={styles.navGroup}>
+                <ul className={styles.navList}>
+                  {items.map((item) => {
+                    // ТИМЧАСОВО: іконки біля пунктів прибрані. Щоб повернути —
+                    // розкоментувати блок нижче разом із `const { Icon } = item;`
+                    // та правилом .link у мобільній медіа-секції CSS-модуля.
+                    // const { Icon } = item;
 
-                return (
-                  <motion.li
-                    key={item.key}
-                    variants={itemVariants}
-                    whileTap={reduceMotion ? undefined : { scale: 0.96 }}
-                  >
-                    <Link href={item.href} className={styles.link} onClick={close}>
-                      {content}
-                    </Link>
-                  </motion.li>
-                );
-              })}
+                    const content = (
+                      <>
+                        <span className={styles.label}>{t(item.key)}</span>
+                        {/*
+                        Колір не задаємо пропом: кружечок залитий акцентом, і
+                        гліф має брати контрастний currentColor із CSS.
+                        <span className={styles.icon}>
+                          <Icon size={20} aria-hidden />
+                        </span>
+                        */}
+                      </>
+                    );
+
+                    return (
+                      <motion.li
+                        key={item.key}
+                        variants={itemVariants}
+                        whileTap={reduceMotion ? undefined : { scale: 0.96 }}
+                      >
+                        <Link href={item.href} className={styles.link} onClick={close}>
+                          {content}
+                        </Link>
+                      </motion.li>
+                    );
+                  })}
+                </ul>
+              </li>
+
+              {/* Виразна кнопка запиту на прорахунок — лише під посиланнями в
+                  мобільному меню. На широких екранах та сама дія вже стоїть
+                  окремо в самій шапці (navbar/page.tsx), тож тут її ховає CSS
+                  (.ctaItem, `min-width: 48em`), щоб не дублювалась. */}
+              <motion.li
+                className={styles.ctaItem}
+                variants={itemVariants}
+                whileTap={reduceMotion ? undefined : { scale: 0.96 }}
+              >
+                <Link
+                  href={{ pathname: '/', hash: 'quote-form' }}
+                  className={styles.link}
+                  onClick={close}
+                >
+                  <span className={styles.ctaLabel}>{t('ctaQuote')}</span>
+                </Link>
+              </motion.li>
             </motion.ul>
           )}
         </AnimatePresence>

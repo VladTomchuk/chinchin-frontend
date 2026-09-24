@@ -73,6 +73,7 @@
     "services": "Servicios",
     "about": "Sobre nosotros",
     "contacts": "Contacto",
+    "ctaQuote": "Solicitar presupuesto",
     "menuTitle": "Menú del sitio",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú"
@@ -81,7 +82,8 @@
     "tagline": "Cócteles que hablan tu idioma.",
     "exploreHeading": "Explorar",
     "contactHeading": "Contacto",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "privacyPolicy": "Política de privacidad"
   },
   "Fab": {
     "nav": "Navegación rápida",
@@ -961,8 +963,10 @@
     },
     "details": {
       "title": "Contacta con nosotros directamente",
+      "envelopeTitle": "Contacto",
       "emailLabel": "Email",
       "whatsappLabel": "WhatsApp",
+      "telegramLabel": "Telegram",
       "whatsappCta": "Escríbenos",
       "locationLabel": "Con base en",
       "locationText": "Barcelona, España — disponibles en todo el mundo",
@@ -995,16 +999,121 @@
     "phone": "Teléfono (opcional)",
     "eventType": "Tipo de evento (opcional)",
     "eventTypePlaceholder": "Selecciona el tipo de evento",
+    "eventTypeExtra": {
+      "privateParty": "Fiesta privada",
+      "brandActivation": "Activación de marca",
+      "other": "Otro"
+    },
+    "eventDate": "Fecha del evento (opcional)",
     "service": "Servicio (opcional)",
     "servicePlaceholder": "Selecciona el servicio",
     "guests": "Número de invitados (opcional)",
     "location": "Ubicación / ciudad (opcional)",
     "message": "Cuéntanos sobre tu evento",
     "messagePlaceholder": "Fecha, formato: cualquier otro detalle que ayude.",
-    "consent": "Acepto el tratamiento de mis datos personales (nombre, email y cualquier otro dato facilitado en este formulario) con el fin de gestionar esta consulta y responder a ella, de acuerdo con el RGPD (Reglamento UE 2016/679). Estos datos no se comparten con terceros.",
+    "consent": "Acepto la <link>Política de privacidad</link> y el tratamiento de mis datos para responder a esta consulta.",
     "submit": "Enviar solicitud",
     "submitting": "Enviando…",
     "success": "¡Gracias! Tu mensaje está en camino; te responderemos por email, normalmente en 24 horas.",
     "error": "Algo ha fallado al enviar tu mensaje. Inténtalo de nuevo, o escríbenos directamente por email."
+  },
+  "CookieConsent": {
+    "title": "Configuración de cookies",
+    "text": "Usamos cookies analíticas (Google Analytics, Google Ads) para entender el tráfico y mejorar el sitio. Solo se cargan si nos das tu consentimiento.",
+    "accept": "Aceptar",
+    "decline": "Rechazar"
+  },
+  "PrivacyPolicy": {
+    "meta": {
+      "title": "Política de privacidad | ChinChin",
+      "description": "Cómo trata ChinChin Bar Catering los datos personales de quienes visitan el sitio: el formulario de contacto, las cookies analíticas (Google Analytics, Google Ads) y tus derechos según el RGPD."
+    },
+    "hero": {
+      "eyebrow": "Legal",
+      "title": "Política de privacidad",
+      "lead": "Última actualización: 24 de septiembre de 2026. Aquí explicamos qué datos recopilamos a través de este sitio, para qué y qué derechos tienes."
+    },
+    "sections": [
+      {
+        "title": "Quiénes somos",
+        "paragraphs": [
+          "Esta política la publica ChinChin Bar Catering (chinchinevents.com), nombre comercial bajo el que opera Vladyslav Tomchuk en Barcelona, España, NIF/NIE: ESY6450133G.",
+          "Para cualquier consulta sobre el tratamiento de tus datos personales, escribe a info@chinchinevents.com."
+        ]
+      },
+      {
+        "title": "Qué datos recopilamos",
+        "paragraphs": ["Según cómo uses el sitio, podemos tratar las siguientes categorías de datos:"],
+        "items": [
+          "Datos del formulario de contacto: nombre, email y mensaje (campos obligatorios), además de teléfono, tipo de evento, servicio, número de invitados y ubicación si los rellenas.",
+          "Datos analíticos, solo si pulsas «Aceptar» en el banner de cookies: páginas visitadas, una fuente de referencia aproximada e interacción con los anuncios de Google Ads (a través de Google Analytics y Google Ads).",
+          "Estadísticas anónimas de rendimiento del sitio (Vercel Analytics y Speed Insights), sin cookies y sin vincularse a ninguna persona, que se recogen siempre."
+        ]
+      },
+      {
+        "title": "Para qué tratamos estos datos",
+        "paragraphs": ["Usamos tus datos con estos fines:"],
+        "items": [
+          "Para responder a tu consulta y preparar una propuesta para tu evento.",
+          "Con tu consentimiento, para entender cómo se usa el sitio y medir el rendimiento de nuestras campañas en Google Ads."
+        ]
+      },
+      {
+        "title": "Base legal del tratamiento",
+        "paragraphs": ["Tratamos los datos sobre las siguientes bases legales (art. 6 RGPD):"],
+        "items": [
+          "Tu consentimiento (art. 6.1.a) — la casilla del formulario de contacto y las cookies analíticas/publicitarias. Puedes retirar tu consentimiento en cualquier momento; esto no afecta a la licitud del tratamiento anterior a la retirada.",
+          "Medidas precontractuales e interés legítimo (art. 6.1.b y f) — gestionar la solicitud de presupuesto como parte de una consulta comercial que tú mismo has iniciado."
+        ]
+      },
+      {
+        "title": "Con quién compartimos los datos",
+        "paragraphs": ["Solo compartimos datos con proveedores que nos ayudan a operar el sitio, y solo en la medida necesaria para su servicio. No vendemos tus datos ni los cedemos a terceros para sus propios fines de marketing:"],
+        "items": [
+          "Titan Email — el proveedor de correo a través del cual las solicitudes del formulario llegan a nuestro equipo.",
+          "Google (Google Analytics, Google Ads) — solo si has aceptado las cookies analíticas en el banner.",
+          "Vercel — alojamiento del sitio y estadísticas anónimas de rendimiento."
+        ]
+      },
+      {
+        "title": "Transferencias internacionales de datos",
+        "paragraphs": ["Google y Vercel pueden tratar datos en servidores fuera del Espacio Económico Europeo (por ejemplo, en EE. UU.). En esos casos se basan en las Cláusulas Contractuales Tipo de la Comisión Europea u otras garantías de protección de datos reconocidas."]
+      },
+      {
+        "title": "Cuánto tiempo conservamos los datos",
+        "paragraphs": ["Conservamos los datos de la solicitud el tiempo necesario para gestionar tu consulta, y hasta 24 meses adicionales tras el último contacto, por si vuelves a escribirnos. Un plazo mayor solo se aplica cuando lo exige la ley, por ejemplo los datos de una reserva necesarios para la contabilidad."]
+      },
+      {
+        "title": "Tus derechos",
+        "paragraphs": ["Según el RGPD, tienes los siguientes derechos sobre tus datos personales:"],
+        "items": [
+          "Acceder a tus datos personales.",
+          "Rectificar datos inexactos.",
+          "Suprimir tus datos («derecho al olvido»).",
+          "Limitar el tratamiento.",
+          "Portar tus datos a otro responsable.",
+          "Oponerte al tratamiento.",
+          "Retirar tu consentimiento en cualquier momento.",
+          "Presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD, aepd.es) si consideras que se han vulnerado tus derechos."
+        ],
+        "note": "Para ejercer cualquiera de estos derechos, escribe a info@chinchinevents.com."
+      },
+      {
+        "title": "Cookies",
+        "paragraphs": ["El sitio no carga ninguna cookie analítica o publicitaria (Google Analytics, Google Ads) hasta que pulsas «Aceptar» en el banner de la parte inferior de la pantalla. Vercel Analytics y Speed Insights funcionan siempre sin cookies y no requieren consentimiento. Para cambiar tu elección, borra los datos del sitio en la configuración de tu navegador: el banner volverá a aparecer."]
+      },
+      {
+        "title": "Seguridad de los datos",
+        "paragraphs": ["Aplicamos medidas técnicas y organizativas razonables para proteger tus datos frente a pérdidas, accesos no autorizados o divulgación."]
+      },
+      {
+        "title": "Cambios en esta política",
+        "paragraphs": ["Podemos actualizar esta política de vez en cuando, por ejemplo si cambian las herramientas que usamos en el sitio. La fecha de la última actualización aparece al principio de esta página."]
+      },
+      {
+        "title": "Contacto",
+        "paragraphs": ["Para cualquier duda sobre esta política o sobre el tratamiento de tus datos, escribe a info@chinchinevents.com."]
+      }
+    ]
   }
 }

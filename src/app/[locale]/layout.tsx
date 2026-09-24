@@ -12,6 +12,9 @@ import SmoothScroll from '@/components/shared/SmoothScroll';
 import TopLoader from '@/components/shared/TopLoader';
 import LoadingCursor from '@/components/shared/LoadingCursor';
 import WhatsAppButton from '@/components/WhatsAppButton/WhatsAppButton';
+import { ConsentProvider } from '@/components/shared/CookieConsent/ConsentContext';
+import CookieBanner from '@/components/shared/CookieConsent/CookieBanner';
+import GoogleTags from '@/components/shared/CookieConsent/GoogleTags';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { brandFont, headingFont, monotonFont, uiFont } from '@/fonts/fonts';
@@ -70,13 +73,17 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Provider>
-              <TopLoader />
-              <LoadingCursor />
-              <SmoothScroll />
-              <Navbar />
-              {children}
-              <Footer />
-              <WhatsAppButton />
+              <ConsentProvider>
+                <TopLoader />
+                <LoadingCursor />
+                <SmoothScroll />
+                <Navbar />
+                {children}
+                <Footer />
+                <WhatsAppButton />
+                <CookieBanner />
+                <GoogleTags />
+              </ConsentProvider>
             </Provider>
           </ThemeProvider>
         </NextIntlClientProvider>

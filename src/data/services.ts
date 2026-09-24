@@ -108,6 +108,7 @@ const SERVICES_AUTHORED: Service[] = [
     heroImage: '/hero/cocktail_bar.png',
     eventTypes: ['corporate-business-events', 'weddings'],
     related: ['open-bar', 'self-service-bar'],
+    status: 'soon',
   },
   {
     slug: 'bartender-for-events',

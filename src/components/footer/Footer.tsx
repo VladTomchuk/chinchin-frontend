@@ -158,6 +158,9 @@ export default async function Footer() {
           <Text fontFamily="var(--font-brand-ui)" fontSize="xs" color={c.textMuted}>
             © {year} ChinChin Bar Catering. {t('rights')}
           </Text>
+          <Link href="/privacy-policy" className={styles.legalLink}>
+            {t('privacyPolicy')}
+          </Link>
         </Flex>
       </Box>
     </Box>

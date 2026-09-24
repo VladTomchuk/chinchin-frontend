@@ -73,6 +73,7 @@
     "services": "Services",
     "about": "About us",
     "contacts": "Contact",
+    "ctaQuote": "Get a quote",
     "menuTitle": "Site menu",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -81,7 +82,8 @@
     "tagline": "Cocktails that speak your language.",
     "exploreHeading": "Explore",
     "contactHeading": "Get in touch",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "privacyPolicy": "Privacy Policy"
   },
   "Fab": {
     "nav": "Quick navigation",
@@ -326,16 +328,12 @@
       "heroImageAlt": "[COPY PENDING — Bartender for Events — EN — Hero Image Alt]",
       "body": {
         "intro": {
-          "paragraphs": [
-            "[COPY PENDING — Bartender for Events — EN — Intro]"
-          ]
+          "paragraphs": ["[COPY PENDING — Bartender for Events — EN — Intro]"]
         },
         "included": {
           "title": "[COPY PENDING — Bartender for Events — EN — What's Included (heading)]",
           "lead": "[COPY PENDING — Bartender for Events — EN — What's Included — lead]",
-          "items": [
-            "[COPY PENDING — Bartender for Events — EN — What's Included]"
-          ]
+          "items": ["[COPY PENDING — Bartender for Events — EN — What's Included]"]
         },
         "perfectFor": {
           "title": "[COPY PENDING — Bartender for Events — EN — Perfect For (heading)]",
@@ -354,15 +352,11 @@
         },
         "howItWorks": {
           "title": "[COPY PENDING — Bartender for Events — EN — How It Works (heading)]",
-          "steps": [
-            "[COPY PENDING — Bartender for Events — EN — How It Works — step]"
-          ]
+          "steps": ["[COPY PENDING — Bartender for Events — EN — How It Works — step]"]
         },
         "international": {
           "title": "[COPY PENDING — Bartender for Events — EN — Events Outside Barcelona (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Bartender for Events — EN — Events Outside Barcelona]"
-          ]
+          "paragraphs": ["[COPY PENDING — Bartender for Events — EN — Events Outside Barcelona]"]
         },
         "cta": {
           "title": "[COPY PENDING — Bartender for Events — EN — Closing CTA (heading)]",
@@ -388,16 +382,12 @@
       "heroImageAlt": "[COPY PENDING — Open Bar — EN — Hero Image Alt]",
       "body": {
         "intro": {
-          "paragraphs": [
-            "[COPY PENDING — Open Bar — EN — Intro]"
-          ]
+          "paragraphs": ["[COPY PENDING — Open Bar — EN — Intro]"]
         },
         "included": {
           "title": "[COPY PENDING — Open Bar — EN — What's Included (heading)]",
           "lead": "[COPY PENDING — Open Bar — EN — What's Included — lead]",
-          "items": [
-            "[COPY PENDING — Open Bar — EN — What's Included]"
-          ]
+          "items": ["[COPY PENDING — Open Bar — EN — What's Included]"]
         },
         "perfectFor": {
           "title": "[COPY PENDING — Open Bar — EN — Perfect For (heading)]",
@@ -410,21 +400,15 @@
         },
         "menu": {
           "title": "[COPY PENDING — Open Bar — EN — Menu & Non-Alcoholic Options (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Open Bar — EN — Menu & Non-Alcoholic Options]"
-          ]
+          "paragraphs": ["[COPY PENDING — Open Bar — EN — Menu & Non-Alcoholic Options]"]
         },
         "howItWorks": {
           "title": "[COPY PENDING — Open Bar — EN — How It Works (heading)]",
-          "steps": [
-            "[COPY PENDING — Open Bar — EN — How It Works — step]"
-          ]
+          "steps": ["[COPY PENDING — Open Bar — EN — How It Works — step]"]
         },
         "international": {
           "title": "[COPY PENDING — Open Bar — EN — Events Outside Barcelona (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Open Bar — EN — Events Outside Barcelona]"
-          ]
+          "paragraphs": ["[COPY PENDING — Open Bar — EN — Events Outside Barcelona]"]
         },
         "cta": {
           "title": "[COPY PENDING — Open Bar — EN — Closing CTA (heading)]",
@@ -450,16 +434,12 @@
       "heroImageAlt": "[COPY PENDING — Self-Service Bar — EN — Hero Image Alt]",
       "body": {
         "intro": {
-          "paragraphs": [
-            "[COPY PENDING — Self-Service Bar — EN — Intro]"
-          ]
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — EN — Intro]"]
         },
         "included": {
           "title": "[COPY PENDING — Self-Service Bar — EN — What's Included (heading)]",
           "lead": "[COPY PENDING — Self-Service Bar — EN — What's Included — lead]",
-          "items": [
-            "[COPY PENDING — Self-Service Bar — EN — What's Included]"
-          ]
+          "items": ["[COPY PENDING — Self-Service Bar — EN — What's Included]"]
         },
         "perfectFor": {
           "title": "[COPY PENDING — Self-Service Bar — EN — Perfect For (heading)]",
@@ -472,21 +452,15 @@
         },
         "menu": {
           "title": "[COPY PENDING — Self-Service Bar — EN — Menu & Non-Alcoholic Options (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Self-Service Bar — EN — Menu & Non-Alcoholic Options]"
-          ]
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — EN — Menu & Non-Alcoholic Options]"]
         },
         "howItWorks": {
           "title": "[COPY PENDING — Self-Service Bar — EN — How It Works (heading)]",
-          "steps": [
-            "[COPY PENDING — Self-Service Bar — EN — How It Works — step]"
-          ]
+          "steps": ["[COPY PENDING — Self-Service Bar — EN — How It Works — step]"]
         },
         "international": {
           "title": "[COPY PENDING — Self-Service Bar — EN — Events Outside Barcelona (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Self-Service Bar — EN — Events Outside Barcelona]"
-          ]
+          "paragraphs": ["[COPY PENDING — Self-Service Bar — EN — Events Outside Barcelona]"]
         },
         "cta": {
           "title": "[COPY PENDING — Self-Service Bar — EN — Closing CTA (heading)]",
@@ -512,16 +486,12 @@
       "heroImageAlt": "[COPY PENDING — Draught Beer Bar — EN — Hero Image Alt]",
       "body": {
         "intro": {
-          "paragraphs": [
-            "[COPY PENDING — Draught Beer Bar — EN — Intro]"
-          ]
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — EN — Intro]"]
         },
         "included": {
           "title": "[COPY PENDING — Draught Beer Bar — EN — What's Included (heading)]",
           "lead": "[COPY PENDING — Draught Beer Bar — EN — What's Included — lead]",
-          "items": [
-            "[COPY PENDING — Draught Beer Bar — EN — What's Included]"
-          ]
+          "items": ["[COPY PENDING — Draught Beer Bar — EN — What's Included]"]
         },
         "perfectFor": {
           "title": "[COPY PENDING — Draught Beer Bar — EN — Perfect For (heading)]",
@@ -534,21 +504,15 @@
         },
         "menu": {
           "title": "[COPY PENDING — Draught Beer Bar — EN — Menu & Non-Alcoholic Options (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Draught Beer Bar — EN — Menu & Non-Alcoholic Options]"
-          ]
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — EN — Menu & Non-Alcoholic Options]"]
         },
         "howItWorks": {
           "title": "[COPY PENDING — Draught Beer Bar — EN — How It Works (heading)]",
-          "steps": [
-            "[COPY PENDING — Draught Beer Bar — EN — How It Works — step]"
-          ]
+          "steps": ["[COPY PENDING — Draught Beer Bar — EN — How It Works — step]"]
         },
         "international": {
           "title": "[COPY PENDING — Draught Beer Bar — EN — Events Outside Barcelona (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Draught Beer Bar — EN — Events Outside Barcelona]"
-          ]
+          "paragraphs": ["[COPY PENDING — Draught Beer Bar — EN — Events Outside Barcelona]"]
         },
         "cta": {
           "title": "[COPY PENDING — Draught Beer Bar — EN — Closing CTA (heading)]",
@@ -574,16 +538,12 @@
       "heroImageAlt": "[COPY PENDING — Coffee Corner — EN — Hero Image Alt]",
       "body": {
         "intro": {
-          "paragraphs": [
-            "[COPY PENDING — Coffee Corner — EN — Intro]"
-          ]
+          "paragraphs": ["[COPY PENDING — Coffee Corner — EN — Intro]"]
         },
         "included": {
           "title": "[COPY PENDING — Coffee Corner — EN — What's Included (heading)]",
           "lead": "[COPY PENDING — Coffee Corner — EN — What's Included — lead]",
-          "items": [
-            "[COPY PENDING — Coffee Corner — EN — What's Included]"
-          ]
+          "items": ["[COPY PENDING — Coffee Corner — EN — What's Included]"]
         },
         "perfectFor": {
           "title": "[COPY PENDING — Coffee Corner — EN — Perfect For (heading)]",
@@ -596,21 +556,15 @@
         },
         "menu": {
           "title": "[COPY PENDING — Coffee Corner — EN — Menu & Non-Alcoholic Options (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Coffee Corner — EN — Menu & Non-Alcoholic Options]"
-          ]
+          "paragraphs": ["[COPY PENDING — Coffee Corner — EN — Menu & Non-Alcoholic Options]"]
         },
         "howItWorks": {
           "title": "[COPY PENDING — Coffee Corner — EN — How It Works (heading)]",
-          "steps": [
-            "[COPY PENDING — Coffee Corner — EN — How It Works — step]"
-          ]
+          "steps": ["[COPY PENDING — Coffee Corner — EN — How It Works — step]"]
         },
         "international": {
           "title": "[COPY PENDING — Coffee Corner — EN — Events Outside Barcelona (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Coffee Corner — EN — Events Outside Barcelona]"
-          ]
+          "paragraphs": ["[COPY PENDING — Coffee Corner — EN — Events Outside Barcelona]"]
         },
         "cta": {
           "title": "[COPY PENDING — Coffee Corner — EN — Closing CTA (heading)]",
@@ -636,16 +590,12 @@
       "heroImageAlt": "[COPY PENDING — Matcha Bar — EN — Hero Image Alt]",
       "body": {
         "intro": {
-          "paragraphs": [
-            "[COPY PENDING — Matcha Bar — EN — Intro]"
-          ]
+          "paragraphs": ["[COPY PENDING — Matcha Bar — EN — Intro]"]
         },
         "included": {
           "title": "[COPY PENDING — Matcha Bar — EN — What's Included (heading)]",
           "lead": "[COPY PENDING — Matcha Bar — EN — What's Included — lead]",
-          "items": [
-            "[COPY PENDING — Matcha Bar — EN — What's Included]"
-          ]
+          "items": ["[COPY PENDING — Matcha Bar — EN — What's Included]"]
         },
         "perfectFor": {
           "title": "[COPY PENDING — Matcha Bar — EN — Perfect For (heading)]",
@@ -658,21 +608,15 @@
         },
         "menu": {
           "title": "[COPY PENDING — Matcha Bar — EN — Menu & Non-Alcoholic Options (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Matcha Bar — EN — Menu & Non-Alcoholic Options]"
-          ]
+          "paragraphs": ["[COPY PENDING — Matcha Bar — EN — Menu & Non-Alcoholic Options]"]
         },
         "howItWorks": {
           "title": "[COPY PENDING — Matcha Bar — EN — How It Works (heading)]",
-          "steps": [
-            "[COPY PENDING — Matcha Bar — EN — How It Works — step]"
-          ]
+          "steps": ["[COPY PENDING — Matcha Bar — EN — How It Works — step]"]
         },
         "international": {
           "title": "[COPY PENDING — Matcha Bar — EN — Events Outside Barcelona (heading)]",
-          "paragraphs": [
-            "[COPY PENDING — Matcha Bar — EN — Events Outside Barcelona]"
-          ]
+          "paragraphs": ["[COPY PENDING — Matcha Bar — EN — Events Outside Barcelona]"]
         },
         "cta": {
           "title": "[COPY PENDING — Matcha Bar — EN — Closing CTA (heading)]",
@@ -700,7 +644,7 @@
   },
   "EventItems": {
     "corporate-business-events": {
-      "name": "Corporate & Business Events",
+      "name": "Corporate & Business",
       "shortDescription": "Conferences, launches, business dinners and company parties — where fast service without queues is the priority.",
       "metaTitle": "Corporate Event Bar Service Barcelona | MICE & Business Bars",
       "metaDescription": "Professional bar service for conferences, exhibitions, corporate parties & team buildings worldwide. Full staff, setup & licensing — turnkey MICE bar solutions."
@@ -1019,8 +963,10 @@
     },
     "details": {
       "title": "Reach us directly",
+      "envelopeTitle": "Contact",
       "emailLabel": "Email",
       "whatsappLabel": "WhatsApp",
+      "telegramLabel": "Telegram",
       "whatsappCta": "Message us",
       "locationLabel": "Based in",
       "locationText": "Barcelona, Spain — available worldwide",
@@ -1053,16 +999,137 @@
     "phone": "Phone (optional)",
     "eventType": "Event type (optional)",
     "eventTypePlaceholder": "Select event type",
+    "eventTypeExtra": {
+      "privateParty": "Private party",
+      "brandActivation": "Brand activation",
+      "other": "Other"
+    },
+    "eventDate": "Event date (optional)",
     "service": "Service (optional)",
     "servicePlaceholder": "Select service",
     "guests": "Guest count (optional)",
     "location": "Location / city (optional)",
     "message": "Tell us about your event",
     "messagePlaceholder": "Date, format — anything else that helps.",
-    "consent": "I agree to the processing of my personal data (name, email and any other details provided in this form) for the purpose of handling this enquiry and replying to it, in accordance with the GDPR (EU Regulation 2016/679). This data is not shared with third parties.",
+    "consent": "I agree to the <link>Privacy Policy</link> and to my data being processed to respond to this enquiry.",
     "submit": "Send request",
     "submitting": "Sending…",
     "success": "Thanks! Your message is on its way — we'll reply by email, usually within 24 hours.",
     "error": "Something went wrong sending your message. Please try again, or email us directly."
+  },
+  "CookieConsent": {
+    "title": "Cookie settings",
+    "text": "We use analytics cookies (Google Analytics, Google Ads) to understand traffic and improve the site. They only load after you agree.",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "PrivacyPolicy": {
+    "meta": {
+      "title": "Privacy Policy | ChinChin",
+      "description": "How ChinChin Bar Catering processes visitors' personal data: the enquiry form, analytics cookies (Google Analytics, Google Ads), and your rights under the GDPR."
+    },
+    "hero": {
+      "eyebrow": "Legal",
+      "title": "Privacy Policy",
+      "lead": "Last updated: 24 September 2026. This page explains what data we collect through this website, why, and what rights you have."
+    },
+    "sections": [
+      {
+        "title": "Who we are",
+        "paragraphs": [
+          "This policy is published by ChinChin Bar Catering (chinchinevents.com) — the trading name under which Vladyslav Tomchuk operates in Barcelona, Spain, tax ID (NIF/NIE): ESY6450133G.",
+          "For any question about how we process personal data, contact info@chinchinevents.com."
+        ]
+      },
+      {
+        "title": "What data we collect",
+        "paragraphs": [
+          "Depending on how you use the site, we may process the following categories of data:"
+        ],
+        "items": [
+          "Enquiry form data: name, email and message (required fields), plus phone, event type, service, guest count and location if you fill them in.",
+          "Analytics data — only if you click \"Accept\" in the cookie banner: pages viewed, an approximate referral source, and interaction with Google Ads (via Google Analytics and Google Ads).",
+          "Anonymous site performance statistics (Vercel Analytics and Speed Insights) — no cookies, not tied to any individual, collected at all times."
+        ]
+      },
+      {
+        "title": "Why we process this data",
+        "paragraphs": ["We use your data for the following purposes:"],
+        "items": [
+          "To respond to your enquiry and prepare a proposal for your event.",
+          "With your consent, to understand how visitors use the site and measure the performance of our Google Ads campaigns."
+        ]
+      },
+      {
+        "title": "Legal basis for processing",
+        "paragraphs": ["We process data on the following legal bases (GDPR Art. 6):"],
+        "items": [
+          "Your consent (Art. 6(1)(a)) — the checkbox on the enquiry form, and analytics/advertising cookies. You can withdraw consent at any time; this doesn't affect the lawfulness of processing carried out before the withdrawal.",
+          "Pre-contractual steps and legitimate interest (Art. 6(1)(b) and (f)) — handling the quote request as part of a business enquiry you initiated yourself."
+        ]
+      },
+      {
+        "title": "Who we share data with",
+        "paragraphs": [
+          "We only share data with service providers that help us run the site, and only to the extent they need it. We don't sell your data or pass it to other parties for their own marketing purposes:"
+        ],
+        "items": [
+          "Titan Email — the email provider that delivers enquiry-form submissions to our team.",
+          "Google (Google Analytics, Google Ads) — only if you accepted analytics cookies in the banner.",
+          "Vercel — site hosting and anonymous performance statistics."
+        ]
+      },
+      {
+        "title": "International data transfers",
+        "paragraphs": [
+          "Google and Vercel may process data on servers outside the European Economic Area (e.g. the US). In those cases they rely on the European Commission's Standard Contractual Clauses or other recognised data-protection safeguards."
+        ]
+      },
+      {
+        "title": "How long we keep data",
+        "paragraphs": [
+          "We keep enquiry data for as long as needed to handle your request, plus up to 24 months after our last contact in case you get back in touch. A longer period applies only where the law requires it — for example, booking records needed for accounting purposes."
+        ]
+      },
+      {
+        "title": "Your rights",
+        "paragraphs": ["Under the GDPR, you have the following rights over your personal data:"],
+        "items": [
+          "Access your personal data.",
+          "Correct inaccurate data.",
+          "Erase your data (\"right to be forgotten\").",
+          "Restrict processing.",
+          "Port your data to another controller.",
+          "Object to processing.",
+          "Withdraw consent at any time.",
+          "Lodge a complaint with the Spanish Data Protection Agency (AEPD, aepd.es) if you believe your rights have been infringed."
+        ],
+        "note": "To exercise any of these rights, email info@chinchinevents.com."
+      },
+      {
+        "title": "Cookies",
+        "paragraphs": [
+          "The site doesn't load any analytics or advertising cookies (Google Analytics, Google Ads) until you click \"Accept\" in the banner at the bottom of the screen. Vercel Analytics and Speed Insights run without cookies at all times and don't require consent. To change your choice, clear this site's data in your browser settings — the banner will appear again."
+        ]
+      },
+      {
+        "title": "Data security",
+        "paragraphs": [
+          "We apply reasonable technical and organisational measures to protect your data from loss, unauthorised access or disclosure."
+        ]
+      },
+      {
+        "title": "Changes to this policy",
+        "paragraphs": [
+          "We may update this policy from time to time — for example, if the set of tools used on the site changes. The date of the last update is shown at the top of this page."
+        ]
+      },
+      {
+        "title": "Contact",
+        "paragraphs": [
+          "For any question about this policy or how we process your data, email info@chinchinevents.com."
+        ]
+      }
+    ]
   }
 }

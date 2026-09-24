@@ -2,15 +2,18 @@
 
 import { useTheme } from 'next-themes';
 import NextLink from 'next/link';
-import { Flex, Box, Image } from '@chakra-ui/react';
+import { useTranslations } from 'next-intl';
+import { Flex, Box, Image, Button } from '@chakra-ui/react';
 import DrawerMenu from './DrawerMenu/DrawerMenu';
 import { useState, useEffect } from 'react';
 import { ColorModeToggle } from '../ui/ColorModeToggle';
 import { useColorModeValue } from '../ui/color-mode';
 import LocaleSwitcher from '../LocaleSwitcherSelect/LocaleSwitcher';
-import { usePathname } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
+import { c, FOCUS_RING } from '@/components/shared/tokens';
 
 export default function Navbar() {
+  const t = useTranslations('Navbar');
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
@@ -109,7 +112,27 @@ export default function Navbar() {
           <Image src={srcLogo} alt="Logo" height="50px" cursor="pointer" />
         </NextLink>
       </Box>
-      <Flex justifyContent={'space-between'}>
+      <Flex align="center" justifyContent={'space-between'}>
+        {/* Тільки для широких екранів — на вузьких та сама дія лежить у
+            низу випадного меню (DrawerMenu), бо в самій шапці для окремої
+            кнопки просто немає місця. */}
+        <Button
+          asChild
+          display={{ base: 'none', md: 'inline-flex' }}
+          size="sm"
+          px={5}
+          mx={1}
+          rounded="full"
+          bg={c.accent}
+          color={c.accentContrast}
+          fontFamily="var(--font-brand-ui)"
+          fontWeight="600"
+          transition="opacity 200ms ease"
+          _hover={{ opacity: 0.86, textDecoration: 'none' }}
+          _focusVisible={FOCUS_RING}
+        >
+          <Link href={{ pathname: '/', hash: 'quote-form' }}>{t('ctaQuote')}</Link>
+        </Button>
         <LocaleSwitcher />
         <ColorModeToggle />
         <DrawerMenu />

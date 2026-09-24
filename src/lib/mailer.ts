@@ -38,10 +38,14 @@ export type ContactRequest = {
   phone: string;
   /** Уже перекладена назва (напр. "Весілля"), не слаг — рахує api/contact/route.ts. */
   eventType: string;
+  /** yyyy-mm-dd (input[type=date]) або порожній рядок, якщо не вказано. */
+  eventDate: string;
   service: string;
   guests: string;
   location: string;
   message: string;
+  /** Абсолютний URL сторінки, з якої відправлена форма — рахує api/contact/route.ts. */
+  page: string;
 };
 
 export type SendContactEmailResult =
@@ -83,7 +87,9 @@ export async function sendContactEmail(data: ContactRequest): Promise<SendContac
     `Імʼя: ${data.name}`,
     `Email: ${data.email}`,
     data.phone ? `Телефон: ${data.phone}` : null,
+    data.page ? `Сторінка заявки: ${data.page}` : null,
     data.eventType ? `Тип події: ${data.eventType}` : null,
+    data.eventDate ? `Дата події: ${data.eventDate}` : null,
     data.service ? `Послуга: ${data.service}` : null,
     data.guests ? `Кількість гостей: ${data.guests}` : null,
     data.location ? `Локація: ${data.location}` : null,
