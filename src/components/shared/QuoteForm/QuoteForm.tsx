@@ -158,9 +158,10 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
         </FormField>
 
         {/* type="date" не підтримує звичайний текстовий placeholder (браузер
-            замість нього завжди показує власну підказку формату) — лейбл
-            лишається лише для скрінрідерів, як і в решти полів. */}
-        <FormField label={t('eventDate')} htmlFor={`${id}-eventDate`}>
+            замість нього показує власну підказку формату, а на мобільному
+            часто взагалі нічого) — тож тут, на відміну від решти полів,
+            лейбл лишаємо видимим, а не sr-only. */}
+        <FormField label={t('eventDate')} htmlFor={`${id}-eventDate`} labelVisible>
           <input id={`${id}-eventDate`} name="eventDate" type="date" className={styles.input} />
         </FormField>
 

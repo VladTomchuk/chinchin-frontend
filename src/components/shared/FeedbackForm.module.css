@@ -35,6 +35,11 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  /* Без цього грід-колонка (1fr) не стискається нижче min-content дитини:
+     нативний "date"-інпут на мобільному має власну мінімальну ширину, ширшу
+     за звичайний текстовий інпут, і без min-width: 0 виштовхує поле за межі
+     .form замість того, щоб стиснутись до width: 100% з .input. */
+  min-width: 0;
 }
 
 /* Назви полів не показуємо зверху — замість них плейсхолдер прямо в
@@ -51,6 +56,16 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Лейбл для полів без текстового placeholder (type="date" його не підтримує
+   — браузер завжди показує власну підказку формату замість нього, а на
+   мобільному часто взагалі нічого). На відміну від .label цей лишається
+   видимим, інакше порожнє поле дати нічим не підказує, що воно означає. */
+.labelVisible {
+  color: #5c5c5c;
+  font-family: var(--font-brand-ui), sans-serif;
+  font-size: 13px;
 }
 
 .requiredMark {
@@ -194,6 +209,7 @@
 /* --- Темна тема: globals.css вішає клас .dark на <html>. --- */
 
 :global(html.dark) .label,
+:global(html.dark) .labelVisible,
 :global(html.dark) .consentLabel {
   color: #c9c3bf;
 }

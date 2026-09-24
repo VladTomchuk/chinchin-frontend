@@ -22,17 +22,20 @@ export function FormField({
   htmlFor,
   wide = false,
   required = false,
+  labelVisible = false,
   children,
 }: {
   label: string;
   htmlFor: string;
   wide?: boolean;
   required?: boolean;
+  /** Для полів без текстового placeholder (type="date") — лейбл лишається видимим замість sr-only. */
+  labelVisible?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <div className={wide ? `${styles.field} ${styles.wide}` : styles.field}>
-      <label className={styles.label} htmlFor={htmlFor}>
+      <label className={labelVisible ? styles.labelVisible : styles.label} htmlFor={htmlFor}>
         {label}
         {required && (
           <span className={styles.requiredMark} aria-hidden="true">
