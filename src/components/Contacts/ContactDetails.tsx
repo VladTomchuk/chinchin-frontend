@@ -31,13 +31,29 @@ const FLAP_BADGE_BG = '#f1e6d3';
 const FLAP_LABEL = '#5c4f3d';
 
 /**
- * Картка "звʼязок напряму" поряд із формою (ContactSection.tsx): один конверт
- * із усією інформацію — email, WhatsApp і Telegram (по два номери кожен) та
- * соцмережі на листі, локація на місці штампу лого на клапані — для тих, хто
- * хоче написати одразу, не заповнюючи форму.
+ * Картка "звʼязок напряму" поряд із формою (ContactSection.tsx). На великих
+ * екранах — конверт із усією інформацію: email, WhatsApp і Telegram (по два
+ * номери кожен) та соцмережі на листі, локація на місці штампу лого на
+ * клапані. На мобільних конверт замінює проста картка (той самий вміст без
+ * Telegram) — на вузькому екрані ілюстрація займає багато місця, а дрібний
+ * текст на ній важче читати, ніж звичайні рядки.
  */
 export default async function ContactDetails() {
   const t = await getTranslations('Contacts.details');
+
+  return (
+    <Box h="fit-content">
+      <Box display={{ base: 'block', lg: 'none' }}>
+        <SimpleCard t={t} />
+      </Box>
+      <Box display={{ base: 'none', lg: 'block' }}>
+        <Envelope t={t} />
+      </Box>
+    </Box>
+  );
+}
+
+function Envelope({ t }: { t: Awaited<ReturnType<typeof getTranslations>> }) {
   const mailto = `mailto:${CONTACT_EMAIL}`;
 
   return (
@@ -174,6 +190,160 @@ export default async function ContactDetails() {
         </Box>
       </Flex>
     </Box>
+  );
+}
+
+/**
+ * Проста картка для мобільних — той самий вміст, що на конверті (email,
+ * WhatsApp і Telegram по два номери кожен, локація), звичайним текстовим
+ * списком замість ілюстрації.
+ */
+function SimpleCard({ t }: { t: Awaited<ReturnType<typeof getTranslations>> }) {
+  const mailto = `mailto:${CONTACT_EMAIL}`;
+
+  return (
+    <Box bg={c.surface} borderWidth="1px" borderColor={c.line} rounded="3xl" p={{ base: 6, md: 8 }}>
+      <Heading as="h2" fontFamily="var(--font-brand-ui)" fontWeight="600" fontSize="lg" color={c.text} mb={6}>
+        {t('title')}
+      </Heading>
+
+      <Flex direction="column" gap={5}>
+        <DetailRow icon={<LuMail size={18} aria-hidden />} label={t('emailLabel')}>
+          <Link href={mailto} color="inherit" _hover={{ color: c.accent }} _focusVisible={FOCUS_RING}>
+            {CONTACT_EMAIL}
+          </Link>
+        </DetailRow>
+
+        <DetailRow icon={<WhatsAppIcon size={18} />} label={t('whatsappLabel')}>
+          <SimplePhoneLinks hrefA={WHATSAPP_URL} labelA={WHATSAPP_DISPLAY} hrefB={WHATSAPP_URL_2} labelB={WHATSAPP_DISPLAY_2} />
+        </DetailRow>
+
+        <DetailRow icon={<TbBrandTelegram size={19} aria-hidden />} label={t('telegramLabel')}>
+          <SimplePhoneLinks hrefA={TELEGRAM_URL} labelA={WHATSAPP_DISPLAY} hrefB={TELEGRAM_URL_2} labelB={WHATSAPP_DISPLAY_2} />
+        </DetailRow>
+
+        <DetailRow icon={<LuMapPin size={18} aria-hidden />} label={t('locationLabel')}>
+          {t('locationText')}
+        </DetailRow>
+      </Flex>
+
+      <Box mt={7} pt={6} borderTopWidth="1px" borderColor={c.line}>
+        <Flex align="center" justify="space-between" gap={4}>
+          <Text
+            fontFamily="var(--font-brand-ui)"
+            fontWeight="600"
+            fontSize="xs"
+            letterSpacing="0.1em"
+            textTransform="uppercase"
+            color={c.textMuted}
+          >
+            {t('socialsLabel')}
+          </Text>
+
+          <Flex gap={2}>
+            {SOCIAL_LINKS.map(({ key, href, Icon }) => (
+              <Box key={key} asChild>
+                <a
+                  href={href || '#'}
+                  target={href ? '_blank' : undefined}
+                  rel={href ? 'noopener noreferrer' : undefined}
+                  aria-label={t(`social.${key}`)}
+                >
+                  <Flex
+                    as="span"
+                    w="40px"
+                    h="40px"
+                    rounded="full"
+                    bg={c.accentSoft}
+                    color={c.accent}
+                    align="center"
+                    justify="center"
+                    transition="background-color 200ms ease, color 200ms ease"
+                    _hover={{ bg: c.accent, color: c.accentContrast }}
+                    _focusVisible={FOCUS_RING}
+                  >
+                    <Icon size={18} aria-hidden />
+                  </Flex>
+                </a>
+              </Box>
+            ))}
+          </Flex>
+        </Flex>
+      </Box>
+    </Box>
+  );
+}
+
+function DetailRow({
+  icon,
+  label,
+  children,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Flex align="flex-start" gap={3}>
+      <Flex
+        w="36px"
+        h="36px"
+        flexShrink={0}
+        rounded="full"
+        bg={c.accentSoft}
+        color={c.accent}
+        align="center"
+        justify="center"
+      >
+        {icon}
+      </Flex>
+
+      <Box minW={0} pt={1}>
+        <Text
+          fontFamily="var(--font-brand-ui)"
+          fontWeight="600"
+          fontSize="xs"
+          letterSpacing="0.06em"
+          textTransform="uppercase"
+          color={c.textMuted}
+          mb={0.5}
+        >
+          {label}
+        </Text>
+        {/* Box (div), не Text (p): рядки з двома номерами (SimplePhoneLinks)
+            кладуть сюди Flex, а div усередині p — невалідна вкладеність. */}
+        <Box fontFamily="var(--font-brand-ui)" fontSize="sm" color={c.text} wordBreak="break-word">
+          {children}
+        </Box>
+      </Box>
+    </Flex>
+  );
+}
+
+/** Два номери через "/", кожен зі своїм посиланням — WhatsApp і Telegram у простій картці. */
+function SimplePhoneLinks({
+  hrefA,
+  labelA,
+  hrefB,
+  labelB,
+}: {
+  hrefA: string;
+  labelA: string;
+  hrefB: string;
+  labelB: string;
+}) {
+  return (
+    <Flex wrap="wrap" align="baseline" gap="4px">
+      <Link href={hrefA} target="_blank" rel="noopener noreferrer" color="inherit" _hover={{ color: c.accent }} _focusVisible={FOCUS_RING}>
+        {labelA}
+      </Link>
+      <Text as="span" color={c.textMuted}>
+        /
+      </Text>
+      <Link href={hrefB} target="_blank" rel="noopener noreferrer" color="inherit" _hover={{ color: c.accent }} _focusVisible={FOCUS_RING}>
+        {labelB}
+      </Link>
+    </Flex>
   );
 }
 

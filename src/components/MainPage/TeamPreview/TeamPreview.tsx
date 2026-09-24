@@ -117,7 +117,14 @@ export default async function TeamPreview() {
           </Link>
         )}
 
-        <Flex align="center" gap={4}>
+        {/* w="full" лише на мобільних: там цей рядок сидить під CTA-кнопкою
+            (parent — direction="column") і inline-flex-item без явної ширини
+            стискається до контенту, тож підпис і іконки лишались би
+            притиснутими одне до одного зліва замість розсунутись по краях. На
+            sm+ рядок і так уже праворуч від CTA (justify="space-between" на
+            батьківському Flex) — там ширину лишаємо "auto", інакше блок
+            розтягнувся б на всю решту рядка й розірвав підпис з іконками. */}
+        <Flex align="center" justify="space-around" gap={4} w={{ base: 'full', sm: 'auto' }}>
           <Text
             fontFamily="var(--font-brand-ui)"
             fontWeight="600"
