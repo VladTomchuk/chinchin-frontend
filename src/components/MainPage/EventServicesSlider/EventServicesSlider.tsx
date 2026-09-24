@@ -35,6 +35,15 @@ const DRAG_CLICK_SUPPRESSION_PX = 8;
 // автогортання відновлюється після ручного втручання.
 const AUTOPLAY_INTERVAL_MS = 3000;
 
+// На мобільній картка займає майже весь екран (--ess-slide-w: 80vw) — за 3с
+// її не встигаєш прочитати, тож там пауза довша.
+const AUTOPLAY_INTERVAL_MOBILE_MS = 6000;
+
+// Той самий брейкпоінт, що й --ess-slide-w у CSS-модулі (768px) — саме нижче
+// нього картка стає майже на весь екран і карусель починає читатись як
+// мобільна, а не зменшена десктопна.
+const MOBILE_BREAKPOINT_PX = 768;
+
 // Частину описів послуг ще не написано — у messages/{ua,en}.json на їх місці
 // стоять заглушки виду "[COPY PENDING — … — Short Description]". У картці такий
 // рядок читається як помилка, тож підставляємо рибу: одразу видно, що текст
@@ -132,6 +141,19 @@ export default function EventServicesSlider() {
   const [isHovering, setIsHovering] = useState(false);
   const [isFocusWithin, setIsFocusWithin] = useState(false);
 
+  // Використовується і для довшої паузи автогортання, і для того, щоб на
+  // вузькому екрані доріжка не їхала за пальцем від самого дотику (див.
+  // onPointerMove) — тільки підтверджений свайп.
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT_PX}px)`);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   // Стан жесту живе в ref, а не в state, з двох причин: між кадрами pointermove
   // він не має викликати ререндер, і — головне — його читають обробники того
   // самого потоку подій (pointerdown → pointermove → pointerup). Оновлення
@@ -186,11 +208,12 @@ export default function EventServicesSlider() {
     if (isDragging || isHovering || isFocusWithin) return undefined;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
-    const id = window.setTimeout(() => step(1), AUTOPLAY_INTERVAL_MS);
+    const interval = isMobile ? AUTOPLAY_INTERVAL_MOBILE_MS : AUTOPLAY_INTERVAL_MS;
+    const id = window.setTimeout(() => step(1), interval);
     return () => window.clearTimeout(id);
     // index у деп-масиві навмисно: step сам по собі стабільний (useCallback),
     // тож без index тут ефект не перезапускав би таймер на кожен крок.
-  }, [index, slideCount, isDragging, isHovering, isFocusWithin, step]);
+  }, [index, slideCount, isDragging, isHovering, isFocusWithin, isMobile, step]);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     // Мишею доріжку не тягнуть: на десктопі слайди гортаються тільки стрілками
@@ -227,7 +250,14 @@ export default function EventServicesSlider() {
       }
     }
 
-    setDragDx(dx);
+    // На мобільній доріжка починає їхати за пальцем лише після того, як зсув
+    // перетнув поріг (dragMoved), а не з першого ж піксела дотику — інакше
+    // будь-який дотик до екрана (навіть без наміру гортати) уже зрушував
+    // картки. На десктопі (тачпад/перо) лишаємо як було — там цей поріг і так
+    // непомітний.
+    if (!isMobile || dragMoved.current) {
+      setDragDx(dx);
+    }
   };
 
   const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {

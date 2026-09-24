@@ -232,7 +232,6 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
             rows={3}
             placeholder={`* ${t('messagePlaceholder')}`}
             className={`${styles.input} ${styles.textarea}`}
-            required
           />
         </FormField>
 
