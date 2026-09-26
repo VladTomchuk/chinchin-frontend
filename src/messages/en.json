@@ -1,7 +1,11 @@
 {
   "Homepage": {
     "title": "Welcome!",
-    "content": "Some long story!"
+    "content": "Some long story!",
+    "meta": {
+      "title": "Mobile Bar Catering for Events in Barcelona | ChinChin",
+      "description": "Full-service mobile bar catering for weddings, corporate & private events. Based in Barcelona, serving Europe and the Middle East. Get a free quote."
+    }
   },
   "HeroSection": {
     "title": "Cocktails\nthat speak\nyour language",

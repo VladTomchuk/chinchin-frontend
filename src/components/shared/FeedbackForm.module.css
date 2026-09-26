@@ -72,24 +72,6 @@
   color: #b3261e;
 }
 
-.dateWrapper {
-  position: relative;
-}
-
-/* Текст-підказка поверх порожнього type="date": сам інпут не приймає
-   placeholder, тож малюємо його вручну в тому самому місці, де він був би в
-   text-інпуті (QuoteForm.tsx ховає цей span, щойно дату обрано). */
-.datePlaceholder {
-  position: absolute;
-  top: 50%;
-  left: 14px;
-  transform: translateY(-50%);
-  color: #8a8478;
-  font-family: var(--font-brand-ui), sans-serif;
-  font-size: 15px;
-  pointer-events: none;
-}
-
 .input {
   width: 100%;
   /* 44px — мінімальна ціль для пальця. */
@@ -228,7 +210,6 @@
 
 :global(html.dark) .label,
 :global(html.dark) .labelVisible,
-:global(html.dark) .datePlaceholder,
 :global(html.dark) .consentLabel {
   color: #c9c3bf;
 }

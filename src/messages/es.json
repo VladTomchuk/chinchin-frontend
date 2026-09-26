@@ -1,7 +1,11 @@
 {
   "Homepage": {
     "title": "¡Bienvenido!",
-    "content": "¡Una larga historia!"
+    "content": "¡Una larga historia!",
+    "meta": {
+      "title": "Coctelería móvil para eventos en Barcelona | ChinChin",
+      "description": "Coctelería móvil para bodas, eventos corporativos y fiestas privadas. Con base en Barcelona, trabajamos en Europa y Oriente Medio. Pide presupuesto."
+    }
   },
   "HeroSection": {
     "title": "Cócteles\nque hablan\ntu idioma",

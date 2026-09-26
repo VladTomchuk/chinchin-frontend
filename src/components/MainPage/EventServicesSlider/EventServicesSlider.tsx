@@ -161,6 +161,7 @@ export default function EventServicesSlider() {
   // свайп «не спрацьовував би». isDragging у state лишається тільки заради
   // класу .dragging у розмітці.
   const dragStartX = useRef(0);
+  const dragStartY = useRef(0);
   const dragMoved = useRef(false);
   const dragging = useRef(false);
 
@@ -223,6 +224,7 @@ export default function EventServicesSlider() {
     if (e.button !== 0) return;
 
     dragStartX.current = e.clientX;
+    dragStartY.current = e.clientY;
     dragMoved.current = false;
     dragging.current = true;
     setIsDragging(true);
@@ -232,21 +234,39 @@ export default function EventServicesSlider() {
     if (!dragging.current) return;
     const dx = e.clientX - dragStartX.current;
 
-    // Захоплення вмикаємо не на pointerdown, а щойно палець реально поїхав.
-    // Захоплений вказівник перенацілює на контейнер і подальший click — тобто
-    // на pointerdown ми б забрали в слайдів усі кліки, і жоден із них не
-    // спрацював би ні як вибір картки, ні як перехід за посиланням.
-    if (Math.abs(dx) > DRAG_CLICK_SUPPRESSION_PX && !dragMoved.current) {
-      dragMoved.current = true;
-      // Кидає NotFoundError, якщо вказівник до цього моменту вже відпущено.
-      // Без перехоплення виняток обірвав би жест на середині: dragging.current
-      // лишився б true, і слайдер реагував би на будь-який наступний рух
-      // вказівника, ніби його досі тягнуть.
-      try {
-        e.currentTarget.setPointerCapture(e.pointerId);
-      } catch {
-        // Захоплення — оптимізація (жест не губиться за межами контейнера),
-        // а не умова роботи: без нього перетягування триває як є.
+    // Напрямок жесту вирішуємо один раз, поки ще не визначились (dragMoved
+    // === false), — так само, як Driftloom.tsx. Якщо вертикальний зсув уже
+    // переважає горизонтальний, це скрол сторінки вниз/вгору, а не свайп по
+    // картках: відпускаємо цей вказівник і більше не чіпаємо його до
+    // pointerup — .viewport (touch-action: pan-y) сам віддає жест сторінці.
+    // Без цієї перевірки будь-який діагональний дотик (навіть переважно
+    // вертикальний) міг захопити доріжку через самий лише горизонтальний
+    // "шум" у русі пальця.
+    if (!dragMoved.current) {
+      const dy = e.clientY - dragStartY.current;
+      if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > DRAG_CLICK_SUPPRESSION_PX) {
+        dragging.current = false;
+        setIsDragging(false);
+        return;
+      }
+
+      // Захоплення вмикаємо не на pointerdown, а щойно палець реально поїхав
+      // горизонтально. Захоплений вказівник перенацілює на контейнер і
+      // подальший click — тобто на pointerdown ми б забрали в слайдів усі
+      // кліки, і жоден із них не спрацював би ні як вибір картки, ні як
+      // перехід за посиланням.
+      if (Math.abs(dx) > DRAG_CLICK_SUPPRESSION_PX) {
+        dragMoved.current = true;
+        // Кидає NotFoundError, якщо вказівник до цього моменту вже відпущено.
+        // Без перехоплення виняток обірвав би жест на середині: dragging.current
+        // лишився б true, і слайдер реагував би на будь-який наступний рух
+        // вказівника, ніби його досі тягнуть.
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId);
+        } catch {
+          // Захоплення — оптимізація (жест не губиться за межами контейнера),
+          // а не умова роботи: без нього перетягування триває як є.
+        }
       }
     }
 

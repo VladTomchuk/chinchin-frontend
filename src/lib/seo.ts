@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { routing, type Locale } from '@/i18n/routing';
 import { services, type ServiceSlug } from '@/data/services';
 import { absoluteUrl, BCP47_LOCALE, OG_LOCALE, ORGANIZATION, SITE_URL } from '@/config/site';
+import { FACEBOOK_URL, INSTAGRAM_URL, LINKEDIN_URL } from '@/config/socials';
 
 /**
  * SEO-шар для сторінок послуг: canonical, hreflang, Open Graph, Twitter і
@@ -138,5 +139,38 @@ export async function buildServiceJsonLd(locale: Locale, slug: ServiceSlug) {
         addressCountry: ORGANIZATION.addressCountry,
       },
     },
+  };
+}
+
+/**
+ * Розмітка schema.org для бізнесу в цілому — на головній, одна на весь сайт.
+ * areaServed той самий набір, що й у buildServiceJsonLd (Барселона +
+ * worldwide): текст на головній ("Barcelona is home base, but it's not the
+ * limit") каже те саме.
+ *
+ * Без streetAddress і telephone: точну адресу сайт ніде публічно не показує
+ * (мобільний бар без вітрини для відвідувачів), а єдиний номер у коді
+ * (config/socials.ts, WHATSAPP_NUMBER) — заглушка з TODO замінити на
+ * реальний. Structured data не повинна містити те, чого нема на самій
+ * сторінці, — Google трактує таку розбіжність як спам-розмітку.
+ */
+export function buildLocalBusinessJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: ORGANIZATION.name,
+    url: SITE_URL,
+    logo: absoluteUrl(ORGANIZATION.logo),
+    email: ORGANIZATION.email,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: ORGANIZATION.addressLocality,
+      addressCountry: ORGANIZATION.addressCountry,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Barcelona' },
+      { '@type': 'AdministrativeArea', name: 'Worldwide' },
+    ],
+    sameAs: [INSTAGRAM_URL, LINKEDIN_URL, FACEBOOK_URL].filter(Boolean),
   };
 }
