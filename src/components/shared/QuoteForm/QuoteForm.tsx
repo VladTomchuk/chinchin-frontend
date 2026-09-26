@@ -161,8 +161,7 @@ export default function QuoteForm({ defaultEventType = '', defaultService = '' }
           <input
             id={`${id}-eventDate`}
             name="eventDate"
-            type="text"
-            placeholder={t('eventDate')}
+            type="date"
             className={styles.input}
           />
         </FormField>
